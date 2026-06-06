@@ -571,6 +571,63 @@ section { padding: 100px 80px; }
   padding: 4px 10px;
 }
 
+/* ── CHILD APP CARD ── */
+.child-card {
+  background: linear-gradient(135deg, var(--teal-900) 0%, var(--teal-800) 100%);
+  border-radius: 24px;
+  padding: 40px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(61,168,154,0.2);
+}
+@media (max-width: 900px) { .child-card { grid-template-columns: 1fr; gap: 32px; padding: 32px; } }
+.child-card-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(232,114,90,0.2); border: 1px solid rgba(232,114,90,0.4);
+  color: #FCA5A5; border-radius: 50px; padding: 5px 14px;
+  font-size: 12px; font-weight: 700; margin-bottom: 20px;
+}
+.child-card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 32px; font-weight: 700; color: white;
+  line-height: 1.2; margin-bottom: 16px;
+}
+.child-card-desc {
+  font-size: 15px; color: rgba(255,255,255,0.7);
+  line-height: 1.7; margin-bottom: 24px;
+}
+.child-card-feats {
+  display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px;
+}
+.child-card-feat {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85);
+}
+.child-card-feat::before { content: '🪶'; font-size: 14px; }
+.child-card-btn {
+  display: inline-block;
+  background: var(--coral); color: white;
+  padding: 13px 28px; border-radius: 50px;
+  font-size: 14px; font-weight: 800;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.child-card-btn:hover { opacity: 0.88; }
+.child-card-preview {
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.child-card-preview img {
+  display: block; width: 100%;
+  height: 340px; object-fit: cover; object-position: top;
+}
+
 /* ── PORTAL PREVIEW ── */
 .portal-preview {
   margin-top: 24px;
@@ -1279,11 +1336,36 @@ footer {
 <!-- ── PARA QUIÉN ── -->
 <section class="para-quien" id="para-quien">
   <div class="container">
-    <p class="eyebrow">Los portales adultos</p>
-    <h2 class="section-title">Cada adulto tiene<br>su propio portal</h2>
+    <p class="eyebrow">El ecosistema Paloma</p>
+    <h2 class="section-title">4 aplicaciones.<br>Un solo ecosistema.</h2>
     <p class="section-lead">
-      Tres portales web (PWA) diseñados para los roles que rodean al niño — con accesos y vistas diferenciadas.
+      La app del niño más tres portales web para los adultos que lo acompañan — cada uno con accesos y vistas diferenciadas.
     </p>
+
+    <!-- App del niño — tarjeta destacada -->
+    <div class="child-card">
+      <div>
+        <div class="child-card-badge">🐦 App principal · iOS & Android</div>
+        <div class="child-card-title">La app del niño:<br>su espacio seguro</div>
+        <div class="child-card-desc">
+          El diario emocional donde el niño expresa lo que siente. Herramientas de calma rápida, seguimiento de estados de ánimo y un botón SOS para emergencias — todo diseñado para 8 a 17 años.
+        </div>
+        <div class="child-card-feats">
+          <div class="child-card-feat">Diario emocional privado — ningún adulto lo lee</div>
+          <div class="child-card-feat">Herramientas: respiración 4-7-8, grounding, Pausa STOP</div>
+          <div class="child-card-feat">Plumas: recompensa por constancia, no por contenido</div>
+          <div class="child-card-feat">Botón SOS visible en toda la app</div>
+          <div class="child-card-feat">3 avatares según edad: Pali (8–10), Luma (11–13), Senior (14–17)</div>
+        </div>
+        <a href="portales/child.html" target="_blank" class="child-card-btn">Ver la app del niño →</a>
+      </div>
+      <div class="child-card-preview">
+        <img src="portal-child.png" alt="App Paloma para niños y adolescentes">
+      </div>
+    </div>
+
+    <!-- Portales adultos -->
+    <p style="font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color: var(--mid); margin-bottom:20px;">Los portales adultos</p>
     <div class="portales-grid">
       <div class="portal-card family">
         <div class="portal-url">paloma-app.com.co/family</div>
