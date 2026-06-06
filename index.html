@@ -1515,7 +1515,14 @@ footer {
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+// Supabase client
+const _sb = supabase.createClient(
+  'https://dwtpvgygivxeqmfkrbxj.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3dHB2Z3lnaXZ4ZXFtZmtyYnhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0OTQxODYsImV4cCI6MjA5MzA3MDE4Nn0.OfqRzGrRpSHO_y40LCo3_GRxFHfjO7CDpMSq81skGSQ'
+);
+
 // Smooth nav active state
 const nav = document.querySelector('nav');
 window.addEventListener('scroll', () => {
@@ -1523,18 +1530,31 @@ window.addEventListener('scroll', () => {
 });
 
 // Waitlist form
-function submitWaitlist(e) {
+async function submitWaitlist(e) {
   e.preventDefault();
   const form = e.target;
-  const nombre = form.querySelector('input[type="text"]').value;
-  const correo = form.querySelector('input[type="email"]').value;
+  const btn  = form.querySelector('.waitlist-submit');
+  const nombre = form.querySelector('input[type="text"]').value.trim();
+  const correo = form.querySelector('input[type="email"]').value.trim();
   const perfil = form.querySelector('select').value;
-  // Enviar por mailto como fallback hasta tener backend
-  const asunto = encodeURIComponent('Lista de espera Paloma · ' + perfil);
-  const cuerpo = encodeURIComponent('Nombre: ' + nombre + '\nCorreo: ' + correo + '\nPerfil: ' + perfil);
-  window.open('mailto:cuentas@ada-apps.com.co?subject=' + asunto + '&body=' + cuerpo);
-  form.style.display = 'none';
-  document.getElementById('waitlist-success').style.display = 'block';
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+
+  try {
+    const { error } = await _sb.from('waitlist').insert({ nombre, correo, perfil });
+    if (error) throw error;
+    form.style.display = 'none';
+    document.getElementById('waitlist-success').style.display = 'block';
+  } catch (err) {
+    // Fallback mailto si Supabase falla
+    console.warn('Supabase error, usando mailto fallback:', err);
+    const asunto = encodeURIComponent('Lista de espera Paloma · ' + perfil);
+    const cuerpo = encodeURIComponent('Nombre: ' + nombre + '\nCorreo: ' + correo + '\nPerfil: ' + perfil);
+    window.open('mailto:cuentas@ada-apps.com.co?subject=' + asunto + '&body=' + cuerpo);
+    form.style.display = 'none';
+    document.getElementById('waitlist-success').style.display = 'block';
+  }
 }
 </script>
 </body>
