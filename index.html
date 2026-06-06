@@ -525,6 +525,42 @@ section { padding: 100px 80px; }
   padding: 4px 10px;
 }
 
+/* ── PORTAL PREVIEW ── */
+.portal-preview {
+  margin-top: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  position: relative;
+}
+.portal-preview-bar {
+  background: rgba(0,0,0,0.25);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.portal-preview-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+}
+.portal-preview-url {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  opacity: 0.4;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.portal-preview img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: top;
+}
+
 /* ── ALERTAS NLP ── */
 .nlp { background: var(--teal-900); }
 .nlp .eyebrow { color: var(--teal-400); }
@@ -1204,6 +1240,15 @@ footer {
           <div class="portal-feat">Citas con psicólogos y especialistas</div>
           <div class="portal-feat">Soporte para hasta 2 padres vinculados</div>
         </div>
+        <div class="portal-preview">
+          <div class="portal-preview-bar">
+            <div class="portal-preview-dot"></div>
+            <div class="portal-preview-dot"></div>
+            <div class="portal-preview-dot"></div>
+            <div class="portal-preview-url">paloma-app.com.co/family</div>
+          </div>
+          <img src="portal-family.png" alt="Vista previa Portal Familiar">
+        </div>
       </div>
       <div class="portal-card school">
         <div class="portal-url">paloma-app.com.co/school</div>
@@ -1218,7 +1263,16 @@ footer {
           <div class="portal-feat">Bitácora firmada por orientador</div>
           <div class="portal-feat">Alertas N1 y N2 solamente</div>
           <div class="portal-feat">Coordinación con familia y especialista</div>
-          <div class="portal-feat">RLS estricto por colegio</div>
+          <div class="portal-feat">Acceso restringido solo a tu institución</div>
+        </div>
+        <div class="portal-preview">
+          <div class="portal-preview-bar">
+            <div class="portal-preview-dot"></div>
+            <div class="portal-preview-dot"></div>
+            <div class="portal-preview-dot"></div>
+            <div class="portal-preview-url">paloma-app.com.co/school</div>
+          </div>
+          <img src="portal-school.png" alt="Vista previa Portal Escolar">
         </div>
       </div>
       <div class="portal-card medical">
@@ -1232,9 +1286,18 @@ footer {
         <div class="portal-features">
           <div class="portal-feat">Alertas N0 con notificación inmediata</div>
           <div class="portal-feat">Tests clínicos: PHQ-A, GAD-7, SCARED, C-SSRS</div>
-          <div class="portal-feat">Resumen NLP listo para historia clínica</div>
+          <div class="portal-feat">Resumen automático listo para historia clínica</div>
           <div class="portal-feat">Notas compartibles con el equipo</div>
           <div class="portal-feat">Hasta 4 especialistas por niño</div>
+        </div>
+        <div class="portal-preview">
+          <div class="portal-preview-bar">
+            <div class="portal-preview-dot"></div>
+            <div class="portal-preview-dot"></div>
+            <div class="portal-preview-dot"></div>
+            <div class="portal-preview-url">paloma-app.com.co/medical</div>
+          </div>
+          <img src="portal-medical.png" alt="Vista previa Portal Especialista">
         </div>
       </div>
     </div>
