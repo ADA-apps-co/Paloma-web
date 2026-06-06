@@ -540,7 +540,9 @@ section { padding: 100px 80px; }
   border-radius: 20px; padding: 28px 24px;
   border: 1px solid rgba(255,255,255,0.1);
   position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
 }
+.alerta-desc { flex: 1; }
 .alerta-card.n0 { background: rgba(197,87,63,0.15); border-color: rgba(197,87,63,0.3); }
 .alerta-card.n1 { background: rgba(242,153,74,0.12); border-color: rgba(242,153,74,0.25); }
 .alerta-card.n2 { background: rgba(242,201,76,0.1);  border-color: rgba(242,201,76,0.2); }
@@ -554,7 +556,7 @@ section { padding: 100px 80px; }
 .n2 .alerta-nivel { color: #FDE68A; }
 .n3 .alerta-nivel { color: var(--teal-300); }
 .alerta-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: white; margin-bottom: 8px; }
-.alerta-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 16px; }
+.alerta-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 16px; flex: 1; }
 .alerta-action {
   font-size: 12px; font-weight: 800; padding: 6px 14px;
   border-radius: 20px; display: inline-block;
@@ -835,7 +837,7 @@ footer {
     <div class="hero-mockup">
       <div class="hero-badge">
         <div class="hero-badge-dot"></div>
-        NLP activo · Análisis en RAM
+        Análisis activo · En nuestros servidores
       </div>
       <div class="phone-frame">
         <div class="phone-screen">
@@ -913,8 +915,8 @@ footer {
   </div>
 </section>
 
-<!-- ── TESTIMONIOS ── -->
-<section style="background: var(--cream); padding: 100px 80px;">
+<!-- ── TESTIMONIOS ── (oculto hasta post-piloto) -->
+<section style="display:none; background: var(--cream); padding: 100px 80px;">
   <div class="container">
     <p class="eyebrow">Voces del piloto</p>
     <h2 class="section-title">Lo que dicen quienes<br>cuidan a los niños</h2>
@@ -1053,9 +1055,9 @@ footer {
       </div>
       <div class="pipe-step">
         <div class="pipe-icon">🧠</div>
-        <div class="pipe-label">NLP server-side</div>
-        <div class="pipe-title">Análisis en RAM</div>
-        <div class="pipe-desc">1.000 frases DSM-5 · Determinístico · Sin IA externa</div>
+        <div class="pipe-label">Análisis automático</div>
+        <div class="pipe-title">En nuestros servidores</div>
+        <div class="pipe-desc">Sin IA externa · Texto nunca sale del servidor · Sin nubes de terceros</div>
         <div class="pipe-badge" style="background: rgba(155,81,224,0.1); color: #9B51E0;">Motor propio</div>
       </div>
       <div class="pipe-step">
@@ -1063,7 +1065,7 @@ footer {
         <div class="pipe-label">Equipo profesional</div>
         <div class="pipe-title">Recibe alerta + nivel</div>
         <div class="pipe-desc">Patrón emocional · Nunca el texto literal</div>
-        <div class="pipe-badge" style="background: rgba(39,174,96,0.1); color: #27AE60;">Nivel N0→N3</div>
+        <div class="pipe-badge" style="background: rgba(39,174,96,0.1); color: #27AE60;">Nivel 0 → Nivel 3</div>
       </div>
       <div class="pipe-step">
         <div class="pipe-icon">🏫</div>
@@ -1092,7 +1094,7 @@ footer {
             <div class="priv-rule-icon">🔒</div>
             <div>
               <div class="priv-rule-title">El diario es invisible para adultos</div>
-              <div class="priv-rule-desc">El texto literal del diario nunca es visible para padres, colegio ni especialistas. El NLP corre en RAM y solo genera un nivel de alerta — jamás transmite las palabras exactas.</div>
+              <div class="priv-rule-desc">El texto literal del diario nunca es visible para padres, colegio ni especialistas. El análisis ocurre en nuestros servidores y solo genera un nivel de alerta — jamás transmite las palabras exactas.</div>
             </div>
           </div>
           <div class="priv-rule">
@@ -1105,8 +1107,8 @@ footer {
           <div class="priv-rule">
             <div class="priv-rule-icon">🛡️</div>
             <div>
-              <div class="priv-rule-title">Cifrado pgcrypto end-to-end</div>
-              <div class="priv-rule-desc">Datos cifrados en reposo con pgcrypto en Supabase. Row Level Security (RLS) garantiza que cada actor solo ve exactamente lo que le corresponde — ni un byte más.</div>
+              <div class="priv-rule-title">Cifrado extremo a extremo</div>
+              <div class="priv-rule-desc">Los datos se cifran en reposo y en tránsito. Cada actor (niño, familia, colegio, psicólogo) solo puede ver exactamente lo que le corresponde — ni un dato más.</div>
             </div>
           </div>
           <div class="priv-rule">
@@ -1156,13 +1158,13 @@ footer {
           <div style="font-size: 12px; opacity: 0.5; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">Protecciones técnicas</div>
           <div style="display: flex; flex-direction: column; gap: 8px;">
             <div style="font-size: 13px; color: rgba(255,255,255,0.7); display: flex; gap: 8px; align-items: center;">
-              <span style="color: var(--teal-400);">✓</span> Supabase RLS · acceso por fila, por actor
+              <span style="color: var(--teal-400);">✓</span> Control de acceso por actor · cada uno ve solo lo suyo
             </div>
             <div style="font-size: 13px; color: rgba(255,255,255,0.7); display: flex; gap: 8px; align-items: center;">
-              <span style="color: var(--teal-400);">✓</span> pgcrypto · cifrado en reposo
+              <span style="color: var(--teal-400);">✓</span> Cifrado en reposo y en tránsito
             </div>
             <div style="font-size: 13px; color: rgba(255,255,255,0.7); display: flex; gap: 8px; align-items: center;">
-              <span style="color: var(--teal-400);">✓</span> NLP en RAM · texto nunca persiste en claro
+              <span style="color: var(--teal-400);">✓</span> Texto del diario nunca persiste ni se comparte
             </div>
             <div style="font-size: 13px; color: rgba(255,255,255,0.7); display: flex; gap: 8px; align-items: center;">
               <span style="color: var(--teal-400);">✓</span> Ley 1581/2012 + Decreto 1377/2013
@@ -1318,12 +1320,12 @@ footer {
 <!-- ── ALERTAS NLP ── -->
 <section class="nlp" id="nlp">
   <div class="container">
-    <p class="eyebrow">Motor NLP</p>
-    <h2 class="section-title" style="color: white;">Detección de riesgo real.<br>Sin IA externa, sin nubes de terceros.</h2>
+    <p class="eyebrow">Detección de riesgo</p>
+    <h2 class="section-title" style="color: white;">Detectamos señales de alerta.<br>Sin leer el diario. Sin IA externa.</h2>
     <p class="section-lead">
-      El motor NLP de Paloma analiza el texto del diario con 1.000 frases clasificadas según el DSM-5.
-      Corre server-side, en RAM — el texto nunca sale del servidor y nunca se persiste en claro.
-      Cuatro niveles de alerta con acciones diferentes para cada uno.
+      Paloma analiza lo que escribe el niño de forma automática, sin intervención humana y sin enviar nada a servicios externos.
+      Todo se procesa en nuestros servidores. Nadie lee el diario — solo el programa, y solo para detectar si el niño necesita ayuda.
+      El resultado es un nivel de alerta para el equipo que acompaña al niño — nunca el texto original.
     </p>
     <div class="alertas-grid">
       <div class="alerta-card n0">
@@ -1423,12 +1425,12 @@ footer {
       <div class="trust-item">
         <div class="trust-icon">🧠</div>
         <div class="trust-title">NLP determinístico</div>
-        <div class="trust-desc">No usamos ChatGPT ni ninguna IA externa. El motor NLP es propio, basado en DSM-5, y corre en nuestros servidores.</div>
+        <div class="trust-desc">No usamos ChatGPT ni ninguna IA externa. El análisis es propio y corre completamente en nuestros servidores.</div>
       </div>
       <div class="trust-item">
         <div class="trust-icon">🔐</div>
         <div class="trust-title">Cifrado total</div>
-        <div class="trust-desc">pgcrypto en Supabase + Row Level Security. Cada actor ve solo lo que le corresponde — sin excepciones.</div>
+        <div class="trust-desc">Cifrado en reposo y en tránsito. Cada actor ve solo lo que le corresponde — sin excepciones.</div>
       </div>
       <div class="trust-item">
         <div class="trust-icon">⚖️</div>
