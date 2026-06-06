@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paloma · Herramientas M40–M42 — Wireframes interactivos</title>
+<style>
+  :root {
+    --font: 'Inter', system-ui, sans-serif;
+    --white: #FFFFFF;
+    --dark:  #1A1A2E;
+    --gray1: #F5F5F7;
+    --gray2: #E0E0E6;
+    --gray3: #9E9EA8;
+    --gray4: #5A5A6A;
+    --green: #27AE60;
+    --red:   #EB5757;
+
+    /* TEMA 8-10: Pali — morado/amarillo */
+    --t1-primary:  #9B51E0;
+    --t1-primary-l:#F3EAFE;
+    --t1-accent:   #F2C94C;
+    --t1-accent-l: #FFFBE6;
+    --t1-bg:       #F8F2FF;
+    --t1-radius:   24px;
+
+    /* TEMA 11-13: Luma — teal/coral */
+    --t2-primary:  #2D9CDB;
+    --t2-primary-l:#EBF6FD;
+    --t2-accent:   #F2994A;
+    --t2-accent-l: #FFF3E8;
+    --t2-bg:       #EEF8FD;
+    --t2-radius:   18px;
+
+    /* TEMA 14-17: Paloma — oscuro/verde */
+    --t3-primary:  #1A1A2E;
+    --t3-primary-l:#E8E8F0;
+    --t3-accent:   #27AE60;
+    --t3-accent-l: #E8F8EE;
+    --t3-bg:       #F0F0F5;
+    --t3-radius:   12px;
+
+    --primary:   var(--t3-primary);
+    --primary-l: var(--t3-primary-l);
+    --accent:    var(--t3-accent);
+    --accent-l:  var(--t3-accent-l);
+    --bg:        var(--t3-bg);
+    --cradius:   var(--t3-radius);
+  }
+  body.tema-8-10  { --primary:var(--t1-primary); --primary-l:var(--t1-primary-l); --accent:var(--t1-accent); --accent-l:var(--t1-accent-l); --bg:var(--t1-bg); --cradius:var(--t1-radius); }
+  body.tema-11-13 { --primary:var(--t2-primary); --primary-l:var(--t2-primary-l); --accent:var(--t2-accent); --accent-l:var(--t2-accent-l); --bg:var(--t2-bg); --cradius:var(--t2-radius); }
+  body.tema-14-17 { --primary:var(--t3-primary); --primary-l:var(--t3-primary-l); --accent:var(--t3-accent); --accent-l:var(--t3-accent-l); --bg:var(--t3-bg); --cradius:var(--t3-radius); }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: #2A2A3E;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px 40px;
+    color: var(--dark);
+  }
+
+  /* ── DEMO CONTROLS ── */
+  .demo-controls {
+    display: flex; gap: 12px; margin-bottom: 16px;
+    align-items: center; flex-wrap: wrap; justify-content: center;
+  }
+  .demo-label { color: #AAA; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .tema-btn {
+    padding: 8px 16px; border-radius: 20px; border: 2px solid transparent;
+    font-size: 13px; font-weight: 700; cursor: pointer; transition: all .2s; color: white; background: #444;
+  }
+  .tema-btn.active { border-color: white; }
+  .tema-btn[data-t="8-10"]  { background: #9B51E0; }
+  .tema-btn[data-t="11-13"] { background: #2D9CDB; }
+  .tema-btn[data-t="14-17"] { background: #27AE60; }
+  .nav-btn {
+    padding: 6px 12px; border-radius: 10px; border: 1px solid #555;
+    font-size: 11px; font-weight: 600; cursor: pointer; color: #CCC;
+    background: #333; transition: all .2s;
+  }
+  .nav-btn:hover { background: #555; color: white; }
+
+  /* ── TÍTULO PANTALLA ── */
+  .screen-title {
+    color: #DDD; font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 8px; text-align: center;
+  }
+
+  /* ── PHONE FRAME ── */
+  .phones-row {
+    display: flex; gap: 32px; align-items: flex-start;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .phone {
+    width: 375px; height: 812px;
+    background: var(--bg);
+    border-radius: 44px;
+    border: 8px solid #111;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(0,0,0,.6), inset 0 0 0 1px #333;
+    display: flex; flex-direction: column;
+  }
+  /* notch */
+  .phone::before {
+    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 30px; background: #111;
+    border-radius: 0 0 20px 20px; z-index: 100;
+  }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    height: 44px; padding: 14px 20px 0;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .status-time { font-size: 12px; font-weight: 700; color: var(--dark); }
+  .status-icons { font-size: 12px; color: var(--dark); display: flex; gap: 4px; }
+
+  /* ── SCROLL AREA ── */
+  .scroll-area {
+    flex: 1; overflow-y: auto; padding: 0 0 8px;
+    scrollbar-width: none;
+  }
+  .scroll-area::-webkit-scrollbar { display: none; }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    height: 72px; background: white; border-top: 1px solid var(--gray2);
+    display: flex; align-items: center; flex-shrink: 0;
+  }
+  .bnav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 3px; cursor: pointer; background: none; border: none; padding: 8px 0;
+  }
+  .bnav-item .bnav-icon { font-size: 22px; }
+  .bnav-item .bnav-lbl { font-size: 10px; font-weight: 700; color: var(--gray3); }
+  .bnav-item.active .bnav-lbl { color: var(--primary); }
+
+  /* ── CRISIS FAB ── */
+  .crisis-fab {
+    position: absolute; bottom: 84px; right: 14px;
+    width: 48px; height: 48px;
+    background: var(--red); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 4px 16px rgba(235,87,87,.5);
+    cursor: pointer; z-index: 50;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 4px 16px rgba(235,87,87,.5); transform: scale(1); }
+    50%      { box-shadow: 0 4px 28px rgba(235,87,87,.8); transform: scale(1.06); }
+  }
+
+  /* ── SHARED UI ── */
+  .top-bar {
+    padding: 10px 20px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .top-bar-title { font-size: 22px; font-weight: 800; color: var(--dark); }
+  .back-btn {
+    background: none; border: none; font-size: 18px; cursor: pointer;
+    color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 4px;
+  }
+  .back-btn span { font-size: 13px; font-weight: 700; }
+  .section-label {
+    font-size: 11px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase;
+    color: var(--gray3); padding: 0 20px; margin-bottom: 8px;
+  }
+
+  /* ── M40 HUB ── */
+  .para-ti-banner {
+    margin: 0 16px 14px;
+    background: var(--accent-l);
+    border: 1.5px solid var(--accent);
+    border-radius: var(--cradius);
+    padding: 14px 16px;
+  }
+  .para-ti-label {
+    font-size: 11px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+  }
+  .para-ti-cards {
+    display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px;
+  }
+  .para-ti-cards::-webkit-scrollbar { display: none; }
+
+  .tool-card-sm {
+    flex-shrink: 0; width: 90px;
+    background: white; border-radius: 14px;
+    padding: 12px 8px; cursor: pointer;
+    border: 1.5px solid var(--gray2);
+    text-align: center; transition: all .2s;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .tool-card-sm:hover { border-color: var(--primary); transform: translateY(-2px); }
+  .tool-card-sm.recommended {
+    border-color: var(--accent); background: white;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .tool-card-sm .tc-icon { font-size: 26px; }
+  .tool-card-sm .tc-name { font-size: 10px; font-weight: 800; color: var(--dark); line-height: 1.3; }
+  .tool-card-sm .tc-time { font-size: 9px; color: var(--gray3); font-weight: 600; }
+
+  .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px; }
+  .tool-card-lg {
+    background: white; border-radius: var(--cradius);
+    padding: 16px 14px; cursor: pointer;
+    border: 1.5px solid var(--gray2); transition: all .2s;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .tool-card-lg:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+  .tool-card-lg .tc-icon { font-size: 30px; }
+  .tool-card-lg .tc-name { font-size: 13px; font-weight: 800; color: var(--dark); line-height: 1.3; }
+  .tool-card-lg .tc-desc { font-size: 11px; color: var(--gray4); line-height: 1.4; }
+  .tc-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+  .tc-time-tag {
+    font-size: 10px; font-weight: 700; color: var(--primary);
+    background: var(--primary-l); border-radius: 20px; padding: 2px 8px;
+  }
+  .tc-plumas { font-size: 10px; color: var(--gray3); font-weight: 600; }
+  .tc-used-badge {
+    font-size: 9px; color: var(--green); font-weight: 700;
+    display: flex; align-items: center; gap: 3px;
+  }
+
+  /* ── M41 DETALLE ── */
+  .tool-hero {
+    background: var(--primary);
+    margin: 0 16px 16px;
+    border-radius: var(--cradius);
+    padding: 24px 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    text-align: center;
+  }
+  .tool-hero .hero-icon { font-size: 52px; }
+  .tool-hero .hero-name { font-size: 22px; font-weight: 800; color: white; }
+  .tool-hero .hero-sub  { font-size: 13px; color: rgba(255,255,255,.7); line-height: 1.5; }
+  .tool-hero .hero-meta {
+    display: flex; gap: 12px; margin-top: 4px;
+  }
+  .hero-tag {
+    font-size: 11px; font-weight: 700;
+    background: rgba(255,255,255,.2); color: white;
+    border-radius: 20px; padding: 4px 12px;
+  }
+
+  .start-btn {
+    display: block; margin: 0 16px 16px;
+    background: var(--primary); color: white;
+    border: none; border-radius: var(--cradius);
+    padding: 16px; font-size: 16px; font-weight: 800;
+    cursor: pointer; text-align: center; width: calc(100% - 32px);
+    transition: opacity .2s;
+  }
+  .start-btn:hover { opacity: .85; }
+
+  .detail-section {
+    margin: 0 16px 14px;
+    background: var(--primary-l);
+    border-radius: var(--cradius); padding: 14px 16px;
+  }
+  .detail-section h3 { font-size: 12px; font-weight: 800; color: var(--primary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .6px; }
+  .step-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+  .step-num {
+    flex-shrink: 0; width: 22px; height: 22px;
+    background: var(--primary); color: white;
+    border-radius: 50%; font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-text { font-size: 12px; color: var(--dark); line-height: 1.5; }
+
+  .info-row { display: flex; gap: 10px; margin: 0 16px 14px; }
+  .info-chip {
+    flex: 1; background: white; border-radius: 12px;
+    padding: 10px 12px; border: 1px solid var(--gray2);
+    display: flex; flex-direction: column; gap: 2px; align-items: center;
+  }
+  .info-chip .ic-val { font-size: 18px; font-weight: 800; color: var(--primary); }
+  .info-chip .ic-lbl { font-size: 10px; color: var(--gray3); font-weight: 600; }
+
+  /* ── M42 EJERCICIO GUIADO ── */
+  .exercise-header {
+    padding: 12px 20px 0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .progress-bar {
+    flex: 1; height: 4px; background: var(--gray2); border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; background: var(--primary); border-radius: 2px; transition: width .5s; }
+
+  /* Respiración — animación círculo */
+  .breath-stage {
+    margin: 16px 20px 0;
+    background: var(--primary-l);
+    border-radius: var(--cradius);
+    padding: 24px 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  .breath-instruction {
+    font-size: 14px; font-weight: 800; color: var(--primary);
+    text-align: center; letter-spacing: .5px;
+  }
+  .breath-circle-wrap {
+    position: relative; width: 160px; height: 160px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .breath-ring {
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 3px solid var(--primary); opacity: .25;
+    animation: ring-pulse 4s ease-in-out infinite;
+  }
+  .breath-ring.r2 { animation-delay: .4s; transform: scale(.85); }
+  .breath-ring.r3 { animation-delay: .8s; transform: scale(.7); }
+  @keyframes ring-pulse {
+    0%,100% { opacity:.25; transform: scale(1); }
+    50%      { opacity:.08; transform: scale(1.12); }
+  }
+  .breath-circle {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: var(--primary); opacity: .9;
+    display: flex; align-items: center; justify-content: center;
+    animation: breathe 11s ease-in-out infinite;
+    box-shadow: 0 0 40px rgba(0,0,0,.15);
+  }
+  @keyframes breathe {
+    0%,100% { transform: scale(.75); }
+    36%     { transform: scale(1); }       /* inhala 4s */
+    73%     { transform: scale(1); }       /* sostiene 7s */
+  }
+  .breath-circle .bc-text { font-size: 13px; font-weight: 800; color: white; text-align: center; line-height: 1.4; }
+  .breath-timer {
+    font-size: 36px; font-weight: 900; color: var(--primary); letter-spacing: -1px;
+  }
+  .breath-phase-label {
+    font-size: 12px; color: var(--gray3); font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
+  }
+
+  .cycle-dots { display: flex; gap: 8px; }
+  .cycle-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gray2); transition: background .3s;
+  }
+  .cycle-dot.done { background: var(--primary); }
+  .cycle-dot.active { background: var(--accent); }
+
+  .breath-phases {
+    margin: 14px 20px 0;
+    display: flex; gap: 8px;
+  }
+  .phase-card {
+    flex: 1; background: white; border-radius: 12px;
+    border: 1.5px solid var(--gray2); padding: 10px 8px; text-align: center;
+  }
+  .phase-card.active { border-color: var(--primary); background: var(--primary-l); }
+  .phase-card .ph-num { font-size: 18px; font-weight: 900; color: var(--primary); }
+  .phase-card .ph-name { font-size: 9px; color: var(--gray3); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  .phase-card .ph-label { font-size: 10px; color: var(--dark); font-weight: 700; margin-top: 2px; }
+
+  .mood-check {
+    margin: 14px 20px 0;
+    background: var(--accent-l);
+    border: 1px solid var(--accent);
+    border-radius: var(--cradius); padding: 14px 16px;
+  }
+  .mood-check p { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 10px; text-align: center; }
+  .mood-btns { display: flex; gap: 8px; justify-content: center; }
+  .mood-btn {
+    flex: 1; padding: 10px 6px;
+    background: white; border: 1.5px solid var(--gray2);
+    border-radius: 12px; font-size: 13px; font-weight: 700;
+    cursor: pointer; text-align: center; transition: all .2s;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .mood-btn span.mb-label { font-size: 10px; color: var(--gray3); }
+  .mood-btn:hover { border-color: var(--primary); background: var(--primary-l); }
+  .mood-btn.mejor { border-color: var(--green); }
+
+  .exit-btn {
+    display: block; margin: 14px 20px 0;
+    background: none; color: var(--gray3);
+    border: 1.5px solid var(--gray2); border-radius: var(--cradius);
+    padding: 12px; font-size: 13px; font-weight: 700;
+    cursor: pointer; text-align: center; width: calc(100% - 0px);
+    transition: all .2s;
+  }
+  .exit-btn:hover { color: var(--dark); border-color: var(--gray3); }
+
+  /* ── WAVE EXERCISE (Surfea la Ola) ── */
+  .wave-stage {
+    margin: 16px 20px 0;
+    background: var(--primary-l);
+    border-radius: var(--cradius); padding: 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .wave-svg { width: 100%; height: 80px; overflow: visible; }
+  .wave-path {
+    fill: none; stroke: var(--primary); stroke-width: 2.5;
+    stroke-linecap: round;
+    animation: wave-anim 4s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes wave-anim {
+    0%,100% { d: path("M0,40 C60,10 120,70 180,40 C240,10 300,70 340,40"); }
+    50%      { d: path("M0,40 C60,70 120,10 180,40 C240,70 300,10 340,40"); }
+  }
+  .wave-label { font-size: 13px; font-weight: 700; color: var(--primary); text-align: center; line-height: 1.5; }
+  .wave-emotion-tag {
+    background: var(--primary); color: white;
+    border-radius: 20px; padding: 6px 16px;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* ── PLUMAS EARNED ── */
+  .plumas-toast {
+    margin: 14px 20px 0;
+    background: var(--accent-l); border: 1.5px solid var(--accent);
+    border-radius: var(--cradius); padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .plumas-toast .pt-icon { font-size: 24px; }
+  .plumas-toast .pt-text { font-size: 13px; font-weight: 700; color: var(--dark); }
+  .plumas-toast .pt-sub  { font-size: 11px; color: var(--gray3); }
+</style>
+</head>
+<body class="tema-14-17">
+
+<!-- ── CONTROLS ── -->
+<div class="demo-controls">
+  <span class="demo-label">Tema etario</span>
+  <button class="tema-btn" data-t="8-10"  onclick="setTema('8-10')">🐦 Pali 8–10</button>
+  <button class="tema-btn" data-t="11-13" onclick="setTema('11-13')">🦋 Luma 11–13</button>
+  <button class="tema-btn active" data-t="14-17" onclick="setTema('14-17')">🕊️ Senior 14–17</button>
+</div>
+<div class="demo-controls" style="margin-bottom:24px;">
+  <span class="demo-label">Pantalla</span>
+  <button class="nav-btn" onclick="goTo('m40')">M40 Hub</button>
+  <button class="nav-btn" onclick="goTo('m41-respiracion')">M41 Detalle</button>
+  <button class="nav-btn" onclick="goTo('m42-respiracion')">M42 Ejercicio</button>
+  <button class="nav-btn" onclick="goTo('m42-ola')">M42 Surfea la Ola</button>
+  <button class="nav-btn" onclick="goTo('m40-recomendada')">M40 Post-NLP</button>
+</div>
+
+<div class="phones-row" id="phones-row">
+
+<!-- ════════════════════════════════════════
+     M40 — HerramientasHub
+     ════════════════════════════════════════ -->
+<div class="phone-wrap" id="pw-m40">
+  <div class="screen-title">M40 · HerramientasHub</div>
+  <div class="phone">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <span class="status-icons">●●● 📶 🔋</span>
+    </div>
+    <div class="scroll-area">
+
+      <div class="top-bar">
+        <div class="top-bar-title">Herramientas</div>
+        <span style="font-size:20px;">🛠️</span>
+      </div>
+
+      <!-- CATEGORÍA: Calma rápida -->
+      <div class="section-label" style="margin-top:4px;">Calma rápida</div>
+      <div class="tool-grid">
+
+        <div class="tool-card-lg" onclick="goTo('m41-respiracion')">
+          <span class="tc-icon">🌬️</span>
+          <div class="tc-name">Respiración 4-7-8</div>
+          <div class="tc-desc">Calma tu cuerpo en minutos con esta técnica de respiración guiada.</div>
+          <div class="tc-meta">
+            <span class="tc-time-tag">2–4 min</span>
+            <span class="tc-plumas">🪶 +3</span>
+          </div>
+        </div>
+
+        <div class="tool-card-lg">
+          <span class="tc-icon">🖐️</span>
+          <div class="tc-name">Grounding 5-4-3-2-1</div>
+          <div class="tc-desc">Usa tus sentidos para volver al presente cuando todo parece demasiado.</div>
+          <div class="tc-meta">
+            <span class="tc-time-tag">3–5 min</span>
+            <span class="tc-plumas">🪶 +4</span>
+          </div>
+        </div>
+
+        <div class="tool-card-lg">
+          <span class="tc-icon">🛑</span>
+          <div class="tc-name">Pausa STOP</div>
+          <div class="tc-desc">Frena antes de reaccionar: Para · Respira · Observa · Decide.</div>
+          <div class="tc-meta">
+            <span class="tc-time-tag">1–2 min</span>
+            <span class="tc-plumas">🪶 +3</span>
+          </div>
+        </div>
+
+        <div class="tool-card-lg">
+          <span class="tc-icon">🧍</span>
+          <div class="tc-name">Escaneo corporal</div>
+          <div class="tc-desc">Recorre tu cuerpo de pies a cabeza y suelta la tensión donde la sientas.</div>
+          <div class="tc-meta">
+            <span class="tc-time-tag">5–10 min</span>
+            <span class="tc-plumas">🪶 +5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORÍA: Con la emoción -->
+      <div class="section-label" style="margin-top:18px;">Con la emoción</div>
+      <div class="tool-grid">
+
+        <div class="tool-card-lg" onclick="goTo('m41-ola')">
+          <span class="tc-icon">🌊</span>
+          <div class="tc-name">Surfea la ola</div>
+          <div class="tc-desc">Las emociones son como olas. No tienes que detenerlas — solo montarlas.</div>
+          <div class="tc-meta">
+            <span class="tc-time-tag">5–10 min</span>
+            <span class="tc-plumas">🪶 +5</span>
+          </div>
+        </div>
+
+        <div class="tool-card-lg">
+          <span class="tc-icon">✍️</span>
+          <div class="tc-name">Escríbelo</div>
+          <div class="tc-desc">A veces solo necesitas sacarlo. Escribe lo que sea — esto es tuyo.</div>
+          <div class="tc-meta">
+            <span class="tc-time-tag">Libre</span>
+            <span class="tc-plumas">🪶 +5</span>
+          </div>
+        </div>
+
+        <div class="tool-card-lg" style="grid-column: span 2;">
+          <span class="tc-icon">💛</span>
+          <div class="tc-name">Nota de ánimo para ti</div>
+          <div class="tc-desc">¿Qué le dirías a un amigo que siente lo mismo que tú ahora mismo?</div>
+          <div class="tc-meta">
+            <span class="tc-time-tag">2–3 min</span>
+            <span class="tc-plumas">🪶 +3</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height: 20px;"></div>
+    </div>
+
+    <div class="crisis-fab">🆘</div>
+    <div class="bottom-nav">
+      <button class="bnav-item" onclick=""><span class="bnav-icon">🏠</span><span class="bnav-lbl">Inicio</span></button>
+      <button class="bnav-item" onclick=""><span class="bnav-icon">✍️</span><span class="bnav-lbl">Registrar</span></button>
+      <button class="bnav-item active"><span class="bnav-icon">🛠️</span><span class="bnav-lbl">Herramientas</span></button>
+      <button class="bnav-item" onclick=""><span class="bnav-icon">📖</span><span class="bnav-lbl">Diccionario</span></button>
+      <button class="bnav-item" onclick=""><span class="bnav-icon">👤</span><span class="bnav-lbl">Mi espacio</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     M40 POST-NLP — "Para ti hoy" activo
+     ════════════════════════════════════════ -->
+<div class="phone-wrap" id="pw-m40-recomendada" style="display:none;">
+  <div class="screen-title">M40 · Post check-in (N2 activo)</div>
+  <div class="phone">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <span class="status-icons">●●● 📶 🔋</span>
+    </div>
+    <div class="scroll-area">
+
+      <div class="top-bar">
+        <div class="top-bar-title">Herramientas</div>
+        <span style="font-size:20px;">🛠️</span>
+      </div>
+
+      <!-- PARA TI HOY -->
+      <div class="para-ti-banner">
+        <div class="para-ti-label">
+          <span>💛</span> Para ti hoy
+          <span style="font-size:10px; color:var(--gray3); font-weight:600; margin-left:4px;">Basado en tu registro de hace un rato</span>
+        </div>
+        <div class="para-ti-cards">
+          <div class="tool-card-sm recommended" onclick="goTo('m41-respiracion')">
+            <span class="tc-icon">🌬️</span>
+            <div class="tc-name">Respiración 4-7-8</div>
+            <div class="tc-time">2–4 min</div>
+          </div>
+          <div class="tool-card-sm recommended">
+            <span class="tc-icon">🖐️</span>
+            <div class="tc-name">Grounding 5-4-3-2-1</div>
+            <div class="tc-time">3–5 min</div>
+          </div>
+          <div class="tool-card-sm recommended">
+            <span class="tc-icon">🛑</span>
+            <div class="tc-name">Pausa STOP</div>
+            <div class="tc-time">1–2 min</div>
+          </div>
+          <div class="tool-card-sm recommended">
+            <span class="tc-icon">✍️</span>
+            <div class="tc-name">Escríbelo</div>
+            <div class="tc-time">Libre</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Todo el catálogo debajo, más tenue -->
+      <div class="section-label">Todas las herramientas</div>
+      <div class="tool-grid">
+        <div class="tool-card-lg" style="opacity:.6;">
+          <span class="tc-icon">🌊</span>
+          <div class="tc-name">Surfea la ola</div>
+          <div class="tc-desc">Las emociones son como olas. Montalas hasta que bajen.</div>
+          <div class="tc-meta"><span class="tc-time-tag">5–10 min</span><span class="tc-plumas">🪶 +5</span></div>
+        </div>
+        <div class="tool-card-lg" style="opacity:.6;">
+          <span class="tc-icon">🧍</span>
+          <div class="tc-name">Escaneo corporal</div>
+          <div class="tc-desc">Recorre tu cuerpo y suelta la tensión donde la sientas.</div>
+          <div class="tc-meta"><span class="tc-time-tag">5–10 min</span><span class="tc-plumas">🪶 +5</span></div>
+        </div>
+        <div class="tool-card-lg" style="opacity:.6; grid-column: span 2;">
+          <span class="tc-icon">💛</span>
+          <div class="tc-name">Nota de ánimo para ti</div>
+          <div class="tc-desc">¿Qué le dirías a un amigo que siente lo mismo que tú?</div>
+          <div class="tc-meta"><span class="tc-time-tag">2–3 min</span><span class="tc-plumas">🪶 +3</span></div>
+        </div>
+      </div>
+      <div style="height:20px;"></div>
+    </div>
+
+    <div class="crisis-fab">🆘</div>
+    <div class="bottom-nav">
+      <button class="bnav-item"><span class="bnav-icon">🏠</span><span class="bnav-lbl">Inicio</span></button>
+      <button class="bnav-item"><span class="bnav-icon">✍️</span><span class="bnav-lbl">Registrar</span></button>
+      <button class="bnav-item active"><span class="bnav-icon">🛠️</span><span class="bnav-lbl">Herramientas</span></button>
+      <button class="bnav-item"><span class="bnav-icon">📖</span><span class="bnav-lbl">Diccionario</span></button>
+      <button class="bnav-item"><span class="bnav-icon">👤</span><span class="bnav-lbl">Mi espacio</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     M41 — Detalle: Respiración 4-7-8
+     ════════════════════════════════════════ -->
+<div class="phone-wrap" id="pw-m41-respiracion" style="display:none;">
+  <div class="screen-title">M41 · Detalle — Respiración 4-7-8</div>
+  <div class="phone">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <span class="status-icons">●●● 📶 🔋</span>
+    </div>
+    <div class="scroll-area">
+
+      <div style="padding: 10px 20px 0;">
+        <button class="back-btn" onclick="goTo('m40')">‹ <span>Herramientas</span></button>
+      </div>
+
+      <div class="tool-hero" style="margin-top:12px;">
+        <div class="hero-icon">🌬️</div>
+        <div class="hero-name">Respiración 4-7-8</div>
+        <div class="hero-sub">Calma tu sistema nervioso en minutos.<br>Disponible también cuando necesitas ayuda.</div>
+        <div class="hero-meta">
+          <span class="hero-tag">⏱ 2–4 min</span>
+          <span class="hero-tag">🪶 +3 Plumas</span>
+          <span class="hero-tag">Todos los rangos</span>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-chip">
+          <span class="ic-val">4</span>
+          <span class="ic-lbl">Inhala</span>
+        </div>
+        <div class="info-chip">
+          <span class="ic-val">7</span>
+          <span class="ic-lbl">Sostén</span>
+        </div>
+        <div class="info-chip">
+          <span class="ic-val">8</span>
+          <span class="ic-lbl">Exhala</span>
+        </div>
+        <div class="info-chip">
+          <span class="ic-val">4×</span>
+          <span class="ic-lbl">Ciclos</span>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>Cómo funciona</h3>
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div class="step-text">Siéntate cómodamente o acuéstate. Cierra los ojos si quieres.</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div class="step-text">Inhala por la nariz durante <strong>4 segundos</strong>.</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div class="step-text">Sostén el aire durante <strong>7 segundos</strong>.</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div class="step-text">Exhala lentamente por la boca durante <strong>8 segundos</strong>.</div>
+        </div>
+        <div class="step-row" style="margin-bottom:0;">
+          <div class="step-num">5</div>
+          <div class="step-text">Repite 4 veces. El círculo te guía — solo síguelo.</div>
+        </div>
+      </div>
+
+      <button class="start-btn" onclick="goTo('m42-respiracion')">▶ Comenzar</button>
+
+      <div style="height:16px;"></div>
+    </div>
+
+    <div class="crisis-fab">🆘</div>
+    <div class="bottom-nav">
+      <button class="bnav-item"><span class="bnav-icon">🏠</span><span class="bnav-lbl">Inicio</span></button>
+      <button class="bnav-item"><span class="bnav-icon">✍️</span><span class="bnav-lbl">Registrar</span></button>
+      <button class="bnav-item active"><span class="bnav-icon">🛠️</span><span class="bnav-lbl">Herramientas</span></button>
+      <button class="bnav-item"><span class="bnav-icon">📖</span><span class="bnav-lbl">Diccionario</span></button>
+      <button class="bnav-item"><span class="bnav-icon">👤</span><span class="bnav-lbl">Mi espacio</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     M41 — Detalle: Surfea la Ola
+     ════════════════════════════════════════ -->
+<div class="phone-wrap" id="pw-m41-ola" style="display:none;">
+  <div class="screen-title">M41 · Detalle — Surfea la Ola</div>
+  <div class="phone">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <span class="status-icons">●●● 📶 🔋</span>
+    </div>
+    <div class="scroll-area">
+      <div style="padding: 10px 20px 0;">
+        <button class="back-btn" onclick="goTo('m40')">‹ <span>Herramientas</span></button>
+      </div>
+
+      <div class="tool-hero" style="margin-top:12px;">
+        <div class="hero-icon">🌊</div>
+        <div class="hero-name">Surfea la ola</div>
+        <div class="hero-sub">Las emociones son como olas — vienen, suben y bajan.<br>No tienes que detenerlas. Solo montalas.</div>
+        <div class="hero-meta">
+          <span class="hero-tag">⏱ 5–10 min</span>
+          <span class="hero-tag">🪶 +5 Plumas</span>
+          <span class="hero-tag">Teen · Senior</span>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>Cómo funciona</h3>
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div class="step-text">Elige la emoción que estás sintiendo ahora.</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div class="step-text">Ubica dónde la sientes en tu cuerpo.</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div class="step-text">Observa la emoción sin pelear con ella. La ola animada te acompaña.</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div class="step-text">Cada 60 segundos recibes una guía suave. La emoción irá bajando.</div>
+        </div>
+        <div class="step-row" style="margin-bottom:0;">
+          <div class="step-num">5</div>
+          <div class="step-text">Sal cuando quieras. La ola siempre baja.</div>
+        </div>
+      </div>
+
+      <button class="start-btn" onclick="goTo('m42-ola')">▶ Comenzar</button>
+      <div style="height:16px;"></div>
+    </div>
+    <div class="crisis-fab">🆘</div>
+    <div class="bottom-nav">
+      <button class="bnav-item"><span class="bnav-icon">🏠</span><span class="bnav-lbl">Inicio</span></button>
+      <button class="bnav-item"><span class="bnav-icon">✍️</span><span class="bnav-lbl">Registrar</span></button>
+      <button class="bnav-item active"><span class="bnav-icon">🛠️</span><span class="bnav-lbl">Herramientas</span></button>
+      <button class="bnav-item"><span class="bnav-icon">📖</span><span class="bnav-lbl">Diccionario</span></button>
+      <button class="bnav-item"><span class="bnav-icon">👤</span><span class="bnav-lbl">Mi espacio</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     M42 — EjercicioGuiado: Respiración
+     ════════════════════════════════════════ -->
+<div class="phone-wrap" id="pw-m42-respiracion" style="display:none;">
+  <div class="screen-title">M42 · Ejercicio — Respiración 4-7-8</div>
+  <div class="phone">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <span class="status-icons">●●● 📶 🔋</span>
+    </div>
+    <div class="scroll-area">
+
+      <div class="exercise-header">
+        <button class="back-btn" onclick="goTo('m41-respiracion')" style="font-size:14px;">✕</button>
+        <div class="progress-bar"><div class="progress-fill" id="breath-progress" style="width:25%"></div></div>
+        <span style="font-size:12px; color:var(--gray3); font-weight:700;">1 / 4</span>
+      </div>
+
+      <div class="breath-stage">
+        <div class="breath-instruction" id="breath-instruction">Inhala por la nariz...</div>
+        <div class="breath-circle-wrap">
+          <div class="breath-ring"></div>
+          <div class="breath-ring r2"></div>
+          <div class="breath-ring r3"></div>
+          <div class="breath-circle">
+            <div class="bc-text" id="breath-count">4</div>
+          </div>
+        </div>
+        <div class="breath-timer" id="breath-timer">4</div>
+        <div class="breath-phase-label" id="breath-phase-label">INHALA</div>
+        <div class="cycle-dots">
+          <div class="cycle-dot active" id="dot-1"></div>
+          <div class="cycle-dot" id="dot-2"></div>
+          <div class="cycle-dot" id="dot-3"></div>
+          <div class="cycle-dot" id="dot-4"></div>
+        </div>
+      </div>
+
+      <div class="breath-phases">
+        <div class="phase-card active" id="ph-inhala">
+          <div class="ph-num">4</div>
+          <div class="ph-name">seg</div>
+          <div class="ph-label">Inhala</div>
+        </div>
+        <div class="phase-card" id="ph-sostiene">
+          <div class="ph-num">7</div>
+          <div class="ph-name">seg</div>
+          <div class="ph-label">Sostén</div>
+        </div>
+        <div class="phase-card" id="ph-exhala">
+          <div class="ph-num">8</div>
+          <div class="ph-name">seg</div>
+          <div class="ph-label">Exhala</div>
+        </div>
+      </div>
+
+      <!-- Mood check (visible al terminar) -->
+      <div class="mood-check" id="mood-check" style="display:none;">
+        <p>¿Cómo te sientes ahora?</p>
+        <div class="mood-btns">
+          <div class="mood-btn mejor">😌 <span class="mb-label">Mejor</span></div>
+          <div class="mood-btn">😐 <span class="mb-label">Igual</span></div>
+          <div class="mood-btn">😔 <span class="mb-label">Peor</span></div>
+        </div>
+      </div>
+
+      <!-- Plumas (visible al terminar) -->
+      <div class="plumas-toast" id="plumas-toast" style="display:none;">
+        <span class="pt-icon">🪶</span>
+        <div>
+          <div class="pt-text">+3 Plumas ganadas</div>
+          <div class="pt-sub">Completaste Respiración 4-7-8</div>
+        </div>
+      </div>
+
+      <button class="exit-btn" onclick="goTo('m40')">Salir del ejercicio</button>
+      <div style="height:20px;"></div>
+    </div>
+    <div class="crisis-fab">🆘</div>
+    <div class="bottom-nav">
+      <button class="bnav-item"><span class="bnav-icon">🏠</span><span class="bnav-lbl">Inicio</span></button>
+      <button class="bnav-item"><span class="bnav-icon">✍️</span><span class="bnav-lbl">Registrar</span></button>
+      <button class="bnav-item active"><span class="bnav-icon">🛠️</span><span class="bnav-lbl">Herramientas</span></button>
+      <button class="bnav-item"><span class="bnav-icon">📖</span><span class="bnav-lbl">Diccionario</span></button>
+      <button class="bnav-item"><span class="bnav-icon">👤</span><span class="bnav-lbl">Mi espacio</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     M42 — EjercicioGuiado: Surfea la Ola
+     ════════════════════════════════════════ -->
+<div class="phone-wrap" id="pw-m42-ola" style="display:none;">
+  <div class="screen-title">M42 · Ejercicio — Surfea la Ola</div>
+  <div class="phone">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <span class="status-icons">●●● 📶 🔋</span>
+    </div>
+    <div class="scroll-area">
+
+      <div class="exercise-header">
+        <button class="back-btn" onclick="goTo('m41-ola')" style="font-size:14px;">✕</button>
+        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        <span style="font-size:12px; color:var(--gray3); font-weight:700;">En curso</span>
+      </div>
+
+      <!-- Emoción seleccionada -->
+      <div style="padding: 14px 20px 0; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:13px; color:var(--gray3); font-weight:600;">Emoción que observas:</span>
+        <div class="wave-emotion-tag">😟 Ansiedad</div>
+      </div>
+
+      <div class="wave-stage">
+        <div class="wave-label">La ola está subiendo.<br>Observa sin luchar con ella.</div>
+        <svg class="wave-svg" viewBox="0 0 340 80">
+          <path class="wave-path" d="M0,40 C60,10 120,70 180,40 C240,10 300,70 340,40"/>
+          <circle cx="170" cy="40" r="6" fill="var(--primary)" opacity=".8">
+            <animateMotion dur="4s" repeatCount="indefinite" path="M0,40 C60,10 120,70 180,40 C240,10 300,70 340,40"/>
+          </circle>
+        </svg>
+        <div class="wave-label" style="font-size:12px; color:var(--gray3);">
+          La emoción alcanza su pico...<br>y siempre baja. Siempre.
+        </div>
+      </div>
+
+      <!-- Guía en curso -->
+      <div class="detail-section" style="margin-top:14px;">
+        <h3>Guía del momento</h3>
+        <p style="font-size:13px; color:var(--dark); line-height:1.6;">
+          Sigue respirando. Nota dónde sientes la ansiedad en tu cuerpo — ¿en el pecho, en el estómago? No tienes que cambiarla. Solo mírala.
+        </p>
+        <p style="font-size:11px; color:var(--gray3); margin-top:8px;">Próxima guía en 45 segundos</p>
+      </div>
+
+      <!-- Cuerpo: dónde está -->
+      <div style="padding: 0 20px; margin-top: 14px;">
+        <div style="font-size:11px; font-weight:800; color:var(--gray3); text-transform:uppercase; letter-spacing:.6px; margin-bottom:8px;">¿Dónde la sientes?</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <div style="background:var(--primary); color:white; border-radius:20px; padding:5px 12px; font-size:11px; font-weight:700;">Pecho</div>
+          <div style="background:var(--primary-l); color:var(--primary); border-radius:20px; padding:5px 12px; font-size:11px; font-weight:700; border:1px solid var(--primary);">Estómago</div>
+          <div style="background:var(--gray1); color:var(--gray3); border-radius:20px; padding:5px 12px; font-size:11px; font-weight:600;">Cabeza</div>
+          <div style="background:var(--gray1); color:var(--gray3); border-radius:20px; padding:5px 12px; font-size:11px; font-weight:600;">Garganta</div>
+        </div>
+      </div>
+
+      <button class="exit-btn" style="margin-top:14px;" onclick="goTo('m40')">Salir del ejercicio</button>
+      <div style="height:20px;"></div>
+    </div>
+    <div class="crisis-fab">🆘</div>
+    <div class="bottom-nav">
+      <button class="bnav-item"><span class="bnav-icon">🏠</span><span class="bnav-lbl">Inicio</span></button>
+      <button class="bnav-item"><span class="bnav-icon">✍️</span><span class="bnav-lbl">Registrar</span></button>
+      <button class="bnav-item active"><span class="bnav-icon">🛠️</span><span class="bnav-lbl">Herramientas</span></button>
+      <button class="bnav-item"><span class="bnav-icon">📖</span><span class="bnav-lbl">Diccionario</span></button>
+      <button class="bnav-item"><span class="bnav-icon">👤</span><span class="bnav-lbl">Mi espacio</span></button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /phones-row -->
+
+<script>
+  // ── Tema ──────────────────────────────────────────────────────────────────
+  function setTema(t) {
+    document.body.className = `tema-${t}`;
+    document.querySelectorAll('.tema-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.t === t)
+    );
+  }
+
+  // ── Navegación ────────────────────────────────────────────────────────────
+  const SCREENS = ['m40','m40-recomendada','m41-respiracion','m41-ola','m42-respiracion','m42-ola'];
+
+  function goTo(id) {
+    SCREENS.forEach(s => {
+      const el = document.getElementById(`pw-${s}`);
+      if (el) el.style.display = s === id ? 'flex' : 'none';
+    });
+    if (id === 'm42-respiracion') startBreath();
+  }
+
+  // Default: mostrar M40
+  goTo('m40');
+
+  // ── Animación Respiración ─────────────────────────────────────────────────
+  let breathInterval = null;
+  let breathTimeout  = null;
+
+  function startBreath() {
+    clearInterval(breathInterval);
+    clearTimeout(breathTimeout);
+    document.getElementById('mood-check').style.display    = 'none';
+    document.getElementById('plumas-toast').style.display  = 'none';
+
+    const phases = [
+      { label:'INHALA',   instruction:'Inhala por la nariz...', duration: 4, ph:'ph-inhala'  },
+      { label:'SOSTÉN',   instruction:'Sostén...',              duration: 7, ph:'ph-sostiene' },
+      { label:'EXHALA',   instruction:'Exhala lentamente...',   duration: 8, ph:'ph-exhala'  },
+    ];
+
+    let cycle = 0;   // 0-3
+    let pi    = 0;   // phase index
+    let secs  = phases[0].duration;
+
+    function updateDots(c) {
+      for(let i=1;i<=4;i++){
+        const d = document.getElementById(`dot-${i}`);
+        if(!d) return;
+        d.className = 'cycle-dot' + (i <= c ? ' done' : '') + (i === c+1 ? ' active':'');
+      }
+    }
+
+    function setPhase(idx) {
+      const ph = phases[idx];
+      document.getElementById('breath-instruction').textContent = ph.instruction;
+      document.getElementById('breath-phase-label').textContent = ph.label;
+      document.getElementById('breath-progress').style.width = `${(cycle/4)*100}%`;
+      document.querySelectorAll('.phase-card').forEach(el => el.classList.remove('active'));
+      document.getElementById(ph.ph).classList.add('active');
+      updateDots(cycle);
+    }
+
+    setPhase(0);
+    secs = phases[0].duration;
+
+    breathInterval = setInterval(() => {
+      document.getElementById('breath-timer').textContent = secs;
+      document.getElementById('breath-count').textContent = secs;
+      secs--;
+
+      if (secs < 0) {
+        pi = (pi + 1) % phases.length;
+        if (pi === 0) {
+          cycle++;
+          if (cycle >= 4) {
+            clearInterval(breathInterval);
+            document.getElementById('breath-instruction').textContent = '¡Completado! 🎉';
+            document.getElementById('breath-timer').textContent = '✓';
+            document.getElementById('breath-phase-label').textContent = 'LISTO';
+            document.getElementById('breath-progress').style.width = '100%';
+            updateDots(4);
+            breathTimeout = setTimeout(() => {
+              document.getElementById('mood-check').style.display   = 'block';
+              document.getElementById('plumas-toast').style.display = 'flex';
+            }, 800);
+            return;
+          }
+        }
+        setPhase(pi);
+        secs = phases[pi].duration;
+      }
+    }, 1000);
+  }
+</script>
+</body>
+</html>

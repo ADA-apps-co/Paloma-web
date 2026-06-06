@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paloma · /medical — Tests Clínicos · 2026-06-04</title>
+<style>
+  :root {
+    --green:    #27AE60;
+    --green-d:  #1a8a48;
+    --green-l:  #E8F8EE;
+    --green-m:  #b7e4c7;
+    --teal:     #2D9CDB;
+    --teal-l:   #EBF6FD;
+    --red:      #EB5757;
+    --red-l:    #FFEEEE;
+    --orange:   #F2994A;
+    --orange-l: #FFF3E8;
+    --purple:   #9B51E0;
+    --purple-l: #F3EAFE;
+    --coral:    #E8725A;
+    --dark:     #1A1A2E;
+    --gray1:    #F5F5F7;
+    --gray2:    #E0E0E6;
+    --gray3:    #9E9EA8;
+    --gray4:    #5A5A6A;
+    --white:    #FFFFFF;
+    --font:     'Inter', system-ui, sans-serif;
+    --radius:   12px;
+    --shadow:   0 2px 12px rgba(0,0,0,.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: #F0F0F5; color: var(--dark); font-size: 14px; line-height: 1.5; }
+
+  /* ── Layout ── */
+  .shell { display: flex; height: 100vh; overflow: hidden; }
+  .sidenav { width: 220px; min-width: 220px; background: var(--dark); color: #fff; display: flex; flex-direction: column; padding: 20px 0; overflow-y: auto; }
+  .sidenav-logo { padding: 0 16px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 12px; }
+  .sidenav-logo .icon { width: 34px; height: 34px; background: var(--green); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .sidenav-logo .name { font-size: 15px; font-weight: 700; }
+  .sidenav-logo .role { font-size: 10px; color: var(--green); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 16px; color: rgba(255,255,255,.55); font-size: 13px; font-weight: 500; cursor: pointer; border-left: 3px solid transparent; }
+  .nav-item:hover { background: rgba(255,255,255,.05); color: #fff; }
+  .nav-item.active { background: rgba(39,174,96,.15); color: var(--green); border-left-color: var(--green); }
+  .nav-item .ni { width: 16px; text-align: center; font-size: 14px; }
+  .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+  .topbar { background: var(--white); border-bottom: 1px solid var(--gray2); padding: 12px 24px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+  .topbar-back { color: var(--green); font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+  .topbar-title { font-weight: 800; font-size: 16px; flex: 1; }
+  .content { padding: 24px; flex: 1; }
+  .screen-nav { background: var(--white); border-bottom: 1px solid var(--gray2); padding: 10px 24px; display: flex; gap: 4px; }
+  .snav-btn { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; border: 1.5px solid var(--gray2); background: transparent; color: var(--gray4); }
+  .snav-btn.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+
+  /* ── Cards ── */
+  .card { background: var(--white); border-radius: var(--radius); padding: 20px 24px; box-shadow: var(--shadow); margin-bottom: 16px; }
+  .card-title { font-size: 13px; font-weight: 800; color: var(--gray4); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 14px; }
+
+  /* ── Patient header ── */
+  .patient-header { background: var(--white); border-radius: var(--radius); padding: 20px 24px; box-shadow: var(--shadow); margin-bottom: 20px; display: flex; align-items: center; gap: 16px; }
+  .patient-avatar { width: 52px; height: 52px; background: var(--green-l); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .patient-name { font-size: 18px; font-weight: 800; }
+  .patient-meta { font-size: 12px; color: var(--gray3); margin-top: 2px; }
+  .patient-tabs { display: flex; gap: 4px; margin-left: auto; }
+  .ptab { padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; border: 1.5px solid var(--gray2); background: transparent; color: var(--gray4); }
+  .ptab.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* ── Screen selector ── */
+  .screens-row { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .screen-pill { padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1.5px solid var(--gray2); background: white; color: var(--gray4); }
+  .screen-pill.active { background: var(--dark); color: white; border-color: var(--dark); }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── Test status badges ── */
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-pending  { background: #FFF3E8; color: #B45309; }
+  .badge-progress { background: var(--teal-l); color: #1565C0; }
+  .badge-done     { background: var(--green-l); color: var(--green-d); }
+  .badge-expired  { background: var(--gray1); color: var(--gray3); }
+
+  /* ── Alert level badges ── */
+  .alert-n0 { background: #FFEEEE; color: #C0392B; border: 1.5px solid #FBBABA; }
+  .alert-n1 { background: #FFF3E8; color: #B45309; border: 1.5px solid #FDD5A0; }
+  .alert-n2 { background: #FFFBE6; color: #92700A; border: 1.5px solid #FAEDB0; }
+  .alert-n3 { background: var(--green-l); color: var(--green-d); border: 1.5px solid var(--green-m); }
+
+  /* ── Test list ── */
+  .test-row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--gray1); }
+  .test-row:last-child { border-bottom: none; }
+  .test-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .test-info { flex: 1; }
+  .test-name { font-size: 13px; font-weight: 700; }
+  .test-meta { font-size: 11px; color: var(--gray3); margin-top: 2px; }
+  .test-actions { display: flex; gap: 6px; align-items: center; }
+  .btn-sm { padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1.5px solid; }
+  .btn-primary { background: var(--green); color: white; border-color: var(--green); }
+  .btn-ghost   { background: transparent; color: var(--gray4); border-color: var(--gray2); }
+  .btn-red     { background: var(--red-l); color: var(--red); border-color: #FBBABA; }
+
+  /* ── Score display ── */
+  .score-hero { text-align: center; padding: 20px 0 16px; }
+  .score-num { font-size: 56px; font-weight: 900; line-height: 1; }
+  .score-max { font-size: 18px; color: var(--gray3); font-weight: 600; }
+  .score-label { font-size: 14px; font-weight: 700; margin-top: 6px; }
+  .score-range { font-size: 11px; color: var(--gray3); margin-top: 3px; }
+
+  /* ── Severity bar ── */
+  .severity-bar { height: 8px; border-radius: 4px; background: linear-gradient(to right, #27AE60, #F2C94C, #F2994A, #EB5757); margin: 12px 0 6px; position: relative; }
+  .severity-marker { position: absolute; top: -4px; width: 16px; height: 16px; background: white; border: 3px solid var(--dark); border-radius: 50%; transform: translateX(-50%); }
+  .severity-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--gray3); font-weight: 600; }
+
+  /* ── Subescales ── */
+  .subscale-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .subscale-name { font-size: 12px; font-weight: 600; width: 140px; flex-shrink: 0; }
+  .subscale-bar-bg { flex: 1; height: 6px; background: var(--gray1); border-radius: 3px; overflow: hidden; }
+  .subscale-bar-fill { height: 100%; border-radius: 3px; }
+  .subscale-val { font-size: 12px; font-weight: 800; width: 28px; text-align: right; flex-shrink: 0; }
+  .subscale-cutoff { font-size: 10px; color: var(--gray3); width: 50px; flex-shrink: 0; }
+
+  /* ── Evolution chart (CSS only) ── */
+  .chart-wrap { padding: 16px 0 0; }
+  .chart-area { height: 120px; display: flex; align-items: flex-end; gap: 0; border-bottom: 2px solid var(--gray2); position: relative; padding: 0 8px; }
+  .chart-label-y { position: absolute; left: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-between; }
+  .chart-y-val { font-size: 10px; color: var(--gray3); line-height: 1; }
+  .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0; padding: 0 6px; }
+  .chart-bar { width: 100%; border-radius: 4px 4px 0 0; transition: opacity .2s; cursor: pointer; position: relative; }
+  .chart-bar:hover { opacity: 0.8; }
+  .chart-bar-val { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 800; white-space: nowrap; }
+  .chart-x-label { font-size: 10px; color: var(--gray3); margin-top: 6px; text-align: center; }
+  .chart-legend { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+  .chart-legend-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--gray4); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Cutoff line ── */
+  .cutoff-line { position: absolute; left: 8px; right: 8px; border-top: 1.5px dashed var(--red); }
+  .cutoff-tag { position: absolute; right: 8px; font-size: 9px; font-weight: 700; color: var(--red); background: white; padding: 0 3px; transform: translateY(-50%); }
+
+  /* ── Recommendation box ── */
+  .rec-box { border-radius: 10px; padding: 16px 18px; margin-top: 16px; }
+  .rec-title { font-size: 12px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .rec-body { font-size: 13px; line-height: 1.6; }
+  .rec-items { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .rec-item { font-size: 12px; display: flex; gap: 6px; }
+  .rec-item::before { content: "→"; color: inherit; font-weight: 700; flex-shrink: 0; }
+
+  /* ── Item 9 flag ── */
+  .flag-box { background: #FFEEEE; border: 1.5px solid #FBBABA; border-radius: 10px; padding: 12px 16px; margin-top: 12px; display: flex; gap: 10px; align-items: flex-start; }
+  .flag-icon { font-size: 18px; flex-shrink: 0; }
+  .flag-text h4 { font-size: 12px; font-weight: 800; color: var(--red); margin-bottom: 3px; }
+  .flag-text p  { font-size: 12px; color: #7B1D1D; line-height: 1.5; }
+
+  /* ── Assign modal ── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 100; display: flex; align-items: center; justify-content: center; }
+  .modal { background: white; border-radius: 16px; padding: 28px; width: 440px; max-width: 95vw; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+  .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+  .modal-sub { font-size: 13px; color: var(--gray3); margin-bottom: 20px; }
+  .form-row { margin-bottom: 14px; }
+  .form-label { font-size: 11px; font-weight: 800; color: var(--gray4); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+  .form-select { width: 100%; padding: 10px 12px; border: 1.5px solid var(--gray2); border-radius: 8px; font-size: 13px; font-family: var(--font); appearance: none; background: white; cursor: pointer; }
+  .form-select:focus { outline: none; border-color: var(--green); }
+  .form-textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--gray2); border-radius: 8px; font-size: 13px; font-family: var(--font); resize: vertical; min-height: 80px; }
+  .modal-actions { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; }
+  .confidential-note { background: var(--orange-l); border-radius: 8px; padding: 10px 12px; font-size: 11px; color: #7C4A00; margin-top: 10px; line-height: 1.5; display: none; }
+  .confidential-note.show { display: block; }
+
+  /* ── C-SSRS special ── */
+  .cssrs-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gray1); }
+  .cssrs-row:last-child { border-bottom: none; }
+  .cssrs-q { font-size: 12px; flex: 1; line-height: 1.4; }
+  .cssrs-ans { font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 20px; flex-shrink: 0; }
+  .cssrs-yes { background: #FFEEEE; color: var(--red); }
+  .cssrs-no  { background: var(--green-l); color: var(--green-d); }
+  .cssrs-flag { background: #FFEEEE; border-left: 4px solid var(--red); padding: 12px 16px; border-radius: 0 8px 8px 0; margin-top: 12px; }
+  .cssrs-flag h4 { font-size: 12px; font-weight: 800; color: var(--red); margin-bottom: 4px; }
+  .cssrs-flag p  { font-size: 12px; color: #7B1D1D; line-height: 1.5; }
+
+  /* ── Two column layout ── */
+  .two-col { display: grid; grid-template-columns: 280px 1fr; gap: 16px; align-items: start; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── Divider ── */
+  .divider { border: none; border-top: 1px solid var(--gray2); margin: 16px 0; }
+</style>
+</head>
+<body>
+
+<!-- ══ SCREEN NAV (selector de vistas) ══ -->
+<div style="background:var(--dark);padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+  <span style="color:rgba(255,255,255,.4);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-right:8px">Vista:</span>
+  <button class="screen-pill active" onclick="showView('v-lista')">1 · Lista de tests</button>
+  <button class="screen-pill" onclick="showView('v-phqa')">2 · Resultado PHQ-A</button>
+  <button class="screen-pill" onclick="showView('v-scared')">3 · Resultado SCARED</button>
+  <button class="screen-pill" onclick="showView('v-cssrs')">4 · Resultado C-SSRS</button>
+  <button class="screen-pill" onclick="showView('v-evolucion')">5 · Evolución multi-test</button>
+  <button class="screen-pill" onclick="showView('v-asignar')" style="margin-left:auto">+ Asignar test</button>
+</div>
+
+<div class="shell">
+  <!-- SIDENAV -->
+  <nav class="sidenav">
+    <div class="sidenav-logo">
+      <div class="icon">
+        <svg width="18" height="24" viewBox="0 0 90 120" fill="none">
+          <path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="51" cy="40" r="7" fill="#E8725A"/>
+        </svg>
+      </div>
+      <div><div class="name">paloma</div><div class="role">Portal Especialista</div></div>
+    </div>
+    <div class="nav-item" onclick=""><span class="ni">🏠</span> Dashboard</div>
+    <div class="nav-item active"><span class="ni">👤</span> Mis pacientes</div>
+    <div class="nav-item"><span class="ni">🔔</span> Alertas</div>
+    <div class="nav-item"><span class="ni">📝</span> Notas</div>
+    <div class="nav-item"><span class="ni">📊</span> Informes</div>
+    <div style="margin-top:auto;padding:16px;border-top:1px solid rgba(255,255,255,.08)">
+      <div style="font-size:12px;color:rgba(255,255,255,.35)">Dra. Ana López</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.2)">Psicóloga clínica</div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <span class="topbar-back">← Mis pacientes</span>
+      <span class="topbar-title">Sofía Martínez · Tests clínicos</span>
+    </div>
+
+    <!-- Patient header -->
+    <div style="padding:20px 24px 0">
+      <div class="patient-header">
+        <div class="patient-avatar">🧒</div>
+        <div>
+          <div class="patient-name">Sofía Martínez</div>
+          <div class="patient-meta">14 años · Senior · Activa desde mar 2026 · 47 registros · 2 alertas históricas</div>
+        </div>
+        <div class="patient-tabs">
+          <button class="ptab">Historial NLP</button>
+          <button class="ptab">Herramientas</button>
+          <button class="ptab active">Tests clínicos</button>
+          <button class="ptab">Notas</button>
+          <button class="ptab">Citas</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ══ VISTA 1: Lista de tests ══ -->
+      <div class="view active" id="v-lista">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div>
+            <div style="font-size:18px;font-weight:800">Tests asignados</div>
+            <div style="font-size:12px;color:var(--gray3);margin-top:2px">Todos los instrumentos de screening para Sofía</div>
+          </div>
+          <button class="btn-sm btn-primary" onclick="showView('v-asignar')">+ Asignar test</button>
+        </div>
+
+        <!-- Pendientes / en curso -->
+        <div class="card">
+          <div class="card-title">Pendientes · En progreso</div>
+          <div class="test-row">
+            <div class="test-icon" style="background:var(--teal-l)">📋</div>
+            <div class="test-info">
+              <div class="test-name">GAD-7 — Ansiedad generalizada</div>
+              <div class="test-meta">Asignado 01 jun · Vence 08 jun · Nota: "Antes de la próxima cita"</div>
+            </div>
+            <div class="test-actions">
+              <span class="badge badge-pending">⏳ Pendiente</span>
+              <button class="btn-sm btn-ghost">Recordar</button>
+              <button class="btn-sm btn-red">Cancelar</button>
+            </div>
+          </div>
+          <div class="test-row">
+            <div class="test-icon" style="background:var(--purple-l)">🧠</div>
+            <div class="test-info">
+              <div class="test-name">SCARED — Ansiedad infantil (versión niño)</div>
+              <div class="test-meta">Asignado 02 jun · Sin fecha límite · 18/41 preguntas respondidas</div>
+            </div>
+            <div class="test-actions">
+              <span class="badge badge-progress">▶ En progreso</span>
+              <button class="btn-sm btn-ghost">Ver avance</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Completados -->
+        <div class="card">
+          <div class="card-title">Completados</div>
+          <div class="test-row">
+            <div class="test-icon" style="background:#FDF0ED">💙</div>
+            <div class="test-info">
+              <div class="test-name">PHQ-A — Depresión</div>
+              <div class="test-meta">Completado 28 may · Score: 14/27 · Moderado</div>
+            </div>
+            <div class="test-actions">
+              <span class="badge" style="background:#FFF3E8;color:#B45309">⚠️ N2</span>
+              <button class="btn-sm btn-primary" onclick="showView('v-phqa')">Ver resultado →</button>
+            </div>
+          </div>
+          <div class="test-row">
+            <div class="test-icon" style="background:var(--red-l)">🔴</div>
+            <div class="test-info">
+              <div class="test-name">C-SSRS — Evaluación de seguridad</div>
+              <div class="test-meta">Completado 28 may · Activado por PHQ-A ítem 9 · Riesgo bajo</div>
+            </div>
+            <div class="test-actions">
+              <span class="badge alert-n2">N2</span>
+              <button class="btn-sm btn-primary" onclick="showView('v-cssrs')">Ver resultado →</button>
+            </div>
+          </div>
+          <div class="test-row">
+            <div class="test-icon" style="background:var(--green-l)">📊</div>
+            <div class="test-info">
+              <div class="test-name">PHQ-A — Depresión (aplicación anterior)</div>
+              <div class="test-meta">Completado 15 abr · Score: 9/27 · Leve</div>
+            </div>
+            <div class="test-actions">
+              <span class="badge alert-n3">N3</span>
+              <button class="btn-sm btn-ghost">Ver →</button>
+            </div>
+          </div>
+          <div class="test-row">
+            <div class="test-icon" style="background:var(--green-l)">📊</div>
+            <div class="test-info">
+              <div class="test-name">PHQ-A — Depresión (1ª aplicación)</div>
+              <div class="test-meta">Completado 01 mar · Score: 6/27 · Leve</div>
+            </div>
+            <div class="test-actions">
+              <span class="badge alert-n3">N3</span>
+              <button class="btn-sm btn-ghost">Ver →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA evolución -->
+        <div style="text-align:center;margin-top:8px">
+          <button class="btn-sm btn-ghost" onclick="showView('v-evolucion')" style="padding:8px 20px">
+            📈 Ver evolución comparada de todos los tests →
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ VISTA 2: Resultado PHQ-A ══ -->
+      <div class="view" id="v-phqa">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <button class="btn-sm btn-ghost" onclick="showView('v-lista')">← Volver</button>
+          <div>
+            <div style="font-size:18px;font-weight:800">PHQ-A · Resultado</div>
+            <div style="font-size:12px;color:var(--gray3)">Sofía Martínez · 28 mayo 2026 · Ventana: últimas 2 semanas</div>
+          </div>
+          <div style="margin-left:auto"><span class="badge alert-n2" style="font-size:13px;padding:5px 14px">Alerta N2</span></div>
+        </div>
+
+        <div class="two-col">
+          <!-- Score panel -->
+          <div>
+            <div class="card">
+              <div class="score-hero">
+                <div class="score-num" style="color:#F2994A">14<span class="score-max">/27</span></div>
+                <div class="score-label" style="color:#F2994A">Moderado</div>
+                <div class="score-range">Rango: 10–14</div>
+              </div>
+              <div class="severity-bar">
+                <div class="severity-marker" style="left:51.8%"></div>
+              </div>
+              <div class="severity-labels">
+                <span>Mínimo</span><span>Leve</span><span>Moderado</span><span>Severo</span>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:0">
+              <div class="card-title">Ítem por ítem</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                <div style="font-size:11px;padding:6px 10px;background:var(--gray1);border-radius:6px;display:flex;justify-content:space-between"><span>P1 Interés</span><strong>2</strong></div>
+                <div style="font-size:11px;padding:6px 10px;background:var(--gray1);border-radius:6px;display:flex;justify-content:space-between"><span>P2 Ánimo</span><strong>3</strong></div>
+                <div style="font-size:11px;padding:6px 10px;background:var(--gray1);border-radius:6px;display:flex;justify-content:space-between"><span>P3 Sueño</span><strong>2</strong></div>
+                <div style="font-size:11px;padding:6px 10px;background:var(--gray1);border-radius:6px;display:flex;justify-content:space-between"><span>P4 Energía</span><strong>2</strong></div>
+                <div style="font-size:11px;padding:6px 10px;background:var(--gray1);border-radius:6px;display:flex;justify-content:space-between"><span>P5 Apetito</span><strong>1</strong></div>
+                <div style="font-size:11px;padding:6px 10px;background:var(--gray1);border-radius:6px;display:flex;justify-content:space-between"><span>P6 Autoestima</span><strong>2</strong></div>
+                <div style="font-size:11px;padding:6px 10px;background:var(--gray1);border-radius:6px;display:flex;justify-content:space-between"><span>P7 Concentración</span><strong>1</strong></div>
+                <div style="font-size:11px;padding:6px 10px;background:var(--gray1);border-radius:6px;display:flex;justify-content:space-between"><span>P8 Psicomotor</span><strong>0</strong></div>
+                <div style="font-size:11px;padding:6px 10px;background:#FFEEEE;border-radius:6px;display:flex;justify-content:space-between;grid-column:1/-1"><span>⚑ P9 Ideación</span><strong style="color:var(--red)">1</strong></div>
+              </div>
+
+              <!-- Flag ítem 9 -->
+              <div class="flag-box">
+                <div class="flag-icon">⚠️</div>
+                <div class="flag-text">
+                  <h4>Ítem 9 positivo — C-SSRS activado</h4>
+                  <p>Sofía respondió "Varios días" al ítem de ideación. Se aplicó automáticamente el C-SSRS Screener a continuación. Resultado: riesgo bajo (solo P1 afirmativo).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recommendation + history -->
+          <div>
+            <div class="card">
+              <div class="card-title">Recomendación clínica autogenerada</div>
+              <div class="rec-box" style="background:#FFF3E8;border:1.5px solid #FDD5A0">
+                <div class="rec-title" style="color:#B45309">⚠️ Depresión moderada (PHQ-A 10–14)</div>
+                <div class="rec-body" style="color:#7C4A00">
+                  Score en rango moderado. Patrón de progresión ascendente (6 → 9 → 14 en 3 meses). Requiere atención activa.
+                </div>
+                <div class="rec-items" style="color:#7C4A00">
+                  <div class="rec-item">Iniciar o intensificar plan de tratamiento psicoterapéutico</div>
+                  <div class="rec-item">Considerar evaluación psiquiátrica para valorar farmacoterapia</div>
+                  <div class="rec-item">Re-evaluar con PHQ-A en 2–3 semanas</div>
+                  <div class="rec-item">Monitorear ítem 9 en próximas sesiones (actualmente: 1/3)</div>
+                  <div class="rec-item">Informar a responsables si el score supera 15 en próxima aplicación</div>
+                </div>
+              </div>
+              <div style="font-size:10px;color:var(--gray3);margin-top:10px">
+                ⚡ Generada automáticamente según cutoffs validados. Siempre interpretar en contexto clínico.
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+                Evolución PHQ-A
+                <button class="btn-sm btn-ghost" onclick="showView('v-evolucion')">Ver comparada →</button>
+              </div>
+              <div class="chart-wrap">
+                <div class="chart-area" style="position:relative">
+                  <!-- Cutoff line at 10 (moderado) = 37% from top -->
+                  <div class="cutoff-line" style="bottom:37%;"><div class="cutoff-tag">Moderado ≥10</div></div>
+                  <!-- Bars: 6, 9, 14 (max 27) -->
+                  <div class="chart-col">
+                    <div class="chart-bar" style="height:22%;background:var(--green);position:relative">
+                      <span class="chart-bar-val" style="color:var(--green-d)">6</span>
+                    </div>
+                    <div class="chart-x-label">Mar 26<br><span style="color:var(--gray3);font-size:9px">N3</span></div>
+                  </div>
+                  <div class="chart-col">
+                    <div class="chart-bar" style="height:33%;background:#F2C94C;position:relative">
+                      <span class="chart-bar-val" style="color:#7A6000">9</span>
+                    </div>
+                    <div class="chart-x-label">Abr 26<br><span style="color:var(--gray3);font-size:9px">N3</span></div>
+                  </div>
+                  <div class="chart-col">
+                    <div class="chart-bar" style="height:51%;background:#F2994A;position:relative">
+                      <span class="chart-bar-val" style="color:#7A3A00">14</span>
+                    </div>
+                    <div class="chart-x-label">May 26<br><span style="color:#B45309;font-size:9px;font-weight:800">N2</span></div>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--red);margin-top:10px;font-weight:700">
+                ↑ Tendencia ascendente confirmada. Aumento de +8 puntos en 3 meses.
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Notas del especialista</div>
+              <textarea style="width:100%;border:1.5px solid var(--gray2);border-radius:8px;padding:10px;font-size:13px;font-family:var(--font);min-height:80px;resize:vertical" placeholder="Añadir nota clínica sobre este resultado..."></textarea>
+              <div style="display:flex;justify-content:flex-end;margin-top:8px">
+                <button class="btn-sm btn-primary">Guardar nota</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ VISTA 3: Resultado SCARED ══ -->
+      <div class="view" id="v-scared">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <button class="btn-sm btn-ghost" onclick="showView('v-lista')">← Volver</button>
+          <div>
+            <div style="font-size:18px;font-weight:800">SCARED · Resultado</div>
+            <div style="font-size:12px;color:var(--gray3)">Sofía Martínez · 15 abr 2026 · 41 ítems · Versión niño</div>
+          </div>
+          <div style="margin-left:auto"><span class="badge alert-n1" style="font-size:13px;padding:5px 14px">Alerta N1</span></div>
+        </div>
+
+        <div class="two-col">
+          <div>
+            <div class="card">
+              <div class="score-hero">
+                <div class="score-num" style="color:var(--red)">31<span class="score-max">/82</span></div>
+                <div class="score-label" style="color:var(--red)">Posible trastorno de ansiedad</div>
+                <div class="score-range">Cutoff: ≥25 · Score total: 31</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Subescalas</div>
+              <div class="subscale-row">
+                <div class="subscale-name">Pánico / somático</div>
+                <div class="subscale-bar-bg">
+                  <div class="subscale-bar-fill" style="width:62%;background:var(--red)"></div>
+                </div>
+                <div class="subscale-val" style="color:var(--red)">8</div>
+                <div class="subscale-cutoff">cutoff ≥7 ⚑</div>
+              </div>
+              <div class="subscale-row">
+                <div class="subscale-name">Ansiedad generalizada</div>
+                <div class="subscale-bar-bg">
+                  <div class="subscale-bar-fill" style="width:78%;background:var(--red)"></div>
+                </div>
+                <div class="subscale-val" style="color:var(--red)">10</div>
+                <div class="subscale-cutoff">cutoff ≥9 ⚑</div>
+              </div>
+              <div class="subscale-row">
+                <div class="subscale-name">Ansiedad separación</div>
+                <div class="subscale-bar-bg">
+                  <div class="subscale-bar-fill" style="width:38%;background:#F2C94C"></div>
+                </div>
+                <div class="subscale-val">4</div>
+                <div class="subscale-cutoff">cutoff ≥5</div>
+              </div>
+              <div class="subscale-row">
+                <div class="subscale-name">Fobia social</div>
+                <div class="subscale-bar-bg">
+                  <div class="subscale-bar-fill" style="width:71%;background:#F2994A"></div>
+                </div>
+                <div class="subscale-val" style="color:#F2994A">7</div>
+                <div class="subscale-cutoff">cutoff ≥8</div>
+              </div>
+              <div class="subscale-row">
+                <div class="subscale-name">Fobia escolar</div>
+                <div class="subscale-bar-bg">
+                  <div class="subscale-bar-fill" style="width:25%;background:var(--green)"></div>
+                </div>
+                <div class="subscale-val" style="color:var(--green-d)">1</div>
+                <div class="subscale-cutoff">cutoff ≥3</div>
+              </div>
+
+              <div style="font-size:11px;color:var(--gray3);margin-top:12px;line-height:1.5">
+                ⚑ Por encima del cutoff diagnóstico. Fobia social cerca del límite.
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <div class="card-title">Recomendación clínica autogenerada</div>
+              <div class="rec-box" style="background:var(--red-l);border:1.5px solid #FBBABA">
+                <div class="rec-title" style="color:#C0392B">🔴 Posible trastorno de ansiedad — Referir para evaluación</div>
+                <div class="rec-body" style="color:#7B1D1D">
+                  Score total 31 (cutoff ≥25). Dos subescalas superan el umbral diagnóstico: <strong>Pánico/somático</strong> y <strong>Ansiedad generalizada</strong>. Fobia social limítrofe.
+                </div>
+                <div class="rec-items" style="color:#7B1D1D">
+                  <div class="rec-item">Evaluación diagnóstica formal de TAG y trastorno de pánico</div>
+                  <div class="rec-item">Considerar referido a psiquiatría si hay síntomas somáticos marcados</div>
+                  <div class="rec-item">Priorizar herramientas de regulación: H01 Respiración, H02 Grounding en la app</div>
+                  <div class="rec-item">Re-evaluar SCARED en 6–8 semanas tras intervención</div>
+                  <div class="rec-item">Aplicar SCARED versión parental (SCARED-P) para comparar discrepancia</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="background:var(--teal-l);border:1.5px solid #B8DCF0">
+              <div class="card-title" style="color:#1565C0">💡 Versión parental (SCARED-P)</div>
+              <p style="font-size:13px;color:#1A3A5C;line-height:1.6">
+                Se recomienda aplicar la versión para padres. Permite comparar la percepción del niño con la de los cuidadores.
+              </p>
+              <div style="margin-top:12px">
+                <button class="btn-sm btn-primary" style="background:var(--teal);border-color:var(--teal)" onclick="showView('v-asignar')">
+                  Asignar SCARED-P a madre/padre →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ VISTA 4: Resultado C-SSRS ══ -->
+      <div class="view" id="v-cssrs">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <button class="btn-sm btn-ghost" onclick="showView('v-lista')">← Volver</button>
+          <div>
+            <div style="font-size:18px;font-weight:800">C-SSRS · Evaluación de Seguridad</div>
+            <div style="font-size:12px;color:var(--gray3)">Sofía Martínez · 28 may 2026 · Activado por PHQ-A ítem 9</div>
+          </div>
+          <div style="margin-left:auto"><span class="badge alert-n2" style="font-size:13px;padding:5px 14px">N2 — Riesgo bajo</span></div>
+        </div>
+
+        <div class="two-col">
+          <div>
+            <div class="card">
+              <div class="card-title">Respuestas por ítem</div>
+              <div style="font-size:11px;color:var(--gray3);margin-bottom:12px">Últimos 30 días (P1–P5) · Últimos 3 meses (P6)</div>
+              <div class="cssrs-row">
+                <div style="width:24px;font-size:11px;font-weight:800;color:var(--gray3);flex-shrink:0">P1</div>
+                <div class="cssrs-q">¿Has deseado estar muerto/a o dormirte y no despertar?</div>
+                <div class="cssrs-ans cssrs-yes">Sí</div>
+              </div>
+              <div class="cssrs-row">
+                <div style="width:24px;font-size:11px;font-weight:800;color:var(--gray3);flex-shrink:0">P2</div>
+                <div class="cssrs-q">¿Has tenido pensamientos de hacerte daño o quitarte la vida?</div>
+                <div class="cssrs-ans cssrs-no">No</div>
+              </div>
+              <div class="cssrs-row">
+                <div style="width:24px;font-size:11px;font-weight:800;color:var(--gray3);flex-shrink:0">P3</div>
+                <div class="cssrs-q">¿Has pensado en cómo podrías hacerlo?</div>
+                <div class="cssrs-ans cssrs-no">No</div>
+              </div>
+              <div class="cssrs-row">
+                <div style="width:24px;font-size:11px;font-weight:800;color:var(--gray3);flex-shrink:0">P4</div>
+                <div class="cssrs-q">¿Has tenido esos pensamientos y sentido deseo de actuar en base a ellos?</div>
+                <div class="cssrs-ans cssrs-no">No</div>
+              </div>
+              <div class="cssrs-row">
+                <div style="width:24px;font-size:11px;font-weight:800;color:var(--gray3);flex-shrink:0">P5</div>
+                <div class="cssrs-q">¿Has empezado a planear cómo, cuándo o dónde lo harías?</div>
+                <div class="cssrs-ans cssrs-no">No</div>
+              </div>
+              <div class="cssrs-row">
+                <div style="width:24px;font-size:11px;font-weight:800;color:var(--gray3);flex-shrink:0">P6</div>
+                <div class="cssrs-q">¿Hiciste algo para prepararte, intentaste hacerte daño o quitarte la vida? (últimos 3 meses)</div>
+                <div class="cssrs-ans cssrs-no">No</div>
+              </div>
+
+              <div style="margin-top:12px;padding:12px;background:var(--green-l);border-radius:8px;font-size:12px;color:var(--green-d);line-height:1.5">
+                ✓ Solo P1 afirmativo. Según matriz Columbia: <strong>Riesgo bajo</strong> — ideación pasiva sin plan ni intención. No requiere intervención de urgencia.
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <div class="card-title">Recomendación clínica autogenerada</div>
+              <div class="rec-box" style="background:#FFFBE6;border:1.5px solid #FAEDB0">
+                <div class="rec-title" style="color:#92700A">⚡ Riesgo bajo — Monitoreo activo</div>
+                <div class="rec-body" style="color:#5C4600">
+                  Ideación pasiva sin plan, intención ni comportamiento (solo P1). Según protocolo Columbia: recursos de salud mental y seguimiento cercano.
+                </div>
+                <div class="rec-items" style="color:#5C4600">
+                  <div class="rec-item">Explorar el contenido del P1 en próxima sesión (contexto, frecuencia, desencadenante)</div>
+                  <div class="rec-item">Verificar red de apoyo: contactos de confianza en la app activos</div>
+                  <div class="rec-item">Activar FAB de crisis como práctica en sesión</div>
+                  <div class="rec-item">Re-aplicar C-SSRS en 4 semanas o antes si PHQ-A sube</div>
+                  <div class="rec-item">Documentar en historia clínica: evaluación de riesgo 28-may-2026</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="background:#FFEEEE;border:1.5px solid #FBBABA">
+              <div class="card-title" style="color:var(--red)">⚠️ Qué activaría protocolo N0</div>
+              <p style="font-size:12px;color:#7B1D1D;line-height:1.6;margin-bottom:10px">
+                Si en una próxima aplicación cualquiera de los siguientes ítems es positivo, la app dispara N0 inmediato:
+              </p>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <div style="font-size:11px;color:#7B1D1D;display:flex;gap:6px"><span style="font-weight:800">P4</span><span>Intención de actuar</span></div>
+                <div style="font-size:11px;color:#7B1D1D;display:flex;gap:6px"><span style="font-weight:800">P5</span><span>Plan específico</span></div>
+                <div style="font-size:11px;color:#7B1D1D;display:flex;gap:6px"><span style="font-weight:800">P6</span><span>Cualquier comportamiento suicida</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ VISTA 5: Evolución comparada ══ -->
+      <div class="view" id="v-evolucion">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <button class="btn-sm btn-ghost" onclick="showView('v-lista')">← Volver</button>
+          <div>
+            <div style="font-size:18px;font-weight:800">Evolución de tests — Sofía Martínez</div>
+            <div style="font-size:12px;color:var(--gray3)">Historial completo de aplicaciones · mar 2026 → jun 2026</div>
+          </div>
+        </div>
+
+        <!-- PHQ-A evolution -->
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <div style="font-size:15px;font-weight:800">PHQ-A — Depresión</div>
+              <div style="font-size:11px;color:var(--gray3)">3 aplicaciones · Tendencia ↑ ascendente</div>
+            </div>
+            <span class="badge alert-n2">Última: N2 · 14/27</span>
+          </div>
+          <div class="chart-area" style="height:100px;position:relative">
+            <div class="cutoff-line" style="bottom:37%"><div class="cutoff-tag">Moderado ≥10</div></div>
+            <div class="cutoff-line" style="bottom:55%;border-color:#F2994A"><div class="cutoff-tag" style="color:#F2994A">Sev. mod. ≥15</div></div>
+            <div class="chart-col">
+              <div class="chart-bar" style="height:22%;background:var(--green);position:relative"><span class="chart-bar-val" style="color:var(--green-d)">6</span></div>
+              <div class="chart-x-label">1 mar</div>
+            </div>
+            <div class="chart-col">
+              <div class="chart-bar" style="height:33%;background:#F2C94C;position:relative"><span class="chart-bar-val" style="color:#7A6000">9</span></div>
+              <div class="chart-x-label">15 abr</div>
+            </div>
+            <div class="chart-col">
+              <div class="chart-bar" style="height:51%;background:#F2994A;position:relative"><span class="chart-bar-val" style="color:#7A3A00">14</span></div>
+              <div class="chart-x-label">28 may ⚑</div>
+            </div>
+            <div class="chart-col" style="opacity:.4;cursor:default">
+              <div style="width:100%;border:2px dashed var(--gray2);border-radius:4px 4px 0 0;height:40%;display:flex;align-items:center;justify-content:center">
+                <span style="font-size:10px;color:var(--gray3)">próx.</span>
+              </div>
+              <div class="chart-x-label">jun</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCARED evolution (solo 1 aplicación) -->
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <div style="font-size:15px;font-weight:800">SCARED — Ansiedad infantil</div>
+              <div style="font-size:11px;color:var(--gray3)">1 aplicación · En progreso la segunda (18/41)</div>
+            </div>
+            <span class="badge alert-n1">Última: N1 · 31/82</span>
+          </div>
+          <div class="chart-area" style="height:80px;position:relative">
+            <div class="cutoff-line" style="bottom:30%"><div class="cutoff-tag">Referir ≥25</div></div>
+            <div class="chart-col">
+              <div class="chart-bar" style="height:37%;background:var(--red);position:relative"><span class="chart-bar-val" style="color:#C0392B">31</span></div>
+              <div class="chart-x-label">15 abr</div>
+            </div>
+            <div class="chart-col" style="opacity:.4">
+              <div style="width:100%;border:2px dashed var(--gray2);border-radius:4px 4px 0 0;height:22%;display:flex;align-items:center;justify-content:center">
+                <span style="font-size:10px;color:var(--gray3)">18/41</span>
+              </div>
+              <div class="chart-x-label">2 jun ▶</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- C-SSRS evolution -->
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <div style="font-size:15px;font-weight:800">C-SSRS — Evaluación de seguridad</div>
+              <div style="font-size:11px;color:var(--gray3)">1 aplicación · Activada por PHQ-A ítem 9</div>
+            </div>
+            <span class="badge alert-n2">Última: N2 · Riesgo bajo</span>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <div style="padding:10px 16px;border-radius:8px;background:var(--green-l);font-size:12px;font-weight:700;color:var(--green-d)">✓ P2–P6 negativos</div>
+            <div style="padding:10px 16px;border-radius:8px;background:#FFEEEE;font-size:12px;font-weight:700;color:var(--red)">⚑ P1 positivo</div>
+            <div style="padding:10px 16px;border-radius:8px;background:var(--green-l);font-size:12px;font-weight:700;color:var(--green-d)">28 may 2026</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;padding:16px;background:white;border-radius:var(--radius);font-size:13px;color:var(--gray3)">
+          💡 Asigna un PHQ-A + GAD-7 ahora para obtener una foto completa pre-cita.
+          <button class="btn-sm btn-primary" style="margin-left:12px" onclick="showView('v-asignar')">Asignar →</button>
+        </div>
+      </div>
+
+      <!-- ══ VISTA 6: Asignar test ══ -->
+      <div class="view" id="v-asignar">
+        <button class="btn-sm btn-ghost" onclick="showView('v-lista')" style="margin-bottom:20px">← Volver</button>
+        <div style="max-width:500px">
+          <div style="font-size:18px;font-weight:800;margin-bottom:4px">Asignar test clínico</div>
+          <div style="font-size:13px;color:var(--gray3);margin-bottom:24px">Sofía Martínez · 14 años</div>
+
+          <div class="card">
+            <div class="form-row">
+              <label class="form-label">Instrumento</label>
+              <select class="form-select" onchange="updateConfidentialNote(this)">
+                <option value="">Seleccionar...</option>
+                <option value="phq-a">PHQ-A — Depresión (11–17 años)</option>
+                <option value="gad-7">GAD-7 — Ansiedad generalizada (≥12 años)</option>
+                <option value="scared-c">SCARED — Ansiedad infantil · versión niño (8–18)</option>
+                <option value="scared-p">SCARED · versión padre/madre</option>
+                <option value="crafft" id="crafft-opt">CRAFFT 2.1+N — Sustancias (12–21 años)</option>
+                <option value="c-ssrs">C-SSRS — Evaluación de seguridad</option>
+              </select>
+              <div class="confidential-note" id="note-crafft">
+                🔒 <strong>Confidencialidad CRAFFT:</strong> Los resultados de este test <strong>nunca</strong> son visibles para los padres, por política clínica de validez del instrumento. Solo tú (el especialista) verás las respuestas.
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-label">Nota para Sofía (opcional)</label>
+              <textarea class="form-textarea" placeholder="Ej: Vamos a hacer este test antes de tu próxima cita para entender mejor cómo te has sentido..."></textarea>
+              <div style="font-size:11px;color:var(--gray3);margin-top:4px">Esta nota aparece en la app del niño antes de que empiece el test.</div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-label">Fecha límite (opcional)</label>
+              <input type="date" class="form-select" style="width:auto">
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:4px">
+              <button class="btn-sm btn-primary" style="padding:10px 20px;font-size:13px">Enviar test a Sofía</button>
+              <button class="btn-sm btn-ghost" onclick="showView('v-lista')" style="padding:10px 20px;font-size:13px">Cancelar</button>
+            </div>
+            <div style="font-size:11px;color:var(--gray3);margin-top:12px;line-height:1.5">
+              Sofía recibirá una notificación push. El test aparecerá destacado en su pantalla de inicio. No es bloqueante — puede completarlo cuando quiera.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'))
+  document.querySelectorAll('.screen-pill').forEach(b => b.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+  const map = { 'v-lista':'1 · Lista de tests', 'v-phqa':'2 · Resultado PHQ-A', 'v-scared':'3 · Resultado SCARED', 'v-cssrs':'4 · Resultado C-SSRS', 'v-evolucion':'5 · Evolución multi-test', 'v-asignar':'+ Asignar test' }
+  document.querySelectorAll('.screen-pill').forEach(b => { if (b.textContent.trim() === map[id]) b.classList.add('active') })
+}
+
+function updateConfidentialNote(sel) {
+  const note = document.getElementById('note-crafft')
+  note.classList.toggle('show', sel.value === 'crafft')
+}
+</script>
+</body>
+</html>

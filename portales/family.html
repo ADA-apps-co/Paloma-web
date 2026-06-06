@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paloma · /family — Wireframes interactivos</title>
+<style>
+  :root {
+    --teal:     #2D9CDB;
+    --teal-d:   #1a7ab0;
+    --teal-l:   #EBF6FD;
+    --teal-m:   #c5e8f7;
+    --green:    #27AE60;
+    --green-l:  #E8F8EE;
+    --red:      #EB5757;
+    --red-l:    #FFEEEE;
+    --orange:   #F2994A;
+    --orange-l: #FFF3E8;
+    --yellow:   #F2C94C;
+    --yellow-l: #FFFBE6;
+    --purple:   #9B51E0;
+    --purple-l: #F3EAFE;
+    --dark:     #1A1A2E;
+    --gray1:    #F5F5F7;
+    --gray2:    #E0E0E6;
+    --gray3:    #9E9EA8;
+    --gray4:    #5A5A6A;
+    --white:    #FFFFFF;
+    --font:     'Inter', system-ui, sans-serif;
+    --radius:   12px;
+    --shadow:   0 2px 12px rgba(0,0,0,.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: #F0F0F5; color: var(--dark); font-size: 14px; line-height: 1.5; }
+  button { cursor: pointer; font-family: var(--font); }
+
+  /* SHELL */
+  .shell { display: flex; height: 100vh; overflow: hidden; }
+
+  /* SIDENAV */
+  .sidenav {
+    width: 240px; min-width: 240px;
+    background: var(--dark); color: #fff;
+    display: flex; flex-direction: column; padding: 24px 0; overflow-y: auto;
+  }
+  .sidenav-logo { padding: 0 20px 24px; display: flex; align-items: center; gap: 10px; }
+  .sidenav-logo .icon { width: 36px; height: 36px; background: var(--teal); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .sidenav-logo .name { font-size: 16px; font-weight: 700; }
+  .sidenav-logo .role { font-size: 11px; color: var(--teal); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .sidenav-section { padding: 6px 20px 4px; font-size: 10px; font-weight: 600; color: rgba(255,255,255,.35); letter-spacing: 1.2px; text-transform: uppercase; margin-top: 8px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 20px; color: rgba(255,255,255,.65); font-size: 13.5px; font-weight: 500; cursor: pointer; transition: all .15s; border-left: 3px solid transparent; }
+  .nav-item:hover { background: rgba(255,255,255,.06); color: #fff; }
+  .nav-item.active { background: rgba(45,156,219,.15); color: var(--teal); border-left-color: var(--teal); }
+  .nav-item .ni { width: 18px; text-align: center; font-size: 15px; }
+  .nav-badge { margin-left: auto; background: var(--red); color: #fff; font-size: 10px; font-weight: 700; border-radius: 20px; padding: 1px 6px; min-width: 18px; text-align: center; }
+  .sidenav-footer { margin-top: auto; padding: 16px 20px 0; border-top: 1px solid rgba(255,255,255,.08); }
+  .user-chip { display: flex; align-items: center; gap: 10px; padding: 10px 0; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--teal); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: #fff; flex-shrink: 0; }
+  .user-info .uname { font-size: 13px; font-weight: 600; color: #fff; }
+  .user-info .ucargo { font-size: 11px; color: rgba(255,255,255,.45); }
+
+  /* MAIN */
+  .main { flex: 1; overflow-y: auto; background: var(--gray1); }
+
+  /* TOPBAR */
+  .topbar { background: var(--white); border-bottom: 1px solid var(--gray2); padding: 14px 28px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 10; }
+  .topbar h1 { font-size: 17px; font-weight: 700; flex: 1; }
+  .topbar-actions { display: flex; gap: 8px; align-items: center; }
+
+  /* BTNS */
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; border: none; transition: all .15s; cursor: pointer; }
+  .btn-primary { background: var(--teal); color: #fff; }
+  .btn-primary:hover { background: var(--teal-d); }
+  .btn-outline { background: transparent; color: var(--gray4); border: 1.5px solid var(--gray2); }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-danger { background: var(--red-l); color: var(--red); border: none; }
+  .btn-ghost { background: transparent; color: var(--gray4); border: none; padding: 8px 10px; }
+  .btn-sm { padding: 5px 11px; font-size: 12px; border-radius: 7px; }
+  .btn-green { background: var(--green); color: #fff; }
+  .btn-red { background: var(--red); color: #fff; }
+
+  /* CONTENT */
+  .content { padding: 24px 28px; }
+
+  /* SCREENS */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* CARDS */
+  .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+
+  /* SCREEN NAV */
+  .screen-nav { background: var(--white); border-bottom: 1px solid var(--gray2); padding: 10px 16px; display: flex; gap: 6px; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; }
+  .sn-btn { padding: 6px 12px; border-radius: 6px; font-size: 11.5px; font-weight: 600; border: 1.5px solid var(--gray2); background: var(--white); color: var(--gray4); cursor: pointer; transition: all .15s; }
+  .sn-btn:hover, .sn-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+  /* ONBOARDING */
+  .onboarding-wrap { min-height: 100vh; background: linear-gradient(135deg, var(--dark) 0%, #1a3a52 100%); display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .onboarding-card { background: var(--white); border-radius: 20px; padding: 40px; width: 100%; max-width: 460px; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+  .onboarding-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+  .logo-icon { width: 44px; height: 44px; background: var(--teal); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .logo-text { font-size: 22px; font-weight: 800; color: var(--dark); }
+  .logo-sub { font-size: 12px; color: var(--teal); font-weight: 600; letter-spacing: .5px; }
+  .step-indicator { display: flex; gap: 6px; margin-bottom: 24px; }
+  .step-dot { height: 4px; border-radius: 2px; flex: 1; background: var(--gray2); transition: background .3s; }
+  .step-dot.done { background: var(--teal); }
+  .onboarding-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+  .onboarding-sub { font-size: 14px; color: var(--gray3); margin-bottom: 24px; }
+  .form-group { margin-bottom: 14px; }
+  .form-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--gray4); margin-bottom: 5px; }
+  .form-input, .form-textarea, .form-select { width: 100%; padding: 10px 14px; border: 1.5px solid var(--gray2); border-radius: 9px; font-size: 14px; font-family: var(--font); background: var(--white); color: var(--dark); transition: border .15s; }
+  .form-textarea { resize: vertical; min-height: 90px; }
+  .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--teal); }
+
+  /* TUTORIAL STEPS */
+  .tutorial-step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray1); align-items: flex-start; }
+  .tutorial-step:last-child { border-bottom: none; }
+  .tutorial-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--teal-l); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .tutorial-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .tutorial-desc { font-size: 12.5px; color: var(--gray4); }
+
+  /* SEMÁFORO */
+  .semaforo-card { background: var(--white); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 20px; margin-bottom: 20px; border-left: 6px solid var(--green); }
+  .semaforo-card.yellow { border-color: var(--yellow); }
+  .semaforo-card.red { border-color: var(--red); }
+  .semaforo-icon { font-size: 36px; }
+  .semaforo-label { font-size: 12px; font-weight: 600; color: var(--gray3); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 2px; }
+  .semaforo-status { font-size: 20px; font-weight: 800; color: var(--green); }
+  .semaforo-card.yellow .semaforo-status { color: #c49a00; }
+  .semaforo-card.red .semaforo-status { color: var(--red); }
+  .semaforo-desc { font-size: 13px; color: var(--gray4); margin-top: 2px; }
+  .semaforo-time { margin-left: auto; font-size: 12px; color: var(--gray3); text-align: right; }
+
+  /* GRID */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+  /* STAT MINI */
+  .stat-mini { background: var(--white); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); }
+  .stat-mini-num { font-size: 26px; font-weight: 800; line-height: 1; margin-bottom: 3px; }
+  .stat-mini-label { font-size: 11.5px; color: var(--gray3); font-weight: 500; }
+
+  /* CHART */
+  .chart-mock { background: var(--gray1); border-radius: 10px; height: 130px; display: flex; align-items: flex-end; gap: 5px; padding: 16px 16px 28px; position: relative; overflow: hidden; }
+  .chart-bar { flex: 1; border-radius: 4px 4px 0 0; background: var(--teal); opacity: .65; transition: all .3s; }
+  .chart-bar:hover { opacity: 1; }
+  .chart-bar.low { background: var(--teal); }
+  .chart-bar.mid { background: var(--yellow); }
+  .chart-bar.high { background: var(--red); }
+  .chart-labels { display: flex; justify-content: space-around; font-size: 10px; color: var(--gray3); margin-top: 4px; padding: 0 4px; }
+
+  /* ALERTAS */
+  .alert-item { background: var(--white); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; box-shadow: var(--shadow); display: flex; align-items: flex-start; gap: 14px; border-left: 5px solid var(--gray2); cursor: pointer; transition: all .15s; }
+  .alert-item:hover { transform: translateX(3px); }
+  .alert-item.nivel0 { border-color: var(--red); background: var(--red-l); }
+  .alert-item.nivel1 { border-color: var(--orange); background: var(--orange-l); }
+  .alert-item.nivel2 { border-color: var(--yellow); background: var(--yellow-l); }
+  .alert-badge { padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; margin-top: 2px; }
+  .badge-red    { background: var(--red); color: #fff; }
+  .badge-orange { background: var(--orange); color: #fff; }
+  .badge-yellow { background: var(--yellow); color: var(--dark); }
+  .badge-green  { background: var(--green); color: #fff; }
+  .badge-teal   { background: var(--teal); color: #fff; }
+  .badge-gray   { background: var(--gray2); color: var(--gray4); }
+  .badge-purple { background: var(--purple); color: #fff; }
+  .alert-info { flex: 1; }
+  .alert-student { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .alert-desc { font-size: 13px; color: var(--gray4); margin-bottom: 4px; }
+  .alert-time { font-size: 11px; color: var(--gray3); }
+  .alert-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+  /* PRIVACY NOTE */
+  .privacy-note { background: var(--teal-l); border: 1px solid var(--teal); border-radius: 10px; padding: 12px 16px; font-size: 12.5px; color: var(--dark); margin-bottom: 18px; display: flex; gap: 10px; align-items: flex-start; }
+
+  /* NOTAS */
+  .nota-item { background: var(--white); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; box-shadow: var(--shadow); border-left: 4px solid var(--teal); }
+  .nota-item.privada { border-color: var(--gray3); background: var(--gray1); }
+  .nota-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .nota-autor { font-size: 13px; font-weight: 700; }
+  .nota-fecha { font-size: 11px; color: var(--gray3); margin-left: auto; }
+  .nota-vis { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+  .vis-privada { background: var(--gray2); color: var(--gray4); }
+  .vis-especialista { background: var(--teal-l); color: var(--teal); border: 1px solid var(--teal-m); }
+  .vis-orientador { background: var(--orange-l); color: var(--orange); }
+  .vis-todos { background: var(--green-l); color: var(--green); }
+  .nota-text { font-size: 13.5px; color: var(--dark); line-height: 1.6; }
+  .nota-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* ACTORES */
+  .actor-card { background: var(--white); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); border: 2px solid var(--gray2); position: relative; }
+  .actor-card.active-actor { border-color: var(--teal); }
+  .actor-type { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gray3); margin-bottom: 8px; }
+  .actor-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--teal-l); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: var(--teal); margin-bottom: 10px; }
+  .actor-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .actor-sub { font-size: 12px; color: var(--gray4); margin-bottom: 10px; }
+  .actor-perms { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .perm-row { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray4); }
+  .perm-on { color: var(--green); font-weight: 700; }
+  .perm-off { color: var(--gray3); }
+  .actor-badge { position: absolute; top: 14px; right: 14px; }
+  .add-actor-card { background: var(--gray1); border-radius: var(--radius); padding: 18px; border: 2px dashed var(--gray2); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; cursor: pointer; transition: all .15s; }
+  .add-actor-card:hover { border-color: var(--teal); background: var(--teal-l); }
+  .add-actor-card .add-icon { font-size: 28px; color: var(--gray3); margin-bottom: 8px; }
+  .add-actor-card .add-label { font-size: 13px; font-weight: 600; color: var(--gray4); }
+
+  /* RUTINA */
+  .rutina-item { background: var(--white); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 14px; }
+  .rutina-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--teal-l); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .rutina-info { flex: 1; }
+  .rutina-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .rutina-detail { font-size: 12px; color: var(--gray4); }
+  .rutina-check { display: flex; gap: 6px; }
+  .check-btn { padding: 5px 10px; border-radius: 7px; font-size: 12px; font-weight: 600; border: 1.5px solid var(--gray2); background: var(--white); cursor: pointer; transition: all .15s; }
+  .check-btn:hover { border-color: var(--teal); }
+  .check-btn.ok { background: var(--green-l); border-color: var(--green); color: var(--green); }
+
+  /* TOGGLE */
+  .toggle { width: 44px; height: 24px; background: var(--gray2); border-radius: 12px; position: relative; cursor: pointer; transition: background .2s; flex-shrink: 0; border: none; }
+  .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .toggle.on { background: var(--teal); }
+  .toggle.on::after { transform: translateX(20px); }
+
+  /* SETTINGS ROW */
+  .settings-row { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--gray1); gap: 16px; }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-row-info { flex: 1; }
+  .settings-row-label { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .settings-row-desc { font-size: 12px; color: var(--gray3); }
+
+  /* TABS */
+  .tabs { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 2px solid var(--gray2); }
+  .tab { padding: 9px 18px; font-size: 13.5px; font-weight: 600; color: var(--gray3); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .15s; }
+  .tab.active { color: var(--teal); border-color: var(--teal); }
+  .tab:hover:not(.active) { color: var(--dark); }
+
+  /* INFORME CARDS */
+  .report-card { background: var(--white); border-radius: var(--radius); padding: 20px; margin-bottom: 12px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 16px; }
+  .report-icon { font-size: 26px; width: 50px; height: 50px; background: var(--teal-l); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .report-info { flex: 1; }
+  .report-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+  .report-desc { font-size: 12.5px; color: var(--gray4); }
+  .report-plan { font-size: 11px; color: var(--gray3); margin-top: 3px; }
+
+  /* FREEMIUM BANNER */
+  .freemium-banner { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-d) 100%); border-radius: var(--radius); padding: 18px 22px; color: #fff; display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .freemium-banner .icon { font-size: 28px; flex-shrink: 0; }
+  .freemium-banner h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .freemium-banner p { font-size: 12.5px; opacity: .85; }
+  .freemium-banner .cta { margin-left: auto; background: #fff; color: var(--teal); border: none; padding: 9px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--white); border-radius: 16px; padding: 28px; width: 100%; max-width: 520px; box-shadow: 0 20px 60px rgba(0,0,0,.25); max-height: 90vh; overflow-y: auto; }
+  .modal-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+  .modal-sub { font-size: 13px; color: var(--gray3); margin-bottom: 20px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+  /* VIS OPTIONS */
+  .vis-options { display: flex; gap: 8px; flex-wrap: wrap; }
+  .vis-opt { padding: 7px 14px; border-radius: 8px; border: 2px solid var(--gray2); font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all .15s; color: var(--gray4); }
+  .vis-opt:hover { border-color: var(--teal); color: var(--teal); }
+  .vis-opt.selected { border-color: var(--teal); background: var(--teal-l); color: var(--teal-d); }
+
+  /* CODE BOX */
+  .code-box { background: var(--dark); color: #fff; border-radius: 12px; padding: 20px; text-align: center; letter-spacing: 4px; font-size: 28px; font-weight: 800; font-family: monospace; margin: 16px 0; }
+  .code-box span { color: var(--teal); }
+
+  /* BREADCRUMB */
+  .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray3); margin-bottom: 16px; }
+  .breadcrumb a { color: var(--teal); cursor: pointer; }
+
+  /* PLAN BADGE */
+  .plan-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--teal-l); color: var(--teal); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN NAV -->
+<div class="screen-nav" id="screenNav">
+  <span style="font-size:11px;color:#9E9EA8;align-self:center;margin-right:6px;">💙 Pantallas /family:</span>
+  <button class="sn-btn" onclick="showScreen('s-landing')">0 · Inicio</button>
+  <button class="sn-btn active" onclick="showScreen('s-onboarding')">1 · Onboarding</button>
+  <button class="sn-btn" onclick="showScreen('s-dashboard')">2 · Dashboard</button>
+  <button class="sn-btn" onclick="showScreen('s-alertas')">3 · Alertas</button>
+  <button class="sn-btn" onclick="showScreen('s-notas')">4 · Notas de familia</button>
+  <button class="sn-btn" onclick="showScreen('s-actores')">5 · Vincular actores</button>
+  <button class="sn-btn" onclick="showScreen('s-rutina')">6 · Rutina de cuidado</button>
+  <button class="sn-btn" onclick="showScreen('s-informes')">7 · Informes</button>
+  <button class="sn-btn" onclick="showScreen('s-perfil')">8 · Perfil y suscripción</button>
+  <button class="sn-btn" onclick="showScreen('s-citas')">9 · Citas</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 1: ONBOARDING (3 pasos)
+══════════════════════════════════════════════ -->
+<div class="screen active" id="s-onboarding">
+  <div class="onboarding-wrap">
+    <div class="onboarding-card">
+      <div class="onboarding-logo">
+        <div class="logo-icon"><svg width="22" height="30" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div>
+        <div>
+          <div class="logo-text">paloma</div>
+          <div class="logo-sub">PORTAL FAMILIAR</div>
+        </div>
+      </div>
+
+      <!-- PASO VISIBLE: 2 de 3 — Datos del niño -->
+      <div class="step-indicator">
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+        <div class="step-dot"></div>
+      </div>
+      <div class="onboarding-title">Cuéntanos sobre tu hijo/a</div>
+      <div class="onboarding-sub">Esta información no es visible para el niño/a en su app</div>
+
+      <div class="form-group">
+        <label class="form-label">Nombre real <span style="color:var(--gray3);font-weight:400">(para ti, no aparece en la app del niño)</span></label>
+        <input class="form-input" type="text" placeholder="ej. Valeria" value="Valeria">
+      </div>
+      <div class="grid2" style="gap:12px;margin-bottom:14px;">
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Fecha de nacimiento</label>
+          <input class="form-input" type="date" value="2011-03-14">
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Género <span style="color:var(--gray3);font-weight:400">(opcional)</span></label>
+          <select class="form-select"><option>Prefiero no indicar</option><option>Niña</option><option selected>Niño</option><option>No binario</option></select>
+        </div>
+      </div>
+
+      <!-- Rango calculado automáticamente -->
+      <div style="background:var(--teal-l);border-radius:10px;padding:12px 16px;margin-bottom:18px;display:flex;gap:10px;align-items:center;">
+        <span style="font-size:18px;">🎓</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;">Rango detectado: <span style="color:var(--teal)">Teen (11–14 años)</span></div>
+          <div style="font-size:12px;color:var(--gray4);">La app del niño mostrará una UI adaptada para adolescentes jóvenes.</div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;" onclick="showScreen('s-onboarding-step3')">
+        Continuar →
+      </button>
+      <div style="display:flex;justify-content:space-between;margin-top:14px;font-size:13px;color:var(--gray3);">
+        <a href="#" style="color:var(--teal)">← Atrás</a>
+        <span>Paso 2 de 3</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3: Código de vinculación -->
+<div class="screen" id="s-onboarding-step3">
+  <div class="onboarding-wrap">
+    <div class="onboarding-card">
+      <div class="onboarding-logo">
+        <div class="logo-icon"><svg width="22" height="30" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div>
+        <div><div class="logo-text">paloma</div><div class="logo-sub">PORTAL FAMILIAR</div></div>
+      </div>
+      <div class="step-indicator">
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+      </div>
+      <div class="onboarding-title">¡Casi listo! Dale este código a Valeria</div>
+      <div class="onboarding-sub">Valeria ingresará este código en su app para vincularse contigo. Válido por 24 horas.</div>
+
+      <div class="code-box"><span>4</span>7<span>K</span>2<span>-</span>8<span>Q</span>3</div>
+
+      <div style="background:var(--gray1);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:12.5px;color:var(--gray4);">
+        💡 Puedes dictárselo, mostrárselo en pantalla o enviárselo por WhatsApp. Una vez Valeria lo ingrese en su app, la vinculación queda activa.
+      </div>
+
+      <!-- Tutorial 3 pasos — aparece antes de entrar al dashboard -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px;">Antes de empezar — lo que debes saber:</div>
+        <div class="tutorial-step">
+          <div class="tutorial-icon">👁️</div>
+          <div>
+            <div class="tutorial-title">Qué puedes ver</div>
+            <div class="tutorial-desc">El estado emocional general de Valeria, alertas automáticas, su batería emocional y los informes. Nunca el texto de su diario.</div>
+          </div>
+        </div>
+        <div class="tutorial-step">
+          <div class="tutorial-icon">🔒</div>
+          <div>
+            <div class="tutorial-title">Qué nunca verás</div>
+            <div class="tutorial-desc">Las palabras exactas que Valeria escribió. Paloma protege esa intimidad para que pueda expresarse con libertad.</div>
+          </div>
+        </div>
+        <div class="tutorial-step">
+          <div class="tutorial-icon">🔔</div>
+          <div>
+            <div class="tutorial-title">Cómo funcionan las alertas</div>
+            <div class="tutorial-desc">Solo recibirás notificación cuando el sistema detecte una señal real de riesgo. No por cada entrada del diario.</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;" onclick="showScreen('s-dashboard')">
+        Entrar al portal familiar 🕊️
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 2: DASHBOARD PRINCIPAL
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-dashboard">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Familiar</div></div></div>
+      <div class="sidenav-section">Inicio</div>
+      <div class="nav-item active"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">1</span></div>
+      <div class="sidenav-section">Herramientas</div>
+      <div class="nav-item" onclick="showScreen('s-notas')"><span class="ni">📝</span> Notas de familia</div>
+      <div class="nav-item" onclick="showScreen('s-citas')"><span class="ni">📅</span> Citas</div>
+      <div class="nav-item" onclick="showScreen('s-actores')"><span class="ni">👥</span> Vincular actores</div>
+      <div class="nav-item" onclick="showScreen('s-rutina')"><span class="ni">💊</span> Rutina de cuidado</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="sidenav-section">Cuenta</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">⚙️</span> Perfil y suscripción</div>
+      <div class="sidenav-footer">
+        <div class="user-chip">
+          <div class="avatar">MP</div>
+          <div class="user-info"><div class="uname">María Pérez</div><div class="ucargo">Mamá de Valeria</div></div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main">
+      <div class="topbar">
+        <h1>Hola, María 👋</h1>
+        <div class="topbar-actions">
+          <span style="font-size:12px;color:var(--gray3);">Jueves 22 de mayo, 2026</span>
+        </div>
+      </div>
+      <div class="content">
+
+        <!-- PRÓXIMA CITA -->
+        <div style="background:var(--teal-l);border:1.5px solid var(--teal);border-radius:var(--radius);padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:28px;">📅</div>
+          <div style="flex:1">
+            <div style="font-size:12px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px;">Próxima cita con especialista</div>
+            <div style="font-weight:700;font-size:14px;">Dra. Alejandra Gómez · Psicóloga clínica</div>
+            <div style="font-size:12.5px;color:var(--gray4);">Lunes 26 de mayo · 9:00 am · Consultorio calle 42 #15-30, Ibagué</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <button class="btn btn-primary btn-sm" onclick="showScreen('s-citas')">Ver citas</button>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('modalCita').classList.add('open')">Agendar</button>
+          </div>
+        </div>
+
+        <!-- SEMÁFORO -->
+        <div class="semaforo-card yellow">
+          <div class="semaforo-icon">🟡</div>
+          <div>
+            <div class="semaforo-label">Estado emocional de Valeria esta semana</div>
+            <div class="semaforo-status">Atención recomendada</div>
+            <div class="semaforo-desc">Hay algo que vale la pena revisar en la próxima cita. Valeria ha registrado emociones de baja intensidad los últimos 3 días.</div>
+          </div>
+          <div class="semaforo-time">
+            Último registro<br>
+            <strong>hace 2 horas</strong>
+          </div>
+        </div>
+
+        <!-- STATS RÁPIDAS -->
+        <div class="grid4" style="margin-bottom:20px;">
+          <div class="stat-mini">
+            <div class="stat-mini-num" style="color:var(--teal);">7</div>
+            <div class="stat-mini-label">Días con registro esta semana</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini-num" style="color:var(--yellow);">4.2</div>
+            <div class="stat-mini-label">Batería promedio / 10</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini-num" style="color:var(--orange);">1</div>
+            <div class="stat-mini-label">Alerta activa</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini-num" style="color:var(--green);">14</div>
+            <div class="stat-mini-label">Días de racha de registros</div>
+          </div>
+        </div>
+
+        <!-- ALERTAS ACTIVAS -->
+        <div class="alert-item nivel2" style="margin-bottom:20px;">
+          <span class="alert-badge badge-yellow">🟡 Nivel 2 · Seguimiento</span>
+          <div class="alert-info">
+            <div class="alert-student">Algo que vale la pena revisar</div>
+            <div class="alert-desc">Tu hija está pasando por una semana con emociones de baja intensidad. No es urgente, pero se recomienda mencionarlo en la próxima cita.</div>
+            <div class="alert-time">Detectado ayer · Sin resolver</div>
+            <div class="alert-actions">
+              <button class="btn btn-outline btn-sm" onclick="showScreen('s-alertas')">Ver protocolo de respuesta</button>
+              <button class="btn btn-ghost btn-sm">Marcar como vista</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRÁFICO + ACTIVIDAD -->
+        <div class="grid2" style="margin-bottom:20px;">
+          <div class="card">
+            <div class="card-title">Batería emocional — esta semana</div>
+            <div class="chart-mock">
+              <div class="chart-bar low" style="height:72%"></div>
+              <div class="chart-bar low" style="height:68%"></div>
+              <div class="chart-bar mid" style="height:50%"></div>
+              <div class="chart-bar mid" style="height:45%"></div>
+              <div class="chart-bar high" style="height:30%"></div>
+              <div class="chart-bar high" style="height:28%"></div>
+              <div class="chart-bar" style="height:42%"></div>
+            </div>
+            <div class="chart-labels"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span style="opacity:.3">S</span><span style="opacity:.3">D</span></div>
+            <div style="font-size:11.5px;color:var(--gray3);margin-top:6px;">Eje Y: intensidad emocional 1–10 · Sin texto del diario</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Acceso rápido</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+              <button class="btn btn-outline" style="justify-content:flex-start;gap:10px;" onclick="showScreen('s-notas')">
+                <span>📝</span> <span>Nueva nota de familia</span>
+              </button>
+              <button class="btn btn-outline" style="justify-content:flex-start;gap:10px;" onclick="showScreen('s-citas')">
+                <span>📅</span> <span>Citas con el especialista</span>
+              </button>
+              <button class="btn btn-outline" style="justify-content:flex-start;gap:10px;" onclick="showScreen('s-rutina')">
+                <span>💊</span> <span>Rutina de cuidado</span>
+              </button>
+              <button class="btn btn-outline" style="justify-content:flex-start;gap:10px;" onclick="showScreen('s-actores')">
+                <span>👥</span> <span>Gestionar actores vinculados</span>
+              </button>
+              <button class="btn btn-outline" style="justify-content:flex-start;gap:10px;" onclick="showScreen('s-informes')">
+                <span>📊</span> <span>Ver informe semanal</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FREEMIUM BANNER (si plan gratuito) -->
+        <div class="freemium-banner">
+          <div class="icon">✨</div>
+          <div>
+            <h3>Desbloquea informes completos y exportación PDF</h3>
+            <p>Con el plan familiar accedes al informe mensual, comparativas y PDF listo para llevar a consulta.</p>
+          </div>
+          <button class="cta" onclick="showScreen('s-perfil')">Ver planes</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 3: ALERTAS
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-alertas">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Familiar</div></div></div>
+      <div class="sidenav-section">Inicio</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item active"><span class="ni">🔔</span> Alertas <span class="nav-badge">1</span></div>
+      <div class="sidenav-section">Herramientas</div>
+      <div class="nav-item" onclick="showScreen('s-notas')"><span class="ni">📝</span> Notas de familia</div>
+      <div class="nav-item" onclick="showScreen('s-citas')"><span class="ni">📅</span> Citas</div>
+      <div class="nav-item" onclick="showScreen('s-actores')"><span class="ni">👥</span> Vincular actores</div>
+      <div class="nav-item" onclick="showScreen('s-rutina')"><span class="ni">💊</span> Rutina de cuidado</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="sidenav-section">Cuenta</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">⚙️</span> Perfil y suscripción</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">MP</div><div class="user-info"><div class="uname">María Pérez</div><div class="ucargo">Mamá de Valeria</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar"><h1>Alertas de Valeria</h1></div>
+      <div class="content">
+
+        <div class="privacy-note">
+          <span style="font-size:16px;">🔒</span>
+          <span>Paloma <strong>nunca te muestra el texto que escribió Valeria</strong>. Solo el nivel de alerta y qué puedes hacer. Esto protege la confianza de tu hija en el sistema.</span>
+        </div>
+
+        <!-- EJEMPLO NIVEL 0 (inactivo en este caso, mostrado como referencia) -->
+        <div style="font-size:12px;font-weight:700;color:var(--gray3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;">● Activas (1)</div>
+
+        <div class="alert-item nivel2">
+          <span class="alert-badge badge-yellow">🟡 Nivel 2 · Seguimiento</span>
+          <div class="alert-info">
+            <div class="alert-student">Hay algo que vale la pena revisar</div>
+            <div class="alert-desc">Tu hija está pasando por una semana con emociones de menor intensidad que lo habitual. No es urgente.</div>
+            <div class="alert-time">Detectado ayer a las 4:30 pm</div>
+
+            <div style="background:var(--white);border-radius:10px;padding:14px;margin-top:12px;border:1px solid var(--yellow);">
+              <div style="font-size:13px;font-weight:700;margin-bottom:8px;">🟡 Protocolo para Nivel 2</div>
+              <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--gray4);">
+                <div>✔ Mencionarlo al especialista en la próxima cita programada</div>
+                <div>✔ Observar cambios de comportamiento en los próximos días</div>
+                <div>✔ Crear un ambiente tranquilo en casa — sin interrogar directamente</div>
+              </div>
+              <div class="alert-actions" style="margin-top:10px;">
+                <button class="btn btn-primary btn-sm" onclick="document.getElementById('modalCita').classList.add('open')">📅 Agendar cita con el especialista</button>
+                <button class="btn btn-outline btn-sm" onclick="showScreen('s-notas')">📝 Agregar nota de contexto</button>
+                <button class="btn btn-ghost btn-sm">✓ Marcar como vista</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NIVEL 0 — como referencia visual -->
+        <div style="font-size:12px;font-weight:700;color:var(--gray3);letter-spacing:.8px;text-transform:uppercase;margin:20px 0 8px;">● Así se ve una alerta Nivel 0 (referencia)</div>
+        <div class="alert-item nivel0" style="opacity:.75;">
+          <span class="alert-badge badge-red">🔴 Nivel 0 · Emergencia</span>
+          <div class="alert-info">
+            <div class="alert-student">Tu hijo/a puede estar en riesgo. Actúa ahora.</div>
+            <div class="alert-desc">El sistema detectó una señal de riesgo importante. No podemos mostrarte qué escribió — pero necesitas actuar.</div>
+            <div style="background:var(--white);border-radius:10px;padding:14px;margin-top:12px;border:1px solid var(--red);">
+              <div style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:8px;">🔴 Protocolo de emergencia</div>
+              <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--gray4);">
+                <div>🚨 Llama a tu hijo/a de inmediato o busca su ubicación</div>
+                <div>📞 Contacta al especialista principal ahora</div>
+                <div>☎ Si la situación es crítica: <strong>línea de salud mental 106</strong> (Colombia)</div>
+              </div>
+              <div class="alert-actions" style="margin-top:10px;">
+                <button class="btn btn-red btn-sm">🚨 Ver protocolo completo</button>
+                <button class="btn btn-outline btn-sm">📞 Contactar especialista</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUELTAS -->
+        <div style="font-size:12px;font-weight:700;color:var(--gray3);letter-spacing:.8px;text-transform:uppercase;margin:20px 0 8px;">● Resueltas este mes (2)</div>
+        <div class="alert-item" style="opacity:.6;">
+          <span class="alert-badge badge-gray">Resuelta</span>
+          <div class="alert-info">
+            <div class="alert-student">Nivel 1 · 10 mayo</div>
+            <div class="alert-desc">Seguimiento completado · Cita con especialista el 12 mayo</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 4: NOTAS DE FAMILIA
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-notas">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Familiar</div></div></div>
+      <div class="sidenav-section">Inicio</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">1</span></div>
+      <div class="sidenav-section">Herramientas</div>
+      <div class="nav-item active"><span class="ni">📝</span> Notas de familia</div>
+      <div class="nav-item" onclick="showScreen('s-citas')"><span class="ni">📅</span> Citas</div>
+      <div class="nav-item" onclick="showScreen('s-actores')"><span class="ni">👥</span> Vincular actores</div>
+      <div class="nav-item" onclick="showScreen('s-rutina')"><span class="ni">💊</span> Rutina de cuidado</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="sidenav-section">Cuenta</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">⚙️</span> Perfil y suscripción</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">MP</div><div class="user-info"><div class="uname">María Pérez</div><div class="ucargo">Mamá de Valeria</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar">
+        <h1>Notas y mensajes del equipo</h1>
+        <div class="topbar-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('modalNota').classList.add('open')">+ Nueva nota</button>
+        </div>
+      </div>
+      <div class="content">
+
+        <div class="tabs" id="notasTabs">
+          <div class="tab active" onclick="switchTab(this,'tn-familia')">📝 Mis notas</div>
+          <div class="tab" onclick="switchTab(this,'tn-orientador')">🏫 Del orientador</div>
+          <div class="tab" onclick="switchTab(this,'tn-especialista')">🩺 Del especialista</div>
+        </div>
+
+        <!-- TAB: MIS NOTAS -->
+        <div id="tn-familia">
+          <div style="background:var(--teal-l);border:1px solid var(--teal);border-radius:10px;padding:12px 16px;font-size:12.5px;margin-bottom:16px;">
+            📋 Contexto para el especialista y el orientador. Registra eventos del hogar. <strong>Valeria nunca las ve.</strong>
+          </div>
+          <div class="filters-row" style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+            <input style="padding:7px 12px;border:1.5px solid var(--gray2);border-radius:8px;font-size:13px;font-family:var(--font);flex:1;min-width:180px;" placeholder="🔍  Buscar en notas...">
+            <select style="padding:7px 12px;border:1.5px solid var(--gray2);border-radius:8px;font-size:13px;font-family:var(--font);">
+              <option>Toda visibilidad</option><option>Solo familia</option><option>Visible al especialista</option><option>Visible al orientador</option>
+            </select>
+          </div>
+          <div class="nota-item">
+            <div class="nota-header">
+              <div class="nota-autor">María · Mamá</div>
+              <span class="nota-vis vis-especialista">🩺 Visible al especialista</span>
+              <div class="nota-fecha">Hoy, 8:30 am</div>
+            </div>
+            <div class="nota-text">Esta semana Valeria llegó del colegio muy callada los últimos 3 días. No parece enferma pero algo la preocupa. No quiso hablar al respecto.</div>
+          </div>
+          <div class="nota-item" style="border-color:var(--orange)">
+            <div class="nota-header">
+              <div class="nota-autor">Jorge · Papá</div>
+              <span class="nota-vis vis-orientador">🏫 Visible al orientador</span>
+              <div class="nota-fecha">20 mayo, 9:00 pm</div>
+            </div>
+            <div class="nota-text">Empezamos el suplemento de magnesio recomendado por el pediatra. Primera toma esta noche sin inconvenientes.</div>
+          </div>
+          <div class="nota-item">
+            <div class="nota-header">
+              <div class="nota-autor">María · Mamá</div>
+              <span class="nota-vis vis-todos">🌐 Visible a todos</span>
+              <div class="nota-fecha">15 mayo, 7:15 pm</div>
+            </div>
+            <div class="nota-text">Hoy Valeria llegó muy contenta. Dijo que ganaron el torneo de voleibol intercolegial. La vi animada toda la tarde.</div>
+          </div>
+          <div class="nota-item privada">
+            <div class="nota-header">
+              <div class="nota-autor">María · Mamá</div>
+              <span class="nota-vis vis-privada">🔒 Solo familia</span>
+              <div class="nota-fecha">10 mayo, 10:00 pm</div>
+            </div>
+            <div class="nota-text">Discusión fuerte con Jorge esta noche. Valeria estaba despierta y escuchó. Nos disculpamos con ella pero quedó tensa.</div>
+          </div>
+        </div>
+
+        <!-- TAB: DEL ORIENTADOR -->
+        <div id="tn-orientador" style="display:none">
+          <div style="background:var(--orange-l);border:1px solid var(--orange);border-radius:10px;padding:12px 16px;font-size:12.5px;margin-bottom:16px;">
+            🏫 Notas y mensajes que la orientadora del colegio ha decidido compartir contigo. Valeria no las ve.
+          </div>
+          <div class="nota-item" style="border-color:var(--orange)">
+            <div class="nota-header">
+              <div class="nota-autor" style="color:var(--orange);">Ana M. López · Orientadora</div>
+              <span class="nota-vis" style="background:var(--orange-l);color:var(--orange);">Visible a familia</span>
+              <div class="nota-fecha">Hoy, 10:05 am</div>
+            </div>
+            <div class="nota-text">Valeria estuvo callada hoy en los descansos. La acompañé un momento. Me dijo que "todo está bien" pero noté algo diferente. Por favor avísame si en casa detectan algo. Estamos atentas.</div>
+            <div class="nota-actions">
+              <button class="btn btn-ghost btn-sm" style="font-size:11.5px;color:var(--teal);">↩ Responder con nota</button>
+            </div>
+          </div>
+          <div class="nota-item" style="border-color:var(--orange);opacity:.7">
+            <div class="nota-header">
+              <div class="nota-autor" style="color:var(--orange);">Carlos M. Vega · Co-orientador</div>
+              <span class="nota-vis" style="background:var(--orange-l);color:var(--orange);">Todos los actores</span>
+              <div class="nota-fecha">15 mayo, 11:00 am</div>
+            </div>
+            <div class="nota-text">Reunión con Valeria. Se habló del aumento de carga académica del tercer período. Participó activamente. Seguimiento en 2 semanas.</div>
+          </div>
+        </div>
+
+        <!-- TAB: DEL ESPECIALISTA -->
+        <div id="tn-especialista" style="display:none">
+          <div style="background:var(--green-l);border:1px solid var(--green);border-radius:10px;padding:12px 16px;font-size:12.5px;margin-bottom:16px;">
+            🩺 Mensajes y recomendaciones de la Dra. Alejandra Gómez para la familia.
+          </div>
+          <div class="nota-item" style="border-color:var(--green)">
+            <div class="nota-header">
+              <div class="nota-autor" style="color:var(--green);">Dra. Alejandra Gómez · Psicóloga clínica</div>
+              <span class="nota-vis" style="background:var(--green-l);color:var(--green);">Para familia</span>
+              <div class="nota-fecha">20 mayo, 3:00 pm</div>
+            </div>
+            <div class="nota-text">Esta semana, si Valeria se siente abrumada, pueden intentar la técnica 4-7-8 antes de dormir: inhalar 4 s, retener 7 s, exhalar 8 s. Es algo simple que pueden practicar juntos.</div>
+            <div class="nota-actions">
+              <button class="btn btn-ghost btn-sm" style="font-size:11.5px;color:var(--teal);">↩ Responder</button>
+            </div>
+          </div>
+          <div class="nota-item" style="border-color:var(--green);opacity:.7">
+            <div class="nota-header">
+              <div class="nota-autor" style="color:var(--green);">Dra. Alejandra Gómez</div>
+              <span class="nota-vis" style="background:var(--green-l);color:var(--green);">Para familia</span>
+              <div class="nota-fecha">15 mayo, 4:30 pm</div>
+            </div>
+            <div class="nota-text">¡Qué buena noticia lo del torneo! Esos momentos de logro grupal son muy importantes para el estado emocional. Lo tendremos en cuenta en la próxima sesión.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 5: VINCULAR ACTORES
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-actores">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Familiar</div></div></div>
+      <div class="sidenav-section">Inicio</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">1</span></div>
+      <div class="sidenav-section">Herramientas</div>
+      <div class="nav-item" onclick="showScreen('s-notas')"><span class="ni">📝</span> Notas de familia</div>
+      <div class="nav-item" onclick="showScreen('s-citas')"><span class="ni">📅</span> Citas</div>
+      <div class="nav-item active"><span class="ni">👥</span> Vincular actores</div>
+      <div class="nav-item" onclick="showScreen('s-rutina')"><span class="ni">💊</span> Rutina de cuidado</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="sidenav-section">Cuenta</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">⚙️</span> Perfil y suscripción</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">MP</div><div class="user-info"><div class="uname">María Pérez</div><div class="ucargo">Mamá de Valeria</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar"><h1>Actores vinculados a Valeria</h1></div>
+      <div class="content">
+
+        <div style="background:var(--teal-l);border:1px solid var(--teal);border-radius:10px;padding:12px 16px;font-size:12.5px;margin-bottom:22px;">
+          🔑 <strong>Tú controlas todo el acceso.</strong> Puedes revocar el acceso de cualquier actor en cualquier momento — el efecto es inmediato.
+        </div>
+
+        <!-- ESPECIALISTAS -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div style="font-size:13px;font-weight:700;">🩺 Especialistas (2 / máx. 4)</div>
+          <div style="font-size:11.5px;color:var(--gray3);">Solo uno puede ser Principal · Los demás reciben alertas según sus permisos</div>
+        </div>
+
+        <div class="grid2" style="margin-bottom:24px;">
+
+          <!-- ESPECIALISTA 1: PRINCIPAL -->
+          <div class="actor-card active-actor">
+            <div class="actor-badge"><span class="alert-badge" style="background:var(--teal);color:#fff;font-size:11px;">⭐ Principal</span></div>
+            <div class="actor-type">Psicóloga clínica</div>
+            <div class="actor-avatar">AG</div>
+            <div class="actor-name">Dra. Alejandra Gómez</div>
+            <div class="actor-sub">Psicóloga clínica infantil · Ibagué</div>
+            <div class="actor-perms">
+              <div class="perm-row"><span class="perm-on">✓</span> Alertas Nivel 0 y 1 <span style="font-size:10px;color:var(--gray3)">(inmediatas)</span></div>
+              <div class="perm-row"><span class="perm-on">✓</span> Alertas Nivel 2</div>
+              <div class="perm-row"><span class="perm-on">✓</span> Frases NLP literales</div>
+              <div class="perm-row"><span class="perm-on">✓</span> Notas de familia</div>
+              <div class="perm-row"><span class="perm-off">✗</span> Rutina de cuidado</div>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button class="btn btn-outline btn-sm">⚙ Permisos</button>
+              <button class="btn btn-danger btn-sm">Revocar</button>
+            </div>
+          </div>
+
+          <!-- ESPECIALISTA 2: SECUNDARIA -->
+          <div class="actor-card active-actor" style="border-color:var(--purple);background:var(--purple-l);">
+            <div class="actor-badge"><span class="alert-badge" style="background:var(--purple);color:#fff;font-size:11px;">Secundaria</span></div>
+            <div class="actor-type">Psiquiatra infantil</div>
+            <div class="actor-avatar" style="background:var(--purple-l);color:var(--purple);">RV</div>
+            <div class="actor-name">Dra. Rosa Vargas</div>
+            <div class="actor-sub">Psiquiatra infantil · Prepagada Salud Total</div>
+            <div class="actor-perms">
+              <div class="perm-row"><span class="perm-on">✓</span> Alertas Nivel 0 <span style="font-size:10px;color:var(--gray3)">(solo emergencias)</span></div>
+              <div class="perm-row"><span class="perm-off">✗</span> Alertas Nivel 1 y 2</div>
+              <div class="perm-row"><span class="perm-on">✓</span> Frases NLP literales</div>
+              <div class="perm-row"><span class="perm-off">✗</span> Notas de familia</div>
+              <div class="perm-row"><span class="perm-on">✓</span> Rutina de cuidado</div>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button class="btn btn-outline btn-sm">⚙ Permisos</button>
+              <button class="btn btn-danger btn-sm">Revocar</button>
+            </div>
+          </div>
+
+          <!-- AGREGAR ESPECIALISTA -->
+          <div class="add-actor-card" onclick="document.getElementById('modalEspecialista').classList.add('open')">
+            <div class="add-icon">+</div>
+            <div class="add-label">Agregar especialista</div>
+            <div style="font-size:11.5px;color:var(--gray3);margin-top:4px;text-align:center;">Genera código de un solo uso · Válido 48 h</div>
+          </div>
+
+        </div>
+
+        <!-- COLEGIO -->
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px;">🏫 Colegio / Orientador</div>
+        <div class="grid2" style="margin-bottom:24px;">
+          <div class="actor-card active-actor">
+            <div class="actor-type">Institución vinculada</div>
+            <div class="actor-avatar" style="background:var(--orange-l);color:var(--orange);border-radius:10px;">🏫</div>
+            <div class="actor-name">Colegio San Carlos</div>
+            <div class="actor-sub">Orientadora: Ana M. López · Jornada Mañana</div>
+            <div class="actor-perms">
+              <div class="perm-row"><span class="perm-on">✓</span> Ve estado emocional (sin texto)</div>
+              <div class="perm-row"><span class="perm-on">✓</span> Recibe alertas Nivel 2</div>
+              <div class="perm-row"><span class="perm-off">✗</span> Notas de familia <span style="font-size:11px;color:var(--gray3);">(no autorizado)</span></div>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button class="btn btn-outline btn-sm">⚙ Permisos</button>
+              <button class="btn btn-danger btn-sm">Revocar acceso</button>
+            </div>
+          </div>
+
+          <div class="add-actor-card" onclick="document.getElementById('modalColegio').classList.add('open')">
+            <div class="add-icon">+</div>
+            <div class="add-label">Agregar colegio</div>
+            <div style="font-size:11.5px;color:var(--gray3);margin-top:4px;text-align:center;">Genera código institucional de 8 dígitos</div>
+          </div>
+        </div>
+
+        <!-- SEGUNDO PADRE -->
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px;">👨‍👩‍👧 Segundo padre / acudiente</div>
+        <div class="grid2">
+          <div class="add-actor-card" onclick="document.getElementById('modalPadre').classList.add('open')">
+            <div class="add-icon">+</div>
+            <div class="add-label">Vincular segundo padre</div>
+            <div style="font-size:11.5px;color:var(--gray3);margin-top:4px;text-align:center;">Genera un código para que cree su propia cuenta con acceso completo</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 6: RUTINA DE CUIDADO
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-rutina">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Familiar</div></div></div>
+      <div class="sidenav-section">Inicio</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">1</span></div>
+      <div class="sidenav-section">Herramientas</div>
+      <div class="nav-item" onclick="showScreen('s-notas')"><span class="ni">📝</span> Notas de familia</div>
+      <div class="nav-item" onclick="showScreen('s-actores')"><span class="ni">👥</span> Vincular actores</div>
+      <div class="nav-item" onclick="showScreen('s-citas')"><span class="ni">📅</span> Citas</div>
+      <div class="nav-item active"><span class="ni">💊</span> Rutina de cuidado</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="sidenav-section">Cuenta</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">⚙️</span> Perfil y suscripción</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">MP</div><div class="user-info"><div class="uname">María Pérez</div><div class="ucargo">Mamá de Valeria</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar">
+        <h1>Rutina de cuidado</h1>
+        <div class="topbar-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('modalRutina').classList.add('open')">+ Agregar ítem</button>
+        </div>
+      </div>
+      <div class="content">
+
+        <div style="background:var(--teal-l);border:1px solid var(--teal);border-radius:10px;padding:12px 16px;font-size:12.5px;margin-bottom:20px;display:flex;gap:10px;">
+          <span style="font-size:16px;">🔒</span>
+          <span><strong>Valeria no sabe que esto existe.</strong> Los ítems de la Rutina de cuidado son completamente invisibles en su app. Paloma es un recordatorio — la responsabilidad médica es tuya y del especialista.</span>
+        </div>
+
+        <!-- HOY -->
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px;">📅 Hoy, 22 de mayo</div>
+
+        <div class="rutina-item">
+          <div class="rutina-icon">🐟</div>
+          <div class="rutina-info">
+            <div class="rutina-name">Omega 3</div>
+            <div class="rutina-detail">1 cápsula · Todos los días · 7:00 am</div>
+          </div>
+          <div class="rutina-check">
+            <button class="check-btn ok">✓ Tomado</button>
+          </div>
+        </div>
+
+        <div class="rutina-item">
+          <div class="rutina-icon">☀️</div>
+          <div class="rutina-info">
+            <div class="rutina-name">Vitamina D3</div>
+            <div class="rutina-detail">1 gota · Lun, Mié, Vie · 8:00 am</div>
+          </div>
+          <div class="rutina-check">
+            <button class="check-btn" onclick="this.classList.add('ok');this.textContent='✓ Tomado'">Marcar</button>
+          </div>
+        </div>
+
+        <div class="rutina-item">
+          <div class="rutina-icon">🧠</div>
+          <div class="rutina-info">
+            <div class="rutina-name">Magnesio</div>
+            <div class="rutina-detail">5 ml · Todos los días · 9:00 pm · <span style="color:var(--teal);font-weight:600;">Visible a Dra. Alejandra</span></div>
+          </div>
+          <div class="rutina-check">
+            <button class="check-btn" onclick="this.classList.add('ok');this.textContent='✓ Tomado'">Marcar</button>
+          </div>
+        </div>
+
+        <!-- RECORDATORIOS -->
+        <div style="margin-top:24px;font-size:13px;font-weight:700;margin-bottom:12px;">🔔 Recordatorios</div>
+        <div class="card" style="margin-bottom:20px;">
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;align-items:center;padding:12px 0;border-bottom:1px solid var(--gray1);gap:12px;">
+              <div style="flex:1"><div style="font-size:13.5px;font-weight:600;">Omega 3</div><div style="font-size:12px;color:var(--gray3);">Push diario a las 7:00 am</div></div>
+              <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+            </div>
+            <div style="display:flex;align-items:center;padding:12px 0;border-bottom:1px solid var(--gray1);gap:12px;">
+              <div style="flex:1"><div style="font-size:13.5px;font-weight:600;">Vitamina D3</div><div style="font-size:12px;color:var(--gray3);">Push lun/mié/vie a las 8:00 am</div></div>
+              <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+            </div>
+            <div style="display:flex;align-items:center;padding:12px 0;gap:12px;">
+              <div style="flex:1"><div style="font-size:13.5px;font-weight:600;">Magnesio</div><div style="font-size:12px;color:var(--gray3);">Push diario a las 9:00 pm</div></div>
+              <button class="toggle" onclick="this.classList.toggle('on')"></button>
+            </div>
+          </div>
+          <div style="font-size:11.5px;color:var(--gray3);margin-top:8px;">Los recordatorios solo te llegan a ti — Valeria nunca recibe estas notificaciones.</div>
+        </div>
+
+        <!-- HISTORIAL MINI -->
+        <div style="margin-top:24px;font-size:13px;font-weight:700;margin-bottom:12px;">📊 Adherencia esta semana</div>
+        <div class="card">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+            <div style="text-align:center;">
+              <div style="font-size:22px;font-weight:800;color:var(--green);">6/7</div>
+              <div style="font-size:11px;color:var(--gray3);">Omega 3</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:22px;font-weight:800;color:var(--green);">3/3</div>
+              <div style="font-size:11px;color:var(--gray3);">Vitamina D3</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:22px;font-weight:800;color:var(--yellow);">2/7</div>
+              <div style="font-size:11px;color:var(--gray3);">Magnesio</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 7: INFORMES
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-informes">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Familiar</div></div></div>
+      <div class="sidenav-section">Inicio</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">1</span></div>
+      <div class="sidenav-section">Herramientas</div>
+      <div class="nav-item" onclick="showScreen('s-notas')"><span class="ni">📝</span> Notas de familia</div>
+      <div class="nav-item" onclick="showScreen('s-actores')"><span class="ni">👥</span> Vincular actores</div>
+      <div class="nav-item" onclick="showScreen('s-rutina')"><span class="ni">💊</span> Rutina de cuidado</div>
+      <div class="nav-item active"><span class="ni">📊</span> Informes</div>
+      <div class="sidenav-section">Cuenta</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">⚙️</span> Perfil y suscripción</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">MP</div><div class="user-info"><div class="uname">María Pérez</div><div class="ucargo">Mamá de Valeria</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar"><h1>Informes de Valeria</h1></div>
+      <div class="content">
+
+        <!-- SEMANAL (gratuito) -->
+        <div class="report-card">
+          <div class="report-icon">📋</div>
+          <div class="report-info">
+            <div class="report-title">Resumen semanal automático</div>
+            <div class="report-desc">Emociones predominantes, batería emocional, alertas y racha de registros. En lenguaje simple, no clínico.</div>
+            <div class="report-plan">🆓 Disponible en plan gratuito · Se envía cada lunes</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+            <button class="btn btn-primary btn-sm">Ver semana actual</button>
+            <button class="btn btn-outline btn-sm">Ver semanas anteriores</button>
+          </div>
+        </div>
+
+        <!-- MENSUAL (pago) -->
+        <div class="report-card" style="opacity:.65;position:relative;">
+          <div class="report-icon">📈</div>
+          <div class="report-info">
+            <div class="report-title">Informe mensual</div>
+            <div class="report-desc">Evolución del mes, comparativa con mes anterior, alertas atendidas vs. pendientes y adherencia a Rutina de cuidado.</div>
+            <div class="report-plan">🔒 Plan familiar · Se genera el 1° de cada mes</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+            <button class="btn btn-primary btn-sm" onclick="showScreen('s-perfil')">✨ Activar plan</button>
+          </div>
+        </div>
+
+        <!-- A DEMANDA (pago) -->
+        <div class="report-card" style="opacity:.65;">
+          <div class="report-icon">⚡</div>
+          <div class="report-info">
+            <div class="report-title">Informe a demanda</div>
+            <div class="report-desc">Generalo en cualquier momento para llevarlo a una cita. Incluye historial emocional, alertas y notas de familia autorizadas.</div>
+            <div class="report-plan">🔒 Plan familiar</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+            <button class="btn btn-primary btn-sm" onclick="showScreen('s-perfil')">✨ Activar plan</button>
+          </div>
+        </div>
+
+        <!-- PDF (pago) -->
+        <div class="report-card" style="opacity:.65;">
+          <div class="report-icon">📄</div>
+          <div class="report-info">
+            <div class="report-title">Exportar PDF</div>
+            <div class="report-desc">Cualquier informe en PDF con logo Paloma, fecha y nombre de Valeria. Listo para llevar a consulta o al colegio.</div>
+            <div class="report-plan">🔒 Plan familiar</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+            <button class="btn btn-primary btn-sm" onclick="showScreen('s-perfil')">✨ Activar plan</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 8: PERFIL Y SUSCRIPCIÓN
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-perfil">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Familiar</div></div></div>
+      <div class="sidenav-section">Inicio</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">1</span></div>
+      <div class="sidenav-section">Herramientas</div>
+      <div class="nav-item" onclick="showScreen('s-notas')"><span class="ni">📝</span> Notas de familia</div>
+      <div class="nav-item" onclick="showScreen('s-citas')"><span class="ni">📅</span> Citas</div>
+      <div class="nav-item" onclick="showScreen('s-actores')"><span class="ni">👥</span> Vincular actores</div>
+      <div class="nav-item" onclick="showScreen('s-rutina')"><span class="ni">💊</span> Rutina de cuidado</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="sidenav-section">Cuenta</div>
+      <div class="nav-item active"><span class="ni">⚙️</span> Perfil y suscripción</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">MP</div><div class="user-info"><div class="uname">María Pérez</div><div class="ucargo">Mamá de Valeria</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar"><h1>Perfil y suscripción</h1></div>
+      <div class="content">
+
+        <div class="tabs" id="perfilTabs">
+          <div class="tab active" onclick="switchTab(this,'tp-datos')">👶 Datos del niño</div>
+          <div class="tab" onclick="switchTab(this,'tp-cuenta')">👤 Mi cuenta</div>
+          <div class="tab" onclick="switchTab(this,'tp-plan')">💳 Plan y pagos</div>
+          <div class="tab" onclick="switchTab(this,'tp-solidaria')">🕊️ Paloma Solidaria</div>
+        </div>
+
+        <!-- TAB: DATOS DEL NIÑO -->
+        <div id="tp-datos">
+          <div class="card">
+            <div class="card-title">Datos de Valeria</div>
+            <div class="grid2" style="gap:14px;">
+              <div class="form-group"><label class="form-label">Nombre real</label><input class="form-input" value="Valeria Pérez"></div>
+              <div class="form-group"><label class="form-label">Fecha de nacimiento</label><input class="form-input" type="date" value="2011-03-14"></div>
+              <div class="form-group">
+                <label class="form-label">Alias en la app <span style="color:var(--gray3);font-weight:400">(elegido por el niño — no editable)</span></label>
+                <input class="form-input" value="Valen 🌟" disabled style="background:var(--gray1);color:var(--gray3);">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Rango etario (calculado)</label>
+                <input class="form-input" value="Teen · 11–14 años" disabled style="background:var(--gray1);color:var(--gray3);">
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm">Guardar cambios</button>
+          </div>
+        </div>
+
+        <!-- TAB: CUENTA -->
+        <div id="tp-cuenta" style="display:none">
+          <div class="card">
+            <div class="card-title">Mi cuenta</div>
+            <div class="form-group"><label class="form-label">Nombre completo</label><input class="form-input" value="María Pérez Rodríguez"></div>
+            <div class="form-group"><label class="form-label">Correo electrónico</label><input class="form-input" type="email" value="maria@gmail.com"></div>
+            <div class="form-group"><label class="form-label">Nueva contraseña</label><input class="form-input" type="password" placeholder="Dejar vacío para no cambiar"></div>
+            <div style="display:flex;gap:10px;margin-top:4px;">
+              <button class="btn btn-primary btn-sm">Guardar cambios</button>
+              <button class="btn btn-danger btn-sm" style="margin-left:auto">Solicitar eliminación de cuenta</button>
+            </div>
+            <div style="font-size:11.5px;color:var(--gray3);margin-top:8px;">La eliminación de cuenta borra todos los datos de Valeria. Proceso de 30 días con confirmación (Ley 1581/2012).</div>
+          </div>
+        </div>
+
+        <!-- TAB: PLAN -->
+        <div id="tp-plan" style="display:none">
+          <!-- Plan actual -->
+          <div class="card" style="margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+              <div>
+                <div style="font-size:11px;color:var(--gray3);font-weight:600;text-transform:uppercase;letter-spacing:.8px;">Plan actual</div>
+                <div style="font-size:20px;font-weight:800;color:var(--gray4);">Gratuito</div>
+              </div>
+              <button class="btn btn-outline btn-sm" style="margin-left:auto">Ver historial de facturas</button>
+            </div>
+          </div>
+
+          <!-- Planes -->
+          <div class="grid2" style="margin-bottom:20px;">
+            <div class="card" style="border:2px solid var(--gray2);">
+              <div style="font-size:13px;font-weight:700;color:var(--gray4);margin-bottom:8px;">Gratuito</div>
+              <div style="font-size:26px;font-weight:800;margin-bottom:12px;">$0 <span style="font-size:13px;font-weight:400;color:var(--gray3);">/ mes</span></div>
+              <div style="display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--gray4);margin-bottom:14px;">
+                <div>✓ Dashboard con semáforo</div>
+                <div>✓ Alertas NLP (todos los niveles)</div>
+                <div>✓ Resumen semanal básico</div>
+                <div>✓ Notas de familia</div>
+                <div style="color:var(--gray3);">✗ Informes mensuales y PDF</div>
+                <div style="color:var(--gray3);">✗ Rutina de cuidado</div>
+              </div>
+              <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;" disabled>Plan actual</button>
+            </div>
+            <div class="card" style="border:2px solid var(--teal);position:relative;">
+              <div style="position:absolute;top:-10px;right:16px;background:var(--teal);color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;">Recomendado</div>
+              <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:8px;">Plan Familiar</div>
+              <div style="font-size:26px;font-weight:800;margin-bottom:2px;">$29.900 <span style="font-size:13px;font-weight:400;color:var(--gray3);">/ mes</span></div>
+              <div style="font-size:12px;color:var(--gray3);margin-bottom:12px;">o $24.900/mes pagando anual</div>
+              <div style="background:var(--teal-l);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--teal);font-weight:700;margin-bottom:10px;">👨‍👩‍👧 Hasta 2 padres · hasta 4 hijos · 1 suscripción</div>
+              <div style="display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--gray4);margin-bottom:14px;">
+                <div>✓ Todo lo del plan gratuito</div>
+                <div>✓ Informes mensuales completos</div>
+                <div>✓ Informes a demanda + PDF</div>
+                <div>✓ Rutina de cuidado</div>
+                <div>✓ Citas con especialistas</div>
+                <div>✓ Comparativa mes a mes</div>
+              </div>
+              <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center;">Activar plan familiar</button>
+            </div>
+          </div>
+
+          <div style="font-size:12px;color:var(--gray3);text-align:center;">Pagos seguros vía Wompi (Colombia) o Stripe (internacional). Cancela cuando quieras.</div>
+        </div>
+
+        <!-- TAB: SOLIDARIA -->
+        <div id="tp-solidaria" style="display:none">
+          <div class="card">
+            <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:20px;">
+              <div style="font-size:36px;">🕊️</div>
+              <div>
+                <div style="font-size:17px;font-weight:800;margin-bottom:6px;">Paloma Solidaria</div>
+                <div style="font-size:13.5px;color:var(--gray4);">Con tu suscripción anual, puedes apadrinar a una familia que no puede pagar el plan. Paloma aporta el resto. Tu gesto le da acceso a un niño que lo necesita.</div>
+              </div>
+            </div>
+
+            <div style="background:var(--teal-l);border-radius:10px;padding:16px 18px;margin-bottom:18px;">
+              <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:4px;">Actualmente apoyas a:</div>
+              <div style="font-size:28px;font-weight:800;color:var(--teal);">0 familias</div>
+              <div style="font-size:12px;color:var(--gray4);margin-top:2px;">Activa el plan anual para comenzar a apadrinar</div>
+            </div>
+
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Apadrinamiento activo</div>
+                <div class="settings-row-desc">Al activar el plan anual, 1 familia sin recursos recibe acceso gratuito</div>
+              </div>
+              <button class="toggle" onclick="this.classList.toggle('on')"></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 0: LANDING / PÁGINA DE INICIO
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-landing">
+  <div class="onboarding-wrap" style="flex-direction:column;gap:0;background:linear-gradient(135deg,#1A1A2E 0%,#1a3a52 60%,#0e4d2e 100%);">
+    <div style="max-width:480px;width:100%;text-align:center;padding:40px 24px;">
+      <div style="font-size:52px;margin-bottom:12px;">🕊️</div>
+      <div style="font-size:32px;font-weight:800;color:#fff;margin-bottom:6px;">paloma</div>
+      <div style="font-size:13px;color:var(--teal);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px;">Portal Familiar</div>
+      <div style="font-size:15px;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:36px;">
+        Acompaña el bienestar emocional de tu hijo/a. Ve su estado sin invadir su privacidad, recibe alertas cuando importa, y mantente conectado/a con el equipo que lo cuida.
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:15px;" onclick="showScreen('s-onboarding')">
+          Crear cuenta familiar →
+        </button>
+        <button class="btn btn-outline" style="width:100%;justify-content:center;padding:14px;font-size:15px;color:#fff;border-color:rgba(255,255,255,.3);" onclick="showScreen('s-dashboard')">
+          Iniciar sesión
+        </button>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:center;gap:24px;">
+        <div style="text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--teal);">🔒</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;">Tu hijo nunca sabe<br>que lo estás viendo</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--teal);">🔔</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;">Alertas cuando<br>realmente importa</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--teal);">👥</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;">Coordinado con<br>médico y colegio</div>
+        </div>
+      </div>
+      <div style="margin-top:32px;font-size:12px;color:rgba(255,255,255,.3);">
+        ¿Eres orientador escolar? <a href="#" style="color:var(--teal);">paloma-app.com.co/school</a><br>
+        ¿Eres especialista? <a href="#" style="color:var(--green);">paloma-app.com.co/medical</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 9: CITAS CON ESPECIALISTA
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-citas">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Familiar</div></div></div>
+      <div class="sidenav-section">Inicio</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">1</span></div>
+      <div class="sidenav-section">Herramientas</div>
+      <div class="nav-item" onclick="showScreen('s-notas')"><span class="ni">📝</span> Notas de familia</div>
+      <div class="nav-item active"><span class="ni">📅</span> Citas</div>
+      <div class="nav-item" onclick="showScreen('s-actores')"><span class="ni">👥</span> Vincular actores</div>
+      <div class="nav-item" onclick="showScreen('s-rutina')"><span class="ni">💊</span> Rutina de cuidado</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="sidenav-section">Cuenta</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">⚙️</span> Perfil y suscripción</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">MP</div><div class="user-info"><div class="uname">María Pérez</div><div class="ucargo">Mamá de Valeria</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar">
+        <h1>Citas de Valeria</h1>
+        <div class="topbar-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('modalCita').classList.add('open')">+ Agendar cita</button>
+        </div>
+      </div>
+      <div class="content">
+
+        <!-- PRÓXIMA CITA -->
+        <div style="background:var(--teal-l);border:2px solid var(--teal);border-radius:var(--radius);padding:20px 22px;margin-bottom:24px;">
+          <div style="font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Próxima cita</div>
+          <div style="font-size:17px;font-weight:800;margin-bottom:4px;">Dra. Alejandra Gómez · Psicóloga clínica</div>
+          <div style="font-size:14px;color:var(--gray4);margin-bottom:2px;">📅 Lunes 26 de mayo · 9:00 am</div>
+          <div style="font-size:13px;color:var(--gray4);">📍 Calle 42 #15-30, Ibagué · Consultorio 204</div>
+          <div style="display:flex;gap:8px;margin-top:14px;">
+            <button class="btn btn-primary btn-sm">📋 Ver historial de Paloma</button>
+            <button class="btn btn-outline btn-sm">🗺 Abrir en Maps</button>
+            <button class="btn btn-ghost btn-sm">✏ Editar</button>
+          </div>
+        </div>
+
+        <!-- PRÓXIMAS CITAS -->
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px;">📆 Citas programadas</div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+          <div style="display:flex;align-items:center;gap:14px;background:var(--white);padding:14px 18px;border-radius:var(--radius);box-shadow:var(--shadow);">
+            <div style="background:var(--teal-l);color:var(--teal);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;text-align:center;flex-shrink:0;min-width:52px;">Lun<br>26 may</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:13.5px;">Dra. Alejandra Gómez</div>
+              <div style="font-size:12px;color:var(--gray4);">9:00 am · Psicóloga clínica · Consulta mensual</div>
+            </div>
+            <button class="btn btn-ghost btn-sm">✏</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;background:var(--white);padding:14px 18px;border-radius:var(--radius);box-shadow:var(--shadow);">
+            <div style="background:var(--gray1);color:var(--gray3);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;text-align:center;flex-shrink:0;min-width:52px;">Mar<br>10 jun</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:13.5px;">Dra. Alejandra Gómez</div>
+              <div style="font-size:12px;color:var(--gray4);">9:00 am · Psicóloga clínica · Seguimiento mensual</div>
+            </div>
+            <button class="btn btn-ghost btn-sm">✏</button>
+          </div>
+        </div>
+
+        <!-- HISTORIAL -->
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px;">🗂 Citas pasadas</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:14px;background:var(--white);padding:14px 18px;border-radius:var(--radius);box-shadow:var(--shadow);opacity:.65;">
+            <div style="background:var(--gray1);color:var(--gray3);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;text-align:center;flex-shrink:0;min-width:52px;">Lun<br>12 may</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:13.5px;">Dra. Alejandra Gómez</div>
+              <div style="font-size:12px;color:var(--gray4);">9:00 am · Realizada · Nota de sesión disponible</div>
+            </div>
+            <span class="alert-badge badge-green">Realizada</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;background:var(--white);padding:14px 18px;border-radius:var(--radius);box-shadow:var(--shadow);opacity:.65;">
+            <div style="background:var(--gray1);color:var(--gray3);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;text-align:center;flex-shrink:0;min-width:52px;">Lun<br>28 abr</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:13.5px;">Dra. Alejandra Gómez</div>
+              <div style="font-size:12px;color:var(--gray4);">9:00 am · Realizada</div>
+            </div>
+            <span class="alert-badge badge-green">Realizada</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     MODALES
+══════════════════════════════════════════════ -->
+
+<!-- MODAL: NUEVA NOTA -->
+<div class="modal-overlay" id="modalNota" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-title">📝 Nueva nota de familia</div>
+    <div class="modal-sub">Contexto para el especialista y el orientador. Valeria nunca verá esto. Máx. 500 caracteres.</div>
+    <div class="form-group">
+      <label class="form-label">Nota</label>
+      <textarea class="form-textarea" placeholder="ej. Esta semana hubo una discusión en casa. Valeria estaba despierta..." maxlength="500"></textarea>
+      <div style="text-align:right;font-size:11px;color:var(--gray3);margin-top:3px;">0 / 500</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">¿Quién puede verla?</label>
+      <div class="vis-options">
+        <div class="vis-opt selected" onclick="selectVis(this)">🔒 Solo familia</div>
+        <div class="vis-opt" onclick="selectVis(this)">🩺 Especialista</div>
+        <div class="vis-opt" onclick="selectVis(this)">🏫 Orientador</div>
+        <div class="vis-opt" onclick="selectVis(this)">🌐 Todos</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('modalNota').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-primary" onclick="document.getElementById('modalNota').classList.remove('open')">💾 Guardar nota</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: VINCULAR ESPECIALISTA -->
+<div class="modal-overlay" id="modalEspecialista" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-title">🩺 Vincular especialista</div>
+    <div class="modal-sub">El sistema genera un código de un solo uso válido por 48 horas. Envíaselo al especialista por WhatsApp o correo — Paloma no conoce el canal.</div>
+    <div class="code-box" style="font-size:22px;letter-spacing:3px;"><span>F</span>4<span>M</span>1-<span>9</span>X<span>3</span>K</div>
+    <div style="background:var(--gray1);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--gray4);margin-bottom:16px;">
+      El especialista ingresa este código en <strong>paloma-app.com.co/medical</strong>. Quedan vinculados automáticamente.
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Rol del especialista</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;">
+        <div onclick="selectRol(this)" class="rol-opt selected" style="border:2px solid var(--teal);background:var(--teal-l);border-radius:10px;padding:12px;cursor:pointer;transition:all .15s;">
+          <div style="font-size:13px;font-weight:700;color:var(--teal);">⭐ Principal</div>
+          <div style="font-size:11.5px;color:var(--gray4);margin-top:3px;">Recibe alertas Nivel 0, 1 y 2. Acceso completo al historial NLP.</div>
+        </div>
+        <div onclick="selectRol(this)" class="rol-opt" style="border:2px solid var(--gray2);background:var(--white);border-radius:10px;padding:12px;cursor:pointer;transition:all .15s;">
+          <div style="font-size:13px;font-weight:700;color:var(--dark);">Secundario/a</div>
+          <div style="font-size:11.5px;color:var(--gray4);margin-top:3px;">Recibe solo las alertas que tú configures. Permisos personalizados.</div>
+        </div>
+      </div>
+      <div style="font-size:11.5px;color:var(--gray3);margin-top:4px;">Solo puede haber un especialista Principal. Cambiarlo reasigna el rol automáticamente.</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Permisos de acceso</label>
+      <div class="settings-row" style="padding:8px 0">
+        <div class="settings-row-info"><div class="settings-row-label" style="font-size:13px;">Alertas Nivel 0 — Emergencia</div><div class="settings-row-desc">Siempre activo para todos los especialistas</div></div>
+        <button class="toggle on" style="opacity:.5;pointer-events:none;"></button>
+      </div>
+      <div class="settings-row" style="padding:8px 0">
+        <div class="settings-row-info"><div class="settings-row-label" style="font-size:13px;">Alertas Nivel 1 y 2</div><div class="settings-row-desc">Notificación inmediata o en resumen semanal</div></div>
+        <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="settings-row" style="padding:8px 0">
+        <div class="settings-row-info"><div class="settings-row-label" style="font-size:13px;">Notas de familia</div><div class="settings-row-desc">El especialista puede leer tus notas autorizadas</div></div>
+        <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="settings-row" style="padding:8px 0">
+        <div class="settings-row-info"><div class="settings-row-label" style="font-size:13px;">Rutina de cuidado</div><div class="settings-row-desc">Ve el historial de medicamentos y recordatorios</div></div>
+        <button class="toggle" onclick="this.classList.toggle('on')"></button>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('modalEspecialista').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-primary">📋 Copiar código y compartir</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: VINCULAR COLEGIO -->
+<div class="modal-overlay" id="modalColegio" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-title">🏫 Vincular colegio</div>
+    <div class="modal-sub">Genera un código institucional de 8 dígitos válido por 72 horas. El orientador del colegio lo ingresa al crear su cuenta en /school.</div>
+    <div class="code-box"><span>B</span>7<span>K</span>2<span>-</span>4<span>P</span>9<span>Q</span></div>
+    <div class="form-group" style="margin-top:14px;">
+      <div class="settings-row" style="padding:8px 0">
+        <div class="settings-row-info"><div class="settings-row-label" style="font-size:13px;">Ver notas de familia</div><div class="settings-row-desc">El orientador puede leer tus notas autorizadas</div></div>
+        <button class="toggle" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="settings-row" style="padding:8px 0">
+        <div class="settings-row-info"><div class="settings-row-label" style="font-size:13px;">Recibir alertas Nivel 2</div><div class="settings-row-desc">El orientador recibe señales de seguimiento</div></div>
+        <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('modalColegio').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-primary">📋 Copiar código</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: VINCULAR SEGUNDO PADRE -->
+<div class="modal-overlay" id="modalPadre" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-title">👨‍👩‍👧 Vincular segundo padre</div>
+    <div class="modal-sub">El segundo padre creará su propia cuenta con el mismo acceso que el tuyo. No hay jerarquía entre los dos.</div>
+    <div class="code-box"><span>P</span>2<span>F</span>8<span>-</span>9<span>A</span>3<span>K</span></div>
+    <div style="background:var(--orange-l);border:1px solid var(--orange);border-radius:10px;padding:12px 14px;font-size:12.5px;margin-top:12px;">
+      ⚠ Cualquiera de los dos padres puede desvincular al otro. Requiere confirmación.
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('modalPadre').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-primary">📋 Copiar código</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: AGENDAR CITA -->
+<div class="modal-overlay" id="modalCita" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-title">📅 Agendar cita</div>
+    <div class="modal-sub">La cita queda registrada en Paloma. El especialista recibirá una notificación de confirmación.</div>
+    <div class="form-group">
+      <label class="form-label">Especialista</label>
+      <select class="form-select">
+        <option>⭐ Dra. Alejandra Gómez — Psicóloga clínica (Principal)</option>
+        <option>Dra. Rosa Vargas — Psiquiatra infantil (Secundaria)</option>
+        <option>+ Vincular nuevo especialista</option>
+      </select>
+    </div>
+    <div class="grid2" style="gap:12px;margin-bottom:14px;">
+      <div class="form-group" style="margin:0"><label class="form-label">Fecha</label><input class="form-input" type="date"></div>
+      <div class="form-group" style="margin:0"><label class="form-label">Hora</label><input class="form-input" type="time" value="09:00"></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Motivo</label>
+      <select class="form-select">
+        <option>Consulta de seguimiento</option>
+        <option>Primera consulta</option>
+        <option>Alerta — seguimiento urgente</option>
+        <option>Control mensual</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nota para el especialista (opcional)</label>
+      <textarea class="form-textarea" placeholder="ej. Valeria tuvo una semana difícil, hay una alerta Nivel 1 reciente..." maxlength="300"></textarea>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;background:var(--teal-l);border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--teal);margin-bottom:14px;">
+      🔔 Recibirás un recordatorio 24 horas antes de la cita.
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('modalCita').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-primary" onclick="document.getElementById('modalCita').classList.remove('open')">📅 Confirmar cita</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: NUEVA RUTINA -->
+<div class="modal-overlay" id="modalRutina" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-title">💊 Agregar ítem a la rutina</div>
+    <div class="modal-sub">Invisible para Valeria en todo momento. Paloma es un recordatorio — la responsabilidad médica es tuya.</div>
+    <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" placeholder="ej. Omega 3, Vitamina D, Ritalín, Melatonina..."></div>
+    <div class="grid2" style="gap:12px;margin-bottom:14px;">
+      <div class="form-group" style="margin:0"><label class="form-label">Dosis (opcional)</label><input class="form-input" placeholder="ej. 1 cápsula, 5 ml"></div>
+      <div class="form-group" style="margin:0"><label class="form-label">Frecuencia</label><select class="form-select"><option>Todos los días</option><option>Días específicos</option><option>Cada N días</option></select></div>
+    </div>
+    <div class="form-group"><label class="form-label">Hora(s) de recordatorio (hasta 3)</label><input class="form-input" type="time" value="07:00"></div>
+    <div class="form-group">
+      <div class="settings-row" style="padding:8px 0">
+        <div class="settings-row-info"><div class="settings-row-label" style="font-size:13px;">Compartir con especialista principal</div><div class="settings-row-desc">La Dra. Alejandra podrá ver el historial de tomas</div></div>
+        <button class="toggle" onclick="this.classList.toggle('on')"></button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('modalRutina').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-primary" onclick="document.getElementById('modalRutina').classList.remove('open')">Guardar ítem</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const ids = ['s-landing','s-onboarding','s-dashboard','s-alertas','s-notas','s-actores','s-rutina','s-informes','s-perfil','s-citas'];
+    document.querySelectorAll('.sn-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', ids[i] === id || (id === 's-onboarding-step3' && i === 0));
+    });
+    window.scrollTo(0,0);
+  }
+
+  function switchTab(el, tabId) {
+    el.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    const prefix = tabId.startsWith('tp-') ? 'tp-' : tabId.startsWith('tn-') ? 'tn-' : 'tab-';
+    document.querySelectorAll('[id^="' + prefix + '"]').forEach(c => c.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+  }
+
+  function selectVis(el) {
+    el.closest('.vis-options').querySelectorAll('.vis-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function selectRol(el) {
+    el.closest('.form-group').querySelectorAll('.rol-opt').forEach(o => {
+      o.classList.remove('selected');
+      o.style.border = '2px solid var(--gray2)';
+      o.style.background = 'var(--white)';
+    });
+    el.classList.add('selected');
+    el.style.border = '2px solid var(--teal)';
+    el.style.background = 'var(--teal-l)';
+  }
+</script>
+</body>
+</html>

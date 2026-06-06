@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paloma · /school — Wireframes interactivos</title>
+<style>
+  /* ── TOKENS ─────────────────────────────────────────── */
+  :root {
+    --orange:   #F2994A;
+    --orange-l: #FFF3E8;
+    --orange-d: #D4722A;
+    --teal:     #2D9CDB;
+    --teal-l:   #EBF6FD;
+    --green:    #27AE60;
+    --green-l:  #E8F8EE;
+    --red:      #EB5757;
+    --red-l:    #FFEEEE;
+    --yellow:   #F2C94C;
+    --yellow-l: #FFFBE6;
+    --dark:     #1A1A2E;
+    --gray1:    #F5F5F7;
+    --gray2:    #E0E0E6;
+    --gray3:    #9E9EA8;
+    --gray4:    #5A5A6A;
+    --white:    #FFFFFF;
+    --font:     'Inter', system-ui, sans-serif;
+    --radius:   12px;
+    --shadow:   0 2px 12px rgba(0,0,0,.08);
+  }
+
+  /* ── RESET ───────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: #F0F0F5; color: var(--dark); font-size: 14px; line-height: 1.5; }
+  a { text-decoration: none; }
+  button { cursor: pointer; font-family: var(--font); }
+
+  /* ── SHELL ───────────────────────────────────────────── */
+  .shell {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── NAV IZQUIERDO ───────────────────────────────────── */
+  .sidenav {
+    width: 240px;
+    min-width: 240px;
+    background: var(--dark);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    overflow-y: auto;
+  }
+  .sidenav-logo {
+    padding: 0 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sidenav-logo .icon {
+    width: 36px; height: 36px;
+    background: var(--orange);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .sidenav-logo .name { font-size: 16px; font-weight: 700; letter-spacing: .3px; }
+  .sidenav-logo .role { font-size: 11px; color: var(--orange); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .sidenav-section { padding: 6px 20px 4px; font-size: 10px; font-weight: 600; color: rgba(255,255,255,.35); letter-spacing: 1.2px; text-transform: uppercase; margin-top: 8px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px;
+    border-radius: 0;
+    color: rgba(255,255,255,.65);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover { background: rgba(255,255,255,.06); color: #fff; }
+  .nav-item.active { background: rgba(242,153,74,.12); color: var(--orange); border-left-color: var(--orange); }
+  .nav-item .ni { width: 18px; text-align: center; font-size: 15px; }
+  .nav-badge {
+    margin-left: auto;
+    background: var(--red);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 1px 6px;
+    min-width: 18px;
+    text-align: center;
+  }
+  .nav-badge.yellow { background: var(--yellow); color: var(--dark); }
+  .sidenav-footer {
+    margin-top: auto;
+    padding: 16px 20px 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .user-chip {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0;
+  }
+  .avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; color: #fff;
+    flex-shrink: 0;
+  }
+  .user-info .uname { font-size: 13px; font-weight: 600; color: #fff; }
+  .user-info .ucargo { font-size: 11px; color: rgba(255,255,255,.45); }
+
+  /* ── MAIN ────────────────────────────────────────────── */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--gray1);
+  }
+
+  /* ── TOPBAR ──────────────────────────────────────────── */
+  .topbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray2);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .topbar h1 { font-size: 17px; font-weight: 700; flex: 1; }
+  .topbar-actions { display: flex; gap: 8px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    border: none; transition: all .15s;
+  }
+  .btn-primary { background: var(--orange); color: #fff; }
+  .btn-primary:hover { background: var(--orange-d); }
+  .btn-outline { background: transparent; color: var(--gray4); border: 1.5px solid var(--gray2); }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+  .btn-danger { background: var(--red-l); color: var(--red); border: none; }
+  .btn-ghost { background: transparent; color: var(--gray4); border: none; padding: 8px 10px; }
+  .btn-sm { padding: 5px 11px; font-size: 12px; border-radius: 7px; }
+  .btn-green { background: var(--green); color: #fff; }
+
+  /* ── CONTENT ─────────────────────────────────────────── */
+  .content { padding: 24px 28px; }
+
+  /* ── SCREEN (show/hide) ──────────────────────────────── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── CARDS ───────────────────────────────────────────── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+  }
+  .card-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 14px; }
+
+  /* ── STAT CARDS ──────────────────────────────────────── */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--gray2);
+  }
+  .stat-card.red   { border-color: var(--red); }
+  .stat-card.yellow { border-color: var(--yellow); }
+  .stat-card.green  { border-color: var(--green); }
+  .stat-card.blue   { border-color: var(--teal); }
+  .stat-num { font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 12px; color: var(--gray3); font-weight: 500; }
+  .stat-card.red   .stat-num { color: var(--red); }
+  .stat-card.yellow .stat-num { color: #c49a00; }
+  .stat-card.green  .stat-num { color: var(--green); }
+  .stat-card.blue   .stat-num { color: var(--teal); }
+
+  /* ── FILTERS ROW ─────────────────────────────────────── */
+  .filters-row { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+  .filter-select, .filter-search {
+    padding: 7px 12px; border: 1.5px solid var(--gray2); border-radius: 8px;
+    font-size: 13px; font-family: var(--font); background: var(--white); color: var(--dark);
+  }
+  .filter-search { flex: 1; min-width: 180px; }
+  .filter-search:focus, .filter-select:focus { outline: none; border-color: var(--orange); }
+
+  /* ── STUDENT GRID ────────────────────────────────────── */
+  .student-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+
+  /* TRIAGE LAYOUT */
+  .triage-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .triage-col-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .triage-list { display: flex; flex-direction: column; gap: 10px; }
+  .triage-row { display: flex; align-items: center; gap: 12px; background: var(--white); border: 1.5px solid var(--gray2); border-radius: var(--radius); padding: 12px 14px; cursor: pointer; transition: all .15s; }
+  .triage-row:hover { border-color: var(--orange); transform: translateY(-1px); box-shadow: var(--shadow); }
+  .triage-row.nivel0 { border-color: var(--red); background: var(--red-l); }
+  .triage-row.nivel1 { border-color: var(--orange); background: var(--orange-l); }
+  .triage-row.nivel2 { border-color: var(--yellow); background: var(--yellow-l); }
+  .triage-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--gray2); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .triage-info { flex: 1; min-width: 0; }
+  .triage-name { font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .triage-sub { font-size: 11.5px; color: var(--gray4); margin-top: 2px; }
+  .triage-action { flex-shrink: 0; }
+
+  /* BARRA ESTUDIANTE ACTIVO */
+  .student-active-bar {
+    background: linear-gradient(90deg, #2d1a00 0%, #3d2800 100%);
+    color: #fff;
+    padding: 10px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    border-bottom: 2px solid var(--orange);
+  }
+  .student-active-bar .sab-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+  .student-active-bar .sab-name { font-weight: 700; font-size: 14px; }
+  .student-active-bar .sab-meta { color: rgba(255,255,255,.65); font-size: 12px; }
+  .student-active-bar .sab-badge { background: var(--red); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+  .student-active-bar .sab-close { margin-left: auto; background: rgba(255,255,255,.15); border: none; color: #fff; border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; font-family: var(--font); }
+  .student-active-bar .sab-close:hover { background: rgba(255,255,255,.25); }
+  .student-card {
+    background: var(--white); border-radius: var(--radius); padding: 16px;
+    box-shadow: var(--shadow); cursor: pointer; transition: all .15s;
+    border: 2px solid transparent; position: relative;
+  }
+  .student-card:hover { border-color: var(--orange); transform: translateY(-2px); }
+  .student-card.alert-red   { border-color: var(--red); }
+  .student-card.alert-yellow { border-color: var(--yellow); }
+  .sc-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .sc-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--orange-l); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; color: var(--orange); flex-shrink: 0; }
+  .sc-name { font-size: 14px; font-weight: 700; }
+  .sc-meta { font-size: 11px; color: var(--gray3); }
+  .status-dot {
+    width: 10px; height: 10px; border-radius: 50%; margin-left: auto; flex-shrink: 0;
+  }
+  .dot-green  { background: var(--green); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-red    { background: var(--red); }
+  .sc-emotion { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray4); margin-bottom: 8px; }
+  .sc-actions { display: flex; gap: 6px; margin-top: 10px; }
+
+  /* ── ALERT LIST ──────────────────────────────────────── */
+  .alert-item {
+    background: var(--white); border-radius: var(--radius); padding: 16px 18px;
+    margin-bottom: 10px; box-shadow: var(--shadow);
+    display: flex; align-items: flex-start; gap: 14px;
+    border-left: 5px solid var(--gray2);
+    cursor: pointer; transition: all .15s;
+  }
+  .alert-item:hover { transform: translateX(3px); }
+  .alert-item.nivel0 { border-color: var(--red); background: var(--red-l); }
+  .alert-item.nivel1 { border-color: var(--orange); background: var(--orange-l); }
+  .alert-item.nivel2 { border-color: var(--yellow); background: var(--yellow-l); }
+  .alert-badge {
+    padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700;
+    white-space: nowrap; margin-top: 2px;
+  }
+  .badge-red    { background: var(--red); color: #fff; }
+  .badge-orange { background: var(--orange); color: #fff; }
+  .badge-yellow { background: var(--yellow); color: var(--dark); }
+  .badge-green  { background: var(--green); color: #fff; }
+  .badge-gray   { background: var(--gray2); color: var(--gray4); }
+  .alert-info { flex: 1; }
+  .alert-student { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .alert-desc { font-size: 13px; color: var(--gray4); margin-bottom: 6px; }
+  .alert-time { font-size: 11px; color: var(--gray3); }
+  .alert-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+  /* ── PRIVACIDAD NOTE ─────────────────────────────────── */
+  .privacy-note {
+    background: var(--orange-l); border: 1px solid var(--orange);
+    border-radius: 10px; padding: 12px 16px; font-size: 12.5px;
+    color: var(--dark); margin-bottom: 20px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .privacy-note .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── STUDENT PROFILE ─────────────────────────────────── */
+  .profile-header {
+    background: var(--white); border-radius: var(--radius);
+    padding: 20px 24px; margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 20px;
+  }
+  .profile-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--orange-l); display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800; color: var(--orange); flex-shrink: 0;
+  }
+  .profile-name { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+  .profile-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .profile-chip {
+    background: var(--gray1); border-radius: 6px; padding: 3px 10px;
+    font-size: 12px; color: var(--gray4); font-weight: 500;
+  }
+  .profile-actions { margin-left: auto; display: flex; gap: 8px; }
+
+  /* ── TABS ────────────────────────────────────────────── */
+  .tabs { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 2px solid var(--gray2); }
+  .tab {
+    padding: 9px 18px; font-size: 13.5px; font-weight: 600;
+    color: var(--gray3); cursor: pointer; border-bottom: 3px solid transparent;
+    margin-bottom: -2px; transition: all .15s;
+  }
+  .tab.active { color: var(--orange); border-color: var(--orange); }
+  .tab:hover:not(.active) { color: var(--dark); }
+
+  /* ── CHART MOCK ──────────────────────────────────────── */
+  .chart-mock {
+    background: var(--gray1); border-radius: 10px; height: 140px;
+    display: flex; align-items: flex-end; gap: 6px; padding: 16px 16px 28px;
+    position: relative; overflow: hidden;
+  }
+  .chart-bar {
+    flex: 1; border-radius: 4px 4px 0 0;
+    background: var(--orange); opacity: .7;
+    transition: all .3s;
+  }
+  .chart-bar:hover { opacity: 1; }
+  .chart-bar.low  { background: var(--teal); }
+  .chart-bar.mid  { background: var(--yellow); }
+  .chart-bar.high { background: var(--red); }
+  .chart-labels {
+    display: flex; justify-content: space-around;
+    font-size: 10px; color: var(--gray3); margin-top: 4px; padding: 0 4px;
+  }
+
+  /* ── BITÁCORA ────────────────────────────────────────── */
+  .nota-item {
+    background: var(--white); border-radius: var(--radius); padding: 16px 18px;
+    margin-bottom: 10px; box-shadow: var(--shadow);
+    border-left: 4px solid var(--orange);
+  }
+  .nota-item.privada { border-color: var(--gray3); background: var(--gray1); }
+  .nota-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .nota-autor { font-size: 13px; font-weight: 700; }
+  .nota-fecha { font-size: 11px; color: var(--gray3); margin-left: auto; }
+  .nota-vis { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+  .vis-privada { background: var(--gray2); color: var(--gray4); }
+  .vis-especialista { background: var(--teal-l); color: var(--teal); }
+  .vis-familia { background: var(--green-l); color: var(--green); }
+  .vis-todos { background: var(--orange-l); color: var(--orange); }
+  .nota-text { font-size: 13.5px; color: var(--dark); line-height: 1.6; }
+  .nota-actions { margin-top: 10px; display: flex; gap: 8px; }
+
+  /* ── FORM ────────────────────────────────────────────── */
+  .form-group { margin-bottom: 16px; }
+  .form-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--gray4); margin-bottom: 6px; }
+  .form-input, .form-textarea, .form-select {
+    width: 100%; padding: 10px 14px; border: 1.5px solid var(--gray2);
+    border-radius: 9px; font-size: 14px; font-family: var(--font);
+    background: var(--white); color: var(--dark); transition: border .15s;
+  }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    outline: none; border-color: var(--orange);
+  }
+  .vis-options { display: flex; gap: 8px; flex-wrap: wrap; }
+  .vis-opt {
+    padding: 7px 14px; border-radius: 8px; border: 2px solid var(--gray2);
+    font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all .15s;
+    color: var(--gray4);
+  }
+  .vis-opt:hover { border-color: var(--orange); color: var(--orange); }
+  .vis-opt.selected { border-color: var(--orange); background: var(--orange-l); color: var(--orange-d); }
+
+  /* ── INFORMES ────────────────────────────────────────── */
+  .report-card {
+    background: var(--white); border-radius: var(--radius); padding: 20px;
+    margin-bottom: 12px; box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .report-icon { font-size: 28px; width: 52px; height: 52px; background: var(--orange-l); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .report-info { flex: 1; }
+  .report-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .report-desc { font-size: 12.5px; color: var(--gray4); }
+  .report-dest { font-size: 11px; color: var(--gray3); margin-top: 3px; }
+
+  /* ── ONBOARDING ──────────────────────────────────────── */
+  .onboarding-wrap {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--dark) 0%, #2a2a4a 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .onboarding-card {
+    background: var(--white); border-radius: 20px; padding: 40px;
+    width: 100%; max-width: 440px; box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  }
+  .onboarding-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+  .onboarding-logo .logo-icon {
+    width: 44px; height: 44px; background: var(--orange); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 22px;
+  }
+  .onboarding-logo .logo-text { font-size: 22px; font-weight: 800; color: var(--dark); }
+  .onboarding-logo .logo-sub { font-size: 12px; color: var(--orange); font-weight: 600; letter-spacing: .5px; }
+  .onboarding-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+  .onboarding-sub { font-size: 14px; color: var(--gray3); margin-bottom: 28px; }
+  .step-indicator { display: flex; gap: 6px; margin-bottom: 24px; }
+  .step-dot {
+    height: 4px; border-radius: 2px; flex: 1;
+    background: var(--gray2); transition: background .3s;
+  }
+  .step-dot.done { background: var(--orange); }
+
+  /* ── SETTINGS ────────────────────────────────────────── */
+  .settings-section { margin-bottom: 28px; }
+  .settings-title { font-size: 14px; font-weight: 700; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--gray2); }
+  .settings-row {
+    display: flex; align-items: center; padding: 14px 0;
+    border-bottom: 1px solid var(--gray1); gap: 16px;
+  }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-row-info { flex: 1; }
+  .settings-row-label { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .settings-row-desc { font-size: 12px; color: var(--gray3); }
+  .toggle {
+    width: 44px; height: 24px; background: var(--gray2); border-radius: 12px;
+    position: relative; cursor: pointer; transition: background .2s; flex-shrink: 0;
+    border: none;
+  }
+  .toggle::after {
+    content: ''; position: absolute; top: 3px; left: 3px;
+    width: 18px; height: 18px; border-radius: 50%; background: #fff;
+    transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  }
+  .toggle.on { background: var(--orange); }
+  .toggle.on::after { transform: translateX(20px); }
+
+  /* ── ORIENTADOR CHIP ─────────────────────────────────── */
+  .orientador-item {
+    display: flex; align-items: center; gap: 12px; padding: 12px 0;
+    border-bottom: 1px solid var(--gray1);
+  }
+  .orientador-item:last-child { border-bottom: none; }
+
+  /* ── NAV SCREEN SWITCHER ─────────────────────────────── */
+  .screen-nav {
+    background: var(--white); border-bottom: 1px solid var(--gray2);
+    padding: 10px 16px; display: flex; gap: 6px; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .sn-btn {
+    padding: 6px 12px; border-radius: 6px; font-size: 11.5px; font-weight: 600;
+    border: 1.5px solid var(--gray2); background: var(--white); color: var(--gray4);
+    cursor: pointer; transition: all .15s;
+  }
+  .sn-btn:hover, .sn-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+
+  /* ── EMPTY STATE ─────────────────────────────────────── */
+  .empty-state { text-align: center; padding: 48px 20px; color: var(--gray3); }
+  .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; }
+
+  /* ── BREADCRUMB ──────────────────────────────────────── */
+  .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray3); margin-bottom: 18px; }
+  .breadcrumb a { color: var(--orange); cursor: pointer; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  /* ── DIVIDER ─────────────────────────────────────────── */
+  .divider { height: 1px; background: var(--gray2); margin: 20px 0; }
+
+  /* ── GRID 2 ──────────────────────────────────────────── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* ── NOTA NUEVA MODAL ─────────────────────────────────── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.45); z-index: 200;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 16px; padding: 28px;
+    width: 100%; max-width: 520px; box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+  .modal-sub { font-size: 13px; color: var(--gray3); margin-bottom: 20px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     SCREEN NAVIGATOR (siempre visible)
+══════════════════════════════════════════════ -->
+<div class="screen-nav" id="screenNav">
+  <span style="font-size:11px;color:#9E9EA8;align-self:center;margin-right:6px;">📱 Pantallas:</span>
+  <button class="sn-btn" onclick="showScreen('s-landing')">0 · Inicio</button>
+  <button class="sn-btn active" onclick="showScreen('s-login')">1 · Login</button>
+  <button class="sn-btn" onclick="showScreen('s-dashboard')">2 · Dashboard</button>
+  <button class="sn-btn" onclick="showScreen('s-alertas')">3 · Alertas</button>
+  <button class="sn-btn" onclick="showScreen('s-perfil')">4 · Perfil Estudiante</button>
+  <button class="sn-btn" onclick="showScreen('s-bitacora')">5 · Bitácora</button>
+  <button class="sn-btn" onclick="showScreen('s-informes')">6 · Informes</button>
+  <button class="sn-btn" onclick="showScreen('s-corpus')">7 · Corpus NLP</button>
+  <button class="sn-btn" onclick="showScreen('s-config')">8 · Configuración</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 1: LOGIN
+══════════════════════════════════════════════ -->
+<div class="screen active" id="s-login">
+  <div class="onboarding-wrap">
+    <div class="onboarding-card">
+      <div class="onboarding-logo">
+        <div class="logo-icon"><svg width="22" height="30" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div>
+        <div>
+          <div class="logo-text">paloma</div>
+          <div class="logo-sub">PORTAL ESCOLAR</div>
+        </div>
+      </div>
+
+      <div id="login-form">
+        <div class="onboarding-title">Bienvenido/a</div>
+        <div class="onboarding-sub">Inicia sesión en la cuenta de tu institución</div>
+
+        <div class="form-group">
+          <label class="form-label">Correo institucional</label>
+          <input class="form-input" type="email" placeholder="tu@colegio.edu.co" value="alopez@colegiosancarlos.edu.co">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input class="form-input" type="password" placeholder="••••••••" value="••••••••">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;" onclick="showScreen('s-dashboard')">
+          Ingresar →
+        </button>
+        <div style="text-align:center;margin-top:14px;font-size:13px;color:var(--gray3)">
+          ¿Primer acceso? <a href="#" style="color:var(--orange);font-weight:600" onclick="document.getElementById('login-form').style.display='none';document.getElementById('register-form').style.display='block';return false;">Registrar institución</a>
+        </div>
+      </div>
+
+      <div id="register-form" style="display:none">
+        <div class="onboarding-title">Registrar institución</div>
+        <div class="onboarding-sub">Crea la cuenta del colegio. Los estudiantes se vinculan después, desde adentro.</div>
+        <div class="form-group">
+          <label class="form-label">Nombre del colegio</label>
+          <input class="form-input" type="text" placeholder="ej. Colegio San Carlos" value="Colegio San Carlos">
+        </div>
+        <div class="form-group">
+          <label class="form-label">NIT</label>
+          <input class="form-input" type="text" placeholder="ej. 890.123.456-7" value="890.123.456-7">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo institucional del orientador principal</label>
+          <input class="form-input" type="email" placeholder="tu@colegio.edu.co" value="alopez@colegiosancarlos.edu.co">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input class="form-input" type="password" placeholder="Mínimo 8 caracteres">
+        </div>
+
+        <div style="background:var(--orange-l);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--dark);margin-bottom:20px;">
+          📎 <strong>¿Cómo vinculo estudiantes?</strong> Una vez dentro, usa <em>Dashboard → Vincular estudiante</em> con el código de 8 dígitos que genera el padre desde /family. No necesitas el código para registrarte.
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;" onclick="showScreen('s-dashboard')">
+          Crear cuenta institucional →
+        </button>
+        <div style="text-align:center;margin-top:14px;font-size:13px;color:var(--gray3)">
+          <a href="#" style="color:var(--orange);font-weight:600" onclick="document.getElementById('register-form').style.display='none';document.getElementById('login-form').style.display='block';return false;">← Volver al inicio de sesión</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 2: DASHBOARD
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-dashboard">
+  <div class="shell">
+    <!-- SIDENAV -->
+    <nav class="sidenav">
+      <div class="sidenav-logo">
+        <div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div>
+        <div>
+          <div class="name">paloma</div>
+          <div class="role">Portal Escolar</div>
+        </div>
+      </div>
+      <div class="sidenav-section">Principal</div>
+      <div class="nav-item active" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')">
+        <span class="ni">🔔</span> Alertas
+        <span class="nav-badge">3</span>
+      </div>
+      <div class="sidenav-section">Estudiantes</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">👤</span> Ver estudiante</div>
+      <div class="nav-item" onclick="showScreen('s-bitacora')"><span class="ni">📓</span> Bitácora</div>
+      <div class="sidenav-section">Institución</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="nav-item" onclick="showScreen('s-corpus')"><span class="ni">🧠</span> Corpus NLP</div>
+      <div class="nav-item" onclick="showScreen('s-config')"><span class="ni">⚙️</span> Configuración</div>
+      <div class="sidenav-footer">
+        <div class="user-chip">
+          <div class="avatar">AL</div>
+          <div class="user-info">
+            <div class="uname">Ana M. López</div>
+            <div class="ucargo">Orientadora · Mañana</div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="topbar">
+        <h1>Dashboard</h1>
+        <div class="topbar-actions">
+          <div style="font-size:12px;color:var(--gray3);">Colegio San Carlos · Jornada Mañana · 6.°–11.°</div>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('modalVincular').classList.add('open')">+ Vincular estudiante</button>
+        </div>
+      </div>
+      <div class="content">
+
+        <!-- STATS -->
+        <div class="stats-row">
+          <div class="stat-card red">
+            <div class="stat-num">2</div>
+            <div class="stat-label">🔴 Alertas Nivel 0–1 activas</div>
+          </div>
+          <div class="stat-card yellow">
+            <div class="stat-num">5</div>
+            <div class="stat-label">🟡 En seguimiento</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-num">41</div>
+            <div class="stat-label">🟢 Estudiantes estables</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-num">48</div>
+            <div class="stat-label">Total estudiantes vinculados</div>
+          </div>
+        </div>
+
+        <!-- ALERTAS DEL DÍA -->
+        <div class="card" style="margin-bottom:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div class="card-title" style="margin:0">🚨 Alertas activas hoy</div>
+            <button class="btn btn-outline btn-sm" onclick="showScreen('s-alertas')">Ver todas</button>
+          </div>
+          <div class="alert-item nivel0" style="margin-bottom:8px;">
+            <span class="alert-badge badge-red">Nivel 0 · Emergencia</span>
+            <div class="alert-info">
+              <div class="alert-student">Sofía R. · 9°A</div>
+              <div class="alert-desc">Emoción: tristeza profunda · Intensidad 9/10</div>
+              <div class="alert-time">Hace 23 min · Sin atender</div>
+              <div class="alert-actions">
+                <button class="btn btn-danger btn-sm">📞 Contactar padre ahora</button>
+                <button class="btn btn-outline btn-sm" onclick="showScreen('s-alertas')">Ver detalle</button>
+              </div>
+            </div>
+          </div>
+          <div class="alert-item nivel1">
+            <span class="alert-badge badge-orange">Nivel 1 · Urgente</span>
+            <div class="alert-info">
+              <div class="alert-student">Miguel T. · 11°B</div>
+              <div class="alert-desc">Emoción: ansiedad · Intensidad 8/10 · 3 alertas en 30 días</div>
+              <div class="alert-time">Hace 2 h · En seguimiento</div>
+              <div class="alert-actions">
+                <button class="btn btn-primary btn-sm" onclick="showScreen('s-alertas')">Registrar acción</button>
+                <button class="btn btn-outline btn-sm">Derivar a especialista</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRIAGE: DOS COLUMNAS -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <h2 style="font-size:15px;font-weight:700;">Mis estudiantes</h2>
+          <input class="filter-search" type="text" placeholder="🔍  Buscar por nombre..." style="max-width:240px;">
+        </div>
+
+        <div class="triage-cols">
+
+          <!-- COLUMNA IZQUIERDA: Requieren atención -->
+          <div>
+            <div class="triage-col-title">
+              <span style="background:var(--red-l);color:var(--red);border-radius:6px;padding:3px 8px;font-size:11px;">🚨 7 REQUIEREN ATENCIÓN</span>
+            </div>
+            <div class="triage-list">
+
+              <div class="triage-row nivel0" onclick="setActiveStudent('Sofía Ramírez','9°A','🔴 Nivel 0');showScreen('s-perfil')">
+                <div class="triage-avatar" style="background:var(--red-l);color:var(--red);">SR</div>
+                <div class="triage-info">
+                  <div class="triage-name">Sofía Ramírez</div>
+                  <div class="triage-sub">9°A · 😢 Tristeza profunda · 9/10 · hace 23 min</div>
+                </div>
+                <div class="triage-action">
+                  <span class="alert-badge badge-red" style="font-size:10px;">N0</span>
+                </div>
+              </div>
+
+              <div class="triage-row nivel1" onclick="setActiveStudent('Miguel Torres','11°B','🟠 Nivel 1');showScreen('s-perfil')">
+                <div class="triage-avatar" style="background:var(--orange-l);color:var(--orange);">MT</div>
+                <div class="triage-info">
+                  <div class="triage-name">Miguel Torres</div>
+                  <div class="triage-sub">11°B · 😰 Ansiedad · 8/10 · hace 2 h</div>
+                </div>
+                <div class="triage-action">
+                  <span class="alert-badge badge-orange" style="font-size:10px;">N1</span>
+                </div>
+              </div>
+
+              <div class="triage-row nivel2" onclick="setActiveStudent('Valentina Cruz','7°B','🟡 Nivel 2');showScreen('s-perfil')">
+                <div class="triage-avatar" style="background:var(--yellow-l);color:#c49a00;">VC</div>
+                <div class="triage-info">
+                  <div class="triage-name">Valentina Cruz</div>
+                  <div class="triage-sub">7°B · 😤 Frustración · 7/10 · ayer</div>
+                </div>
+                <div class="triage-action">
+                  <span class="alert-badge badge-yellow" style="font-size:10px;">N2</span>
+                </div>
+              </div>
+
+              <div class="triage-row nivel2" onclick="setActiveStudent('Andrés Mora','8°A','🟡 Nivel 2');showScreen('s-perfil')">
+                <div class="triage-avatar" style="background:var(--yellow-l);color:#c49a00;">AM</div>
+                <div class="triage-info">
+                  <div class="triage-name">Andrés Mora</div>
+                  <div class="triage-sub">8°A · 😔 Tristeza · 6/10 · ayer</div>
+                </div>
+                <div class="triage-action">
+                  <span class="alert-badge badge-yellow" style="font-size:10px;">N2</span>
+                </div>
+              </div>
+
+              <div style="text-align:center;padding:10px;font-size:12px;color:var(--gray3);">+ 3 estudiantes más en seguimiento</div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA: Estables -->
+          <div>
+            <div class="triage-col-title">
+              <span style="background:var(--green-l);color:var(--green);border-radius:6px;padding:3px 8px;font-size:11px;">🟢 41 ESTABLES</span>
+            </div>
+            <div class="triage-list">
+
+              <div class="triage-row" onclick="setActiveStudent('Laura Medina','8°C','🟢 Estable');showScreen('s-perfil')">
+                <div class="triage-avatar" style="background:var(--green-l);color:var(--green);">LM</div>
+                <div class="triage-info">
+                  <div class="triage-name">Laura Medina</div>
+                  <div class="triage-sub">8°C · 😊 Alegría · 7/10 · ayer</div>
+                </div>
+                <div class="status-dot dot-green"></div>
+              </div>
+
+              <div class="triage-row" onclick="setActiveStudent('Julián Castro','10°A','🟢 Estable');showScreen('s-perfil')">
+                <div class="triage-avatar" style="background:var(--teal-l);color:var(--teal);">JC</div>
+                <div class="triage-info">
+                  <div class="triage-name">Julián Castro</div>
+                  <div class="triage-sub">10°A · 🙂 Calma · 5/10 · hace 3 h</div>
+                </div>
+                <div class="status-dot dot-green"></div>
+              </div>
+
+              <div class="triage-row" onclick="setActiveStudent('Camila Ruiz','6°C','🟢 Estable');showScreen('s-perfil')">
+                <div class="triage-avatar" style="background:var(--purple-l);color:var(--purple);">CR</div>
+                <div class="triage-info">
+                  <div class="triage-name">Camila Ruiz</div>
+                  <div class="triage-sub">6°C · 😌 Tranquilidad · 6/10 · hace 1 h</div>
+                </div>
+                <div class="status-dot dot-green"></div>
+              </div>
+
+              <div style="text-align:center;padding:10px;font-size:12px;color:var(--gray3);cursor:pointer;color:var(--orange);" onclick="showScreen('s-perfil')">Ver todos los estudiantes →</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ESTADÍSTICAS DEL CURSO -->
+        <div class="card" style="margin-top:24px;">
+          <div class="card-title">📈 Batería emocional del grupo — últimas 2 semanas</div>
+          <div class="chart-mock">
+            <div class="chart-bar low"  style="height:45%"></div>
+            <div class="chart-bar low"  style="height:55%"></div>
+            <div class="chart-bar"      style="height:60%"></div>
+            <div class="chart-bar"      style="height:65%"></div>
+            <div class="chart-bar mid"  style="height:40%"></div>
+            <div class="chart-bar mid"  style="height:35%"></div>
+            <div class="chart-bar"      style="height:58%"></div>
+            <div class="chart-bar"      style="height:62%"></div>
+            <div class="chart-bar"      style="height:70%"></div>
+            <div class="chart-bar high" style="height:30%"></div>
+            <div class="chart-bar high" style="height:28%"></div>
+            <div class="chart-bar"      style="height:50%"></div>
+            <div class="chart-bar"      style="height:55%"></div>
+            <div class="chart-bar"      style="height:58%"></div>
+          </div>
+          <div class="chart-labels">
+            <span>L 12</span><span>M</span><span>X</span><span>J</span><span>V</span>
+            <span style="opacity:.3">S</span><span style="opacity:.3">D</span>
+            <span>L 19</span><span>M</span><span>X</span><span>J</span><span>V</span>
+            <span style="opacity:.3">S</span><span style="opacity:.3">D</span>
+          </div>
+          <div style="font-size:12px;color:var(--gray3);margin-top:8px;">
+            💡 <em>Caída notable el miércoles y jueves — coincide con jornada de evaluaciones parciales. Recomendado: reunión de equipo.</em>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 3: ALERTAS
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-alertas">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Escolar</div></div></div>
+      <div class="sidenav-section">Principal</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item active"><span class="ni">🔔</span> Alertas <span class="nav-badge">3</span></div>
+      <div class="sidenav-section">Estudiantes</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">👤</span> Ver estudiante</div>
+      <div class="nav-item" onclick="showScreen('s-bitacora')"><span class="ni">📓</span> Bitácora</div>
+      <div class="sidenav-section">Institución</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="nav-item" onclick="showScreen('s-corpus')"><span class="ni">🧠</span> Corpus NLP</div>
+      <div class="nav-item" onclick="showScreen('s-config')"><span class="ni">⚙️</span> Configuración</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">AL</div><div class="user-info"><div class="uname">Ana M. López</div><div class="ucargo">Orientadora · Mañana</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar">
+        <h1>Alertas NLP</h1>
+        <div class="topbar-actions">
+          <select class="filter-select" style="border:1.5px solid var(--gray2)"><option>Todas</option><option>Nivel 0</option><option>Nivel 1</option><option>Nivel 2</option></select>
+          <select class="filter-select" style="border:1.5px solid var(--gray2)"><option>Activas</option><option>Resueltas</option><option>Todas</option></select>
+        </div>
+      </div>
+      <div class="content">
+
+        <div class="privacy-note">
+          <span class="icon">🔒</span>
+          <span><strong>Privacidad:</strong> Ves la emoción, la intensidad y el nivel de riesgo del estudiante — <strong>nunca el texto que escribió</strong>. Solo el especialista médico vinculado puede ver las frases literales, con autorización del padre.</span>
+        </div>
+
+        <!-- NIVEL 0 -->
+        <div style="font-size:12px;font-weight:700;color:var(--red);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;">● Nivel 0 — Emergencia (1)</div>
+        <div class="alert-item nivel0">
+          <span class="alert-badge badge-red">NIVEL 0</span>
+          <div class="alert-info">
+            <div class="alert-student">Sofía Ramírez · 9°A · 15 años</div>
+            <div class="alert-desc">Emoción detectada: <strong>tristeza profunda</strong> · Intensidad: <strong>9/10</strong> · Patrón: recurrente en 5 días</div>
+            <div class="alert-time">⏱ Hoy 09:47 am · <strong style="color:var(--red)">Sin atender — acción obligatoria en menos de 24 h</strong></div>
+            <div class="alert-actions">
+              <button class="btn btn-danger">📞 Contactar padre ahora</button>
+              <button class="btn btn-primary" onclick="document.getElementById('modalCrisis').classList.add('open')">🚨 Activar protocolo de crisis</button>
+              <button class="btn btn-outline btn-sm">📩 Enviar nota a familia</button>
+              <button class="btn btn-outline btn-sm" onclick="showScreen('s-perfil')">Ver perfil completo</button>
+            </div>
+            <div style="margin-top:10px;background:var(--white);border-radius:8px;padding:10px 14px;font-size:12.5px;color:var(--gray4)">
+              <strong>Registrar acción tomada</strong> (obligatorio para cerrar la alerta):
+              <textarea class="form-textarea" style="margin-top:6px;min-height:60px;" placeholder="ej. Llamé a la madre a las 10:15 am. Acordamos cita con psicólogo esta tarde..."></textarea>
+              <div style="display:flex;gap:8px;margin-top:8px;">
+                <button class="btn btn-green btn-sm">✓ Registrar y pasar a 'En atención'</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NIVEL 1 -->
+        <div style="font-size:12px;font-weight:700;color:var(--orange);letter-spacing:.8px;text-transform:uppercase;margin:16px 0 8px;">● Nivel 1 — Urgente (1)</div>
+        <div class="alert-item nivel1">
+          <span class="alert-badge badge-orange">NIVEL 1</span>
+          <div class="alert-info">
+            <div class="alert-student">Miguel Torres · 11°B · 17 años</div>
+            <div class="alert-desc">Emoción detectada: <strong>ansiedad</strong> · Intensidad: <strong>8/10</strong> · 3 alertas Nivel 1 en los últimos 30 días</div>
+            <div class="alert-time">⏱ Hoy 08:15 am · En seguimiento</div>
+            <div class="alert-actions">
+              <button class="btn btn-primary btn-sm">📓 Registrar seguimiento</button>
+              <button class="btn btn-outline btn-sm">🩺 Derivar a especialista vinculado</button>
+              <button class="btn btn-outline btn-sm">📩 Enviar nota a familia</button>
+              <button class="btn btn-outline btn-sm" onclick="showScreen('s-perfil')">Ver perfil</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- NIVEL 2 -->
+        <div style="font-size:12px;font-weight:700;color:#c49a00;letter-spacing:.8px;text-transform:uppercase;margin:16px 0 8px;">● Nivel 2 — Seguimiento (1)</div>
+        <div class="alert-item nivel2">
+          <span class="alert-badge badge-yellow">NIVEL 2</span>
+          <div class="alert-info">
+            <div class="alert-student">Laura Medina · 8°C · 13 años</div>
+            <div class="alert-desc">Señal: <strong>baja sostenida de batería emocional</strong> · Promedio bajó de 7.2 a 4.1 en 10 días · Sin registros en 3 días</div>
+            <div class="alert-time">⏱ Ayer 15:30 pm · Sin urgencia inmediata</div>
+            <div class="alert-actions">
+              <button class="btn btn-outline btn-sm">📋 Revisar en próxima sesión</button>
+              <button class="btn btn-outline btn-sm">📩 Enviar nota a familia</button>
+              <button class="btn btn-ghost btn-sm">Archivar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUELTAS -->
+        <div style="font-size:12px;font-weight:700;color:var(--gray3);letter-spacing:.8px;text-transform:uppercase;margin:24px 0 8px;">● Resueltas esta semana (3)</div>
+        <div class="alert-item" style="opacity:.6">
+          <span class="alert-badge badge-gray">Resuelta</span>
+          <div class="alert-info">
+            <div class="alert-student">Julián Castro · 10°A</div>
+            <div class="alert-desc">Nivel 1 · Ansiedad 7/10 · Resuelto el lunes</div>
+            <div class="alert-time">Lun 19 May</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 4: PERFIL DEL ESTUDIANTE
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-perfil">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Escolar</div></div></div>
+      <div class="sidenav-section">Principal</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">3</span></div>
+      <div class="sidenav-section">Estudiantes</div>
+      <div class="nav-item active"><span class="ni">👤</span> Ver estudiante</div>
+      <div class="nav-item" onclick="showScreen('s-bitacora')"><span class="ni">📓</span> Bitácora</div>
+      <div class="sidenav-section">Institución</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="nav-item" onclick="showScreen('s-corpus')"><span class="ni">🧠</span> Corpus NLP</div>
+      <div class="nav-item" onclick="showScreen('s-config')"><span class="ni">⚙️</span> Configuración</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">AL</div><div class="user-info"><div class="uname">Ana M. López</div><div class="ucargo">Orientadora · Mañana</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar">
+        <div class="breadcrumb" style="margin:0;flex:1">
+          <a onclick="showScreen('s-dashboard')">Dashboard</a> / <span>Perfil del estudiante</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('modalNota').classList.add('open')">+ Nueva nota</button>
+          <button class="btn btn-outline btn-sm">📥 Exportar informe</button>
+        </div>
+      </div>
+
+      <!-- BARRA ESTUDIANTE ACTIVO -->
+      <div class="student-active-bar" id="studentBarPerfil">
+        <div class="sab-avatar" id="sabAvatarPerfil">SR</div>
+        <div>
+          <div class="sab-name" id="sabNamePerfil">Sofía Ramírez</div>
+          <div class="sab-meta" id="sabMetaPerfil">9°A · 15 años · Vinculada hace 3 meses</div>
+        </div>
+        <span class="sab-badge" id="sabBadgePerfil">🔴 Alerta activa</span>
+        <button class="sab-close" onclick="showScreen('s-dashboard')">← Volver al dashboard</button>
+      </div>
+
+      <div class="content">
+
+        <!-- HEADER -->
+        <div class="profile-header">
+          <div class="profile-avatar">SR</div>
+          <div style="flex:1">
+            <div class="profile-name">Sofía Ramírez</div>
+            <div class="profile-meta">
+              <span class="profile-chip">9° A</span>
+              <span class="profile-chip">15 años</span>
+              <span class="profile-chip">Jornada Mañana</span>
+              <span class="profile-chip" style="background:var(--red-l);color:var(--red)">🔴 Alerta activa</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="tabs" id="perfilTabs">
+          <div class="tab active" onclick="switchTab(this,'tab-emocional')">📊 Estado emocional</div>
+          <div class="tab" onclick="switchTab(this,'tab-alertas')">🔔 Alertas (3)</div>
+          <div class="tab" onclick="switchTab(this,'tab-bitacora')">📓 Bitácora orientador</div>
+          <div class="tab" onclick="switchTab(this,'tab-notas-familia')">👨‍👩‍👧 Notas familia</div>
+          <div class="tab" onclick="switchTab(this,'tab-notas-medico')">🩺 Notas especialista</div>
+          <div class="tab" onclick="switchTab(this,'tab-actores')">👥 Actores</div>
+        </div>
+
+        <!-- TAB: EMOCIONAL -->
+        <div class="tab-content active" id="tab-emocional">
+          <div class="grid2" style="margin-bottom:20px;">
+            <div class="card">
+              <div class="card-title">Batería emocional — últimas 2 semanas</div>
+              <div class="chart-mock">
+                <div class="chart-bar" style="height:65%"></div>
+                <div class="chart-bar" style="height:70%"></div>
+                <div class="chart-bar mid" style="height:50%"></div>
+                <div class="chart-bar mid" style="height:40%"></div>
+                <div class="chart-bar high" style="height:25%"></div>
+                <div class="chart-bar high" style="height:20%"></div>
+                <div class="chart-bar high" style="height:18%"></div>
+                <div class="chart-bar high" style="height:15%"></div>
+                <div class="chart-bar high" style="height:10%"></div>
+              </div>
+              <div class="chart-labels"><span>L 12</span><span>M</span><span>X</span><span>J</span><span>V</span><span style="opacity:.3">S</span><span style="opacity:.3">D</span><span>L 19</span><span>M</span></div>
+              <div style="font-size:11.5px;color:var(--red);margin-top:8px;font-weight:600;">⚠ Tendencia descendente sostenida — 7 días consecutivos</div>
+            </div>
+            <div class="card">
+              <div class="card-title">Emociones más frecuentes (30 días)</div>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>😢 Tristeza</span><span style="color:var(--red);font-weight:700">38%</span></div>
+                  <div style="height:8px;background:var(--gray2);border-radius:4px;overflow:hidden;"><div style="height:100%;width:38%;background:var(--red);border-radius:4px;"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>😰 Ansiedad</span><span style="color:var(--orange);font-weight:700">27%</span></div>
+                  <div style="height:8px;background:var(--gray2);border-radius:4px;overflow:hidden;"><div style="height:100%;width:27%;background:var(--orange);border-radius:4px;"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>😤 Frustración</span><span style="color:var(--yellow);font-weight:700">18%</span></div>
+                  <div style="height:8px;background:var(--gray2);border-radius:4px;overflow:hidden;"><div style="height:100%;width:18%;background:var(--yellow);border-radius:4px;"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>😊 Alegría</span><span style="color:var(--green);font-weight:700">10%</span></div>
+                  <div style="height:8px;background:var(--gray2);border-radius:4px;overflow:hidden;"><div style="height:100%;width:10%;background:var(--green);border-radius:4px;"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>😑 Apatía</span><span style="color:var(--gray3);font-weight:700">7%</span></div>
+                  <div style="height:8px;background:var(--gray2);border-radius:4px;overflow:hidden;"><div style="height:100%;width:7%;background:var(--gray3);border-radius:4px;"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="privacy-note">
+            <span class="icon">🔒</span>
+            <span>Solo ves patrones y categorías de emoción. <strong>Nunca el texto que escribió Sofía</strong>. Las frases literales detectadas por el NLP solo son visibles para el especialista médico vinculado.</span>
+          </div>
+        </div>
+
+        <!-- TAB: ALERTAS -->
+        <div class="tab-content" id="tab-alertas" style="display:none">
+          <div class="alert-item nivel0" style="margin-bottom:10px;">
+            <span class="alert-badge badge-red">Nivel 0 · Hoy</span>
+            <div class="alert-info">
+              <div class="alert-student">Tristeza profunda · 9/10</div>
+              <div class="alert-desc">Patrón: recurrente 5 días · Sin atender</div>
+              <div class="alert-actions">
+                <button class="btn btn-danger btn-sm">Registrar acción</button>
+              </div>
+            </div>
+          </div>
+          <div class="alert-item nivel1">
+            <span class="alert-badge badge-orange">Nivel 1 · 15 mayo</span>
+            <div class="alert-info">
+              <div class="alert-student">Ansiedad · 7/10</div>
+              <div class="alert-desc">Estado: Resuelta · Acción registrada</div>
+            </div>
+          </div>
+          <div class="alert-item nivel2">
+            <span class="alert-badge badge-yellow">Nivel 2 · 8 mayo</span>
+            <div class="alert-info">
+              <div class="alert-student">Baja sostenida de actividad emocional</div>
+              <div class="alert-desc">Estado: Archivada · Vista en reunión de equipo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: BITÁCORA -->
+        <div class="tab-content" id="tab-bitacora" style="display:none">
+          <div style="display:flex;justify-content:flex-end;margin-bottom:14px;">
+            <button class="btn btn-primary btn-sm" onclick="document.getElementById('modalNota').classList.add('open')">+ Nueva nota</button>
+          </div>
+          <div class="nota-item">
+            <div class="nota-header">
+              <div class="nota-autor">Ana M. López</div>
+              <span class="nota-vis vis-especialista">Visible al especialista</span>
+              <div class="nota-fecha">Hoy 10:05 am</div>
+            </div>
+            <div class="nota-text">Sofía llegó llorando al descanso. Se negó a hablar del motivo. Permitió que la acompañara en silencio. Al final del descanso dijo que "todo está bien" pero su expresión corporal indica lo contrario. Pendiente conversar con directora de grupo.</div>
+            <div class="nota-actions">
+              <button class="btn btn-ghost btn-sm" style="font-size:11px;color:var(--gray3);">+ Nota de seguimiento</button>
+              <button class="btn btn-ghost btn-sm" style="font-size:11px;color:var(--teal);">Proponer frase al corpus NLP</button>
+            </div>
+          </div>
+          <div class="nota-item privada">
+            <div class="nota-header">
+              <div class="nota-autor">Ana M. López</div>
+              <span class="nota-vis vis-privada">🔒 Solo yo</span>
+              <div class="nota-fecha">19 mayo, 2:30 pm</div>
+            </div>
+            <div class="nota-text">Noté que Sofía evitó hablar con sus amigas habituales durante el almuerzo. Sentó sola. Comportamiento inusual para su perfil.</div>
+          </div>
+          <div class="nota-item" style="border-color:var(--green)">
+            <div class="nota-header">
+              <div class="nota-autor">Carlos M. Vega</div>
+              <span class="nota-vis vis-todos" style="background:var(--green-l);color:var(--green)">Todos los actores</span>
+              <div class="nota-fecha">15 mayo, 11:00 am</div>
+            </div>
+            <div class="nota-text">Reunión con Sofía y su madre. Se habló del aumento de carga académica del tercer período. La madre se comprometió a retomar acompañamiento en casa. Sofía participó activamente. Seguimiento en 2 semanas.</div>
+          </div>
+        </div>
+
+        <!-- TAB: NOTAS FAMILIA -->
+        <div class="tab-content" id="tab-notas-familia" style="display:none">
+          <div class="privacy-note">
+            <span class="icon">ℹ️</span>
+            <span>Solo ves las notas que la familia marcó como visibles para el colegio o para todos los actores. Las notas privadas de los padres <strong>nunca</strong> son visibles aquí.</span>
+          </div>
+          <div class="nota-item" style="border-color:var(--teal)">
+            <div class="nota-header">
+              <div class="nota-autor" style="color:var(--teal)">Patricia Ramírez · Madre</div>
+              <span class="nota-vis" style="background:var(--teal-l);color:var(--teal);">Visible al colegio</span>
+              <div class="nota-fecha">Hoy 8:30 am</div>
+            </div>
+            <div class="nota-text">Sofía no durmió bien esta semana. Hemos tenido discusiones en casa por el teléfono. Puede que esté un poco sensible. Por favor háganme saber si la notan mal.</div>
+            <div class="nota-actions">
+              <button class="btn btn-ghost btn-sm" style="font-size:11px;color:var(--orange);">↩ Responder con nota en bitácora</button>
+            </div>
+          </div>
+          <div class="nota-item" style="border-color:var(--teal)">
+            <div class="nota-header">
+              <div class="nota-autor" style="color:var(--teal)">Jorge Ramírez · Padre</div>
+              <span class="nota-vis" style="background:var(--orange-l);color:var(--orange);">Todos los actores</span>
+              <div class="nota-fecha">15 mayo, 7:00 pm</div>
+            </div>
+            <div class="nota-text">Gracias por la reunión del martes. Sofía llegó más tranquila a casa esa tarde. Seguimos en contacto.</div>
+          </div>
+          <div style="text-align:center;padding:20px;font-size:13px;color:var(--gray3)">No hay más notas de familia disponibles.</div>
+        </div>
+
+        <!-- TAB: NOTAS ESPECIALISTA -->
+        <div class="tab-content" id="tab-notas-medico" style="display:none">
+          <div class="privacy-note">
+            <span class="icon">ℹ️</span>
+            <span>Solo ves las notas que la especialista compartió explícitamente con el colegio. Las notas clínicas privadas y el historial NLP literal <strong>nunca</strong> son visibles aquí.</span>
+          </div>
+          <div class="nota-item" style="border-color:var(--green)">
+            <div class="nota-header">
+              <div class="nota-autor" style="color:var(--green)">Dra. Carmen Ríos · Psicóloga clínica</div>
+              <span class="nota-vis" style="background:var(--green-l);color:var(--green);">Visible al colegio</span>
+              <div class="nota-fecha">20 mayo, 3:00 pm</div>
+            </div>
+            <div class="nota-text">Sofía está pasando por un período de ajuste emocional. Le pido al equipo que refuercen la sensación de pertenencia en el aula. Eviten confrontarla directamente en público. Próxima sesión: 27 de mayo.</div>
+            <div class="nota-actions">
+              <button class="btn btn-ghost btn-sm" style="font-size:11px;color:var(--orange);">↩ Responder con nota en bitácora</button>
+            </div>
+          </div>
+          <div style="text-align:center;padding:20px;font-size:13px;color:var(--gray3)">No hay más notas del especialista disponibles.</div>
+        </div>
+
+        <!-- TAB: ACTORES -->
+        <div class="tab-content" id="tab-actores" style="display:none">
+          <div class="card">
+            <div class="card-title">Actores vinculados a Sofía</div>
+            <div style="font-size:12.5px;color:var(--gray3);margin-bottom:14px;">El orientador NO ve datos de contacto de los especialistas médicos.</div>
+            <div class="orientador-item">
+              <div class="avatar" style="background:var(--teal-l);color:var(--teal);">M</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:14px;">Madre · Patricia Ramírez</div>
+                <div style="font-size:12px;color:var(--green)">✓ Activa desde marzo 2026</div>
+              </div>
+              <span class="badge-green alert-badge">Padre/Madre</span>
+            </div>
+            <div class="orientador-item">
+              <div class="avatar" style="background:var(--teal-l);color:var(--teal);">P</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:14px;">Padre · Jorge Ramírez</div>
+                <div style="font-size:12px;color:var(--green)">✓ Activo desde abril 2026</div>
+              </div>
+              <span class="badge-green alert-badge">Padre/Madre</span>
+            </div>
+            <div class="orientador-item">
+              <div class="avatar" style="background:var(--teal-l);color:var(--teal);">Ps</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:14px;">Especialista · Psicóloga clínica</div>
+                <div style="font-size:12px;color:var(--gray3);">Datos de contacto: solo visibles para la familia</div>
+              </div>
+              <span class="alert-badge badge-gray">Especialista</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 5: BITÁCORA GENERAL
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-bitacora">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Escolar</div></div></div>
+      <div class="sidenav-section">Principal</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">3</span></div>
+      <div class="sidenav-section">Estudiantes</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">👤</span> Ver estudiante</div>
+      <div class="nav-item active"><span class="ni">📓</span> Bitácora</div>
+      <div class="sidenav-section">Institución</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="nav-item" onclick="showScreen('s-corpus')"><span class="ni">🧠</span> Corpus NLP</div>
+      <div class="nav-item" onclick="showScreen('s-config')"><span class="ni">⚙️</span> Configuración</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">AL</div><div class="user-info"><div class="uname">Ana M. López</div><div class="ucargo">Orientadora · Mañana</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar">
+        <h1>Bitácora del Orientador</h1>
+        <div class="topbar-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('modalNota').classList.add('open')">+ Nueva nota</button>
+        </div>
+      </div>
+
+      <!-- BARRA ESTUDIANTE ACTIVO -->
+      <div class="student-active-bar" id="studentBarBitacora">
+        <div class="sab-avatar" id="sabAvatarBitacora">SR</div>
+        <div>
+          <div class="sab-name" id="sabNameBitacora">Sofía Ramírez</div>
+          <div class="sab-meta">Mostrando entradas de este estudiante</div>
+        </div>
+        <span class="sab-badge" id="sabBadgeBitacora">🔴 Alerta activa</span>
+        <button class="sab-close" onclick="clearActiveStudent();showScreen('s-bitacora')">Ver bitácora general ×</button>
+      </div>
+
+      <div class="content">
+        <div class="filters-row">
+          <input class="filter-search" type="text" placeholder="🔍  Buscar por estudiante o contenido...">
+          <select class="filter-select"><option>Todos los estudiantes</option><option>Sofía Ramírez</option><option>Miguel Torres</option><option>Laura Medina</option></select>
+          <select class="filter-select"><option>Toda visibilidad</option><option>🔒 Solo yo</option><option>Visible al especialista</option><option>Visible a familia</option><option>Todos</option></select>
+        </div>
+
+        <div class="nota-item">
+          <div class="nota-header">
+            <div class="nota-autor">Sofía Ramírez · 9°A</div>
+            <span class="nota-vis vis-especialista">Visible al especialista</span>
+            <div class="nota-fecha">Hoy 10:05 am</div>
+          </div>
+          <div class="nota-text">Sofía llegó llorando al descanso. Se negó a hablar del motivo. Permitió que la acompañara en silencio...</div>
+          <div class="nota-actions">
+            <button class="btn btn-ghost btn-sm" style="font-size:11.5px;" onclick="showScreen('s-perfil')">Ver perfil del estudiante →</button>
+          </div>
+        </div>
+
+        <div class="nota-item">
+          <div class="nota-header">
+            <div class="nota-autor">Miguel Torres · 11°B</div>
+            <span class="nota-vis vis-todos" style="background:var(--green-l);color:var(--green)">Todos los actores</span>
+            <div class="nota-fecha">Ayer, 3:15 pm</div>
+          </div>
+          <div class="nota-text">Conversación individual solicitada por el estudiante. Manifestó preocupación por exámenes del ICFES. Se acordó sesión de manejo de ansiedad ante exámenes para el grupo de 11.°</div>
+        </div>
+
+        <div class="nota-item privada">
+          <div class="nota-header">
+            <div class="nota-autor">Sofía Ramírez · 9°A</div>
+            <span class="nota-vis vis-privada">🔒 Solo yo</span>
+            <div class="nota-fecha">19 mayo, 2:30 pm</div>
+          </div>
+          <div class="nota-text">Noté que Sofía evitó hablar con sus amigas durante el almuerzo...</div>
+        </div>
+
+        <div class="nota-item">
+          <div class="nota-header">
+            <div class="nota-autor">Laura Medina · 8°C</div>
+            <span class="nota-vis vis-familia" style="background:var(--green-l);color:var(--green)">Visible a familia</span>
+            <div class="nota-fecha">15 mayo, 9:00 am</div>
+          </div>
+          <div class="nota-text">Laura participó en la actividad de identificación de emociones del grupo. Mostró alta capacidad para nombrar sus estados, sin embargo se pone muy ansiosa cuando el tema gira hacia la familia.</div>
+        </div>
+
+        <div style="background:var(--orange-l);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:13px;">
+          🔒 <strong>Regla de integridad:</strong> Las notas no pueden editarse ni borrarse una vez guardadas. Solo puedes agregar una nota de seguimiento. Cada nota registra automáticamente la firma del orientador, cargo y fecha/hora.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 6: INFORMES
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-informes">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Escolar</div></div></div>
+      <div class="sidenav-section">Principal</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">3</span></div>
+      <div class="sidenav-section">Estudiantes</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">👤</span> Ver estudiante</div>
+      <div class="nav-item" onclick="showScreen('s-bitacora')"><span class="ni">📓</span> Bitácora</div>
+      <div class="sidenav-section">Institución</div>
+      <div class="nav-item active"><span class="ni">📊</span> Informes</div>
+      <div class="nav-item" onclick="showScreen('s-config')"><span class="ni">⚙️</span> Configuración</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">AL</div><div class="user-info"><div class="uname">Ana M. López</div><div class="ucargo">Orientadora · Mañana</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar">
+        <h1>Informes Institucionales</h1>
+        <div class="topbar-actions">
+          <select class="filter-select" style="border:1.5px solid var(--gray2)"><option>Mayo 2026</option><option>Abril 2026</option><option>Marzo 2026</option></select>
+        </div>
+      </div>
+      <div class="content">
+
+        <div style="font-size:13px;color:var(--gray4);margin-bottom:20px;">
+          📋 Genera y exporta informes según el destinatario. Los datos individuales siempre se muestran con el nombre — los informes institucionales y de comité se exportan <strong>anonimizados</strong>.
+        </div>
+
+        <div class="report-card">
+          <div class="report-icon">📊</div>
+          <div class="report-info">
+            <div class="report-title">Informe mensual de curso</div>
+            <div class="report-desc">Distribución de emociones del grupo, alertas generadas y tendencias colectivas — datos anonimizados.</div>
+            <div class="report-dest">Para: Comité institucional · Directivos</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+            <button class="btn btn-primary btn-sm">📥 Generar PDF</button>
+            <button class="btn btn-outline btn-sm">👁 Vista previa</button>
+          </div>
+        </div>
+
+        <div class="report-card">
+          <div class="report-icon">👤</div>
+          <div class="report-info">
+            <div class="report-title">Informe individual del estudiante</div>
+            <div class="report-desc">Historial emocional completo, alertas y bitácora del estudiante seleccionado.</div>
+            <div class="report-dest">Para: Orientador (uso interno) · Solo el autor</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+            <select class="filter-select" style="width:180px;font-size:12px;"><option>Seleccionar estudiante</option><option>Sofía Ramírez</option><option>Miguel Torres</option><option>Laura Medina</option></select>
+            <button class="btn btn-primary btn-sm">📥 Generar PDF</button>
+          </div>
+        </div>
+
+        <div class="report-card">
+          <div class="report-icon">⚖️</div>
+          <div class="report-info">
+            <div class="report-title">Informe para Comité de Convivencia</div>
+            <div class="report-desc">Resumen de situación emocional relevante. El orientador selecciona qué incluir antes de exportar. Sin frases NLP literales.</div>
+            <div class="report-dest">Para: Comité de convivencia · Rector</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+            <button class="btn btn-outline btn-sm">⚙ Configurar contenido</button>
+            <button class="btn btn-primary btn-sm">📥 Exportar PDF firmado</button>
+          </div>
+        </div>
+
+        <div class="report-card">
+          <div class="report-icon">🏛️</div>
+          <div class="report-info">
+            <div class="report-title">Informe anual institucional</div>
+            <div class="report-desc">Estadísticas del año escolar: usuarios activos, alertas por nivel, tendencias por grado — anonimizado.</div>
+            <div class="report-dest">Para: Secretaría de Educación · Junta directiva</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+            <select class="filter-select" style="width:140px;font-size:12px;"><option>Año 2025–2026</option><option>Año 2024–2025</option></select>
+            <button class="btn btn-primary btn-sm">📥 Generar PDF</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 7: CONFIGURACIÓN INSTITUCIONAL
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-config">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Escolar</div></div></div>
+      <div class="sidenav-section">Principal</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">3</span></div>
+      <div class="sidenav-section">Estudiantes</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">👤</span> Ver estudiante</div>
+      <div class="nav-item" onclick="showScreen('s-bitacora')"><span class="ni">📓</span> Bitácora</div>
+      <div class="sidenav-section">Institución</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="nav-item active"><span class="ni">⚙️</span> Configuración</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">AL</div><div class="user-info"><div class="uname">Ana M. López</div><div class="ucargo">Orientadora · Mañana</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar"><h1>Configuración institucional</h1></div>
+      <div class="content">
+
+        <!-- DATOS DEL COLEGIO -->
+        <div class="settings-section">
+          <div class="settings-title">🏫 Datos del colegio</div>
+          <div class="card">
+            <div class="grid2" style="gap:14px;">
+              <div class="form-group"><label class="form-label">Nombre del colegio</label><input class="form-input" value="Colegio San Carlos"></div>
+              <div class="form-group"><label class="form-label">NIT</label><input class="form-input" value="890.123.456-7"></div>
+              <div class="form-group"><label class="form-label">Municipio</label><input class="form-input" value="Ibagué, Tolima"></div>
+              <div class="form-group"><label class="form-label">Jornadas activas</label>
+                <select class="form-select"><option>Mañana y tarde</option><option>Solo mañana</option><option>Única</option></select>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm">Guardar cambios</button>
+          </div>
+        </div>
+
+        <!-- ORIENTADORES -->
+        <div class="settings-section">
+          <div class="settings-title">👩‍🏫 Orientadores co-titulares</div>
+          <div class="card">
+            <div class="orientador-item">
+              <div class="avatar">AL</div>
+              <div style="flex:1"><div style="font-weight:700">Ana María López Torres</div><div style="font-size:12px;color:var(--gray3)">Orientadora principal · Jornada mañana</div></div>
+              <span class="alert-badge badge-green">Activa</span>
+            </div>
+            <div class="orientador-item">
+              <div class="avatar" style="background:var(--teal-l);color:var(--teal);">CM</div>
+              <div style="flex:1"><div style="font-weight:700">Carlos M. Vega</div><div style="font-size:12px;color:var(--gray3)">Co-orientador · Jornada tarde</div></div>
+              <span class="alert-badge badge-green">Activo</span>
+              <button class="btn btn-ghost btn-sm" style="font-size:11px;color:var(--gray3)">Desactivar</button>
+            </div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--gray2);">
+              <button class="btn btn-outline btn-sm">+ Agregar co-orientador</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CÓDIGOS DE VINCULACIÓN -->
+        <div class="settings-section">
+          <div class="settings-title">🔑 Códigos de vinculación activos</div>
+          <div class="card">
+            <div style="font-size:12.5px;color:var(--gray4);margin-bottom:14px;">⚠ Los códigos los genera siempre el padre desde /family — el colegio no puede generarlos. Esto preserva el control familiar.</div>
+            <div class="orientador-item">
+              <div style="font-family:monospace;font-size:15px;font-weight:700;letter-spacing:2px;color:var(--orange);">B7K2-4P9Q</div>
+              <div style="flex:1;padding-left:14px;"><div style="font-size:13px;">Para: Valentina Gómez · 7°B</div><div style="font-size:11px;color:var(--gray3)">Vence en 14 horas</div></div>
+              <span class="alert-badge" style="background:var(--yellow-l);color:#c49a00;">Pendiente uso</span>
+            </div>
+            <div class="orientador-item">
+              <div style="font-family:monospace;font-size:15px;font-weight:700;letter-spacing:2px;color:var(--gray3);">A3F8-9K21</div>
+              <div style="flex:1;padding-left:14px;"><div style="font-size:13px;">Para: Sofía Ramírez · 9°A</div><div style="font-size:11px;color:var(--gray3)">Usado hace 3 días</div></div>
+              <span class="alert-badge badge-green">Activo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTIFICACIONES -->
+        <div class="settings-section">
+          <div class="settings-title">🔔 Notificaciones</div>
+          <div class="card">
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Alertas fuera de jornada</div>
+                <div class="settings-row-desc">Recibir alertas Nivel 0 fuera del horario escolar (incluye noches y fines de semana)</div>
+              </div>
+              <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Resumen diario por correo</div>
+                <div class="settings-row-desc">Recibir un resumen de la actividad al final de cada día escolar</div>
+              </div>
+              <button class="toggle" onclick="this.classList.toggle('on')"></button>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Alertas Nivel 2 en tiempo real</div>
+                <div class="settings-row-desc">Las alertas de seguimiento se pueden revisar en la próxima sesión; activa esto si prefieres verlas de inmediato</div>
+              </div>
+              <button class="toggle" onclick="this.classList.toggle('on')"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUSCRIPCIÓN -->
+        <div class="settings-section">
+          <div class="settings-title">💳 Suscripción</div>
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+              <div>
+                <div style="font-size:16px;font-weight:800;color:var(--orange)">Plan Escolar</div>
+                <div style="font-size:13px;color:var(--gray4)">$12.000 COP / estudiante / mes · 48 estudiantes activos</div>
+                <div style="font-size:12px;color:var(--gray3);margin-top:3px;">Próxima renovación: 1 de junio 2026</div>
+              </div>
+              <button class="btn btn-outline btn-sm" style="margin-left:auto">Ver facturación</button>
+              <button class="btn btn-outline btn-sm">Contactar soporte</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 8: CORPUS NLP
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-corpus">
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="sidenav-logo"><div class="icon"><svg width="18" height="24" viewBox="0 0 90 120" fill="none"><path d="M 27,108 C 27,92 27,70 27,52" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,52 C 27,34 34,18 48,13 C 63,8 77,18 77,36 C 77,54 62,68 46,70 C 35,71 27,63 27,53" stroke="white" stroke-width="6" stroke-linecap="round"/><path d="M 27,108 C 28,88 30,64 34,50 C 37,38 41,22 48,13" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="51" cy="40" r="7" fill="#E8725A"/></svg></div><div><div class="name">paloma</div><div class="role">Portal Escolar</div></div></div>
+      <div class="sidenav-section">Principal</div>
+      <div class="nav-item" onclick="showScreen('s-dashboard')"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showScreen('s-alertas')"><span class="ni">🔔</span> Alertas <span class="nav-badge">3</span></div>
+      <div class="sidenav-section">Estudiantes</div>
+      <div class="nav-item" onclick="showScreen('s-perfil')"><span class="ni">👤</span> Ver estudiante</div>
+      <div class="nav-item" onclick="showScreen('s-bitacora')"><span class="ni">📓</span> Bitácora</div>
+      <div class="sidenav-section">Institución</div>
+      <div class="nav-item" onclick="showScreen('s-informes')"><span class="ni">📊</span> Informes</div>
+      <div class="nav-item active"><span class="ni">🧠</span> Corpus NLP</div>
+      <div class="nav-item" onclick="showScreen('s-config')"><span class="ni">⚙️</span> Configuración</div>
+      <div class="sidenav-footer"><div class="user-chip"><div class="avatar">AL</div><div class="user-info"><div class="uname">Ana M. López</div><div class="ucargo">Orientadora · Mañana</div></div></div></div>
+    </nav>
+    <div class="main">
+      <div class="topbar">
+        <h1>Corpus NLP — Propuestas del colegio</h1>
+      </div>
+      <div class="content">
+
+        <div style="background:var(--orange-l);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:13.5px;line-height:1.7;">
+          🧠 <strong>¿Qué es el corpus NLP?</strong> Paloma detecta riesgo con frases clasificadas según el DSM-5. Como orientador, puedes <strong>proponer frases reales del contexto escolar colombiano</strong> que quisieras que el motor reconociera. El equipo clínico de Paloma las revisa antes de incorporarlas. Nunca incluyas nombres ni datos identificables.
+        </div>
+
+        <!-- PROPONER FRASE -->
+        <div class="card" style="margin-bottom:24px;">
+          <div class="card-title">+ Proponer nueva frase</div>
+          <div class="form-group">
+            <label class="form-label">Frase o expresión observada</label>
+            <textarea class="form-textarea" placeholder="ej. &quot;ya nada tiene sentido, pa qué estudiar&quot; · Escribe solo la expresión, sin nombre del estudiante"></textarea>
+          </div>
+          <div class="grid2" style="gap:12px;">
+            <div class="form-group" style="margin:0">
+              <label class="form-label">Emoción asociada (contexto)</label>
+              <select class="form-select">
+                <option>Seleccionar...</option>
+                <option>Tristeza / desesperanza</option>
+                <option>Ansiedad / miedo</option>
+                <option>Ira / frustración</option>
+                <option>Apatía / desconexión</option>
+                <option>Ideación (sin precisar)</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin:0">
+              <label class="form-label">Nivel de riesgo sugerido</label>
+              <select class="form-select">
+                <option>Seleccionar...</option>
+                <option>Nivel 0 — Emergencia</option>
+                <option>Nivel 1 — Urgente</option>
+                <option>Nivel 2 — Seguimiento</option>
+                <option>Nivel 3 — Desahogo normal</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:14px;">
+            <label class="form-label">Contexto adicional (opcional)</label>
+            <input class="form-input" type="text" placeholder="ej. Lo dijo durante una actividad en grupo, en tono serio">
+          </div>
+          <button class="btn btn-primary" style="margin-top:4px;">📤 Enviar propuesta al equipo clínico</button>
+        </div>
+
+        <!-- ESTADO DE PROPUESTAS -->
+        <div class="card-title" style="margin-bottom:14px;">Mis propuestas enviadas</div>
+
+        <div class="alert-item" style="border-color:var(--green);background:var(--green-l);">
+          <span class="alert-badge badge-green">Aprobada</span>
+          <div class="alert-info">
+            <div class="alert-student" style="font-size:13px;">"ya pa qué, si igual todo se daña"</div>
+            <div class="alert-desc">Tristeza / desesperanza · Nivel 2 sugerido · Incorporada al corpus v1.4</div>
+            <div class="alert-time">Propuesta el 10 mayo · Aprobada el 15 mayo</div>
+          </div>
+        </div>
+
+        <div class="alert-item" style="border-color:var(--yellow);background:var(--yellow-l);">
+          <span class="alert-badge badge-yellow">En revisión</span>
+          <div class="alert-info">
+            <div class="alert-student" style="font-size:13px;">"me da igual lo que piensen"</div>
+            <div class="alert-desc">Apatía / desconexión · Nivel 3 sugerido · Pendiente revisión clínica</div>
+            <div class="alert-time">Propuesta el 19 mayo</div>
+          </div>
+        </div>
+
+        <div class="alert-item" style="border-color:var(--gray2);">
+          <span class="alert-badge badge-gray">No incorporada</span>
+          <div class="alert-info">
+            <div class="alert-student" style="font-size:13px;">"tengo sueño todo el tiempo"</div>
+            <div class="alert-desc">Motivo: expresión demasiado general, sin marcador de riesgo claro</div>
+            <div class="alert-time">Propuesta el 5 mayo</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 0 · LANDING PAGE
+══════════════════════════════════════════════ -->
+<div class="screen" id="s-landing">
+  <div style="min-height:100vh;background:linear-gradient(145deg,#2d1a00 0%,#5a3300 50%,#2d1a00 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;">
+    <div style="font-size:52px;margin-bottom:12px;">🕊️</div>
+    <div style="font-size:32px;font-weight:900;color:#fff;margin-bottom:6px;">paloma</div>
+    <div style="font-size:13px;color:var(--orange);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;">PORTAL ORIENTADOR</div>
+    <div style="font-size:18px;font-weight:600;color:rgba(255,255,255,.9);max-width:420px;margin-bottom:8px;line-height:1.4;">El bienestar emocional de tus estudiantes, en tiempo real</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.55);max-width:380px;margin-bottom:36px;line-height:1.6;">Paloma te alerta cuando un estudiante necesita acompañamiento. Sin acceder al diario — solo señales de alerta contextualizadas y notas del equipo.</div>
+    <div style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;margin-bottom:40px;">
+      <button class="btn" style="justify-content:center;padding:14px;font-size:15px;border-radius:12px;background:var(--orange);border:none;color:#fff;cursor:pointer;" onclick="showScreen('s-login')">Iniciar sesión</button>
+      <button class="btn btn-outline" style="justify-content:center;padding:14px;font-size:15px;border-radius:12px;color:#fff;border-color:rgba(255,255,255,.35);cursor:pointer;" onclick="document.getElementById('login-form').style.display='none';document.getElementById('register-form').style.display='block';showScreen('s-login')">Registrar institución</button>
+    </div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;margin-bottom:48px;">
+      <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.7);font-size:13px;"><span>🔔</span> Alertas por nivel de urgencia</div>
+      <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.7);font-size:13px;"><span>📋</span> Perfil emocional del estudiante</div>
+      <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.7);font-size:13px;"><span>🤝</span> Comunicación con la familia</div>
+    </div>
+    <div style="font-size:12px;color:rgba(255,255,255,.35);">¿Eres familia? <a href="/family" style="color:var(--orange);font-weight:600;">paloma-app.com.co/family</a> · ¿Eres especialista? <a href="/medical" style="color:var(--orange);font-weight:600;">paloma-app.com.co/medical</a></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     MODAL: NUEVA NOTA EN BITÁCORA
+══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalNota" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-title">📓 Nueva nota en bitácora</div>
+    <div class="modal-sub">La nota quedará firmada con tu nombre, cargo y fecha/hora automáticamente. No podrá editarse ni borrarse — solo se puede añadir seguimiento.</div>
+
+    <div class="form-group">
+      <label class="form-label">Estudiante</label>
+      <select class="form-select"><option>Sofía Ramírez · 9°A</option><option>Miguel Torres · 11°B</option><option>Laura Medina · 8°C</option></select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nota</label>
+      <textarea class="form-textarea" placeholder="ej. Llegó llorando al descanso. Se negó a hablar del motivo..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Visibilidad de esta nota</label>
+      <div class="vis-options">
+        <div class="vis-opt selected" onclick="selectVis(this)">🔒 Solo yo</div>
+        <div class="vis-opt" onclick="selectVis(this)">🩺 Visible al especialista</div>
+        <div class="vis-opt" onclick="selectVis(this)">👨‍👩‍👧 Visible a familia</div>
+        <div class="vis-opt" onclick="selectVis(this)">🌐 Todos</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--gray4);">
+        <input type="checkbox" style="width:16px;height:16px;accent-color:var(--teal);">
+        Proponer alguna frase de esta nota para revisión del corpus NLP (equipo clínico Paloma)
+      </label>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('modalNota').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-primary" onclick="document.getElementById('modalNota').classList.remove('open')">💾 Guardar nota</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     MODAL: PROTOCOLO DE CRISIS
+══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalCrisis" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:560px;">
+    <div style="background:var(--red-l);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:center;">
+      <span style="font-size:28px;">🚨</span>
+      <div>
+        <div class="modal-title" style="color:var(--red);margin-bottom:2px;">Protocolo de Crisis — Nivel 0</div>
+        <div style="font-size:12.5px;color:var(--gray4);">Activar este protocolo notifica a todos los actores vinculados y registra tu acción con hora y firma.</div>
+      </div>
+    </div>
+
+    <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:12px;">Pasos del protocolo (obligatorio completarlos en orden):</div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--gray1);border-radius:10px;">
+        <div style="width:26px;height:26px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex-shrink:0;">1</div>
+        <div><div style="font-weight:700;font-size:13.5px;">Contacto inmediato con padre/madre</div><div style="font-size:12px;color:var(--gray4);margin-top:2px;">Llamar al teléfono registrado. Plazo: &lt; 30 minutos. Si no hay respuesta, escalar a contacto de emergencia.</div></div>
+        <input type="checkbox" style="margin-left:auto;width:18px;height:18px;accent-color:var(--red);flex-shrink:0;" onchange="updateCrisisProgress()">
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--gray1);border-radius:10px;">
+        <div style="width:26px;height:26px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex-shrink:0;">2</div>
+        <div><div style="font-weight:700;font-size:13.5px;">Acompañamiento presencial al estudiante</div><div style="font-size:12px;color:var(--gray4);margin-top:2px;">No dejar al estudiante solo. Llevar a sala de orientación o espacio tranquilo.</div></div>
+        <input type="checkbox" style="margin-left:auto;width:18px;height:18px;accent-color:var(--red);flex-shrink:0;">
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--gray1);border-radius:10px;">
+        <div style="width:26px;height:26px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex-shrink:0;">3</div>
+        <div><div style="font-weight:700;font-size:13.5px;">Notificar al especialista vinculado</div><div style="font-size:12px;color:var(--gray4);margin-top:2px;">Paloma envía push automático al especialista principal. Confirma que lo recibió.</div></div>
+        <input type="checkbox" style="margin-left:auto;width:18px;height:18px;accent-color:var(--red);flex-shrink:0;">
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--gray1);border-radius:10px;">
+        <div style="width:26px;height:26px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex-shrink:0;">4</div>
+        <div><div style="font-weight:700;font-size:13.5px;">Notificar al rector o coordinador</div><div style="font-size:12px;color:var(--gray4);margin-top:2px;">Informar a la dirección del colegio según el protocolo interno institucional.</div></div>
+        <input type="checkbox" style="margin-left:auto;width:18px;height:18px;accent-color:var(--red);flex-shrink:0;">
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--gray1);border-radius:10px;">
+        <div style="width:26px;height:26px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex-shrink:0;">5</div>
+        <div><div style="font-weight:700;font-size:13.5px;">Registrar acción en el sistema</div><div style="font-size:12px;color:var(--gray4);margin-top:2px;">Documentar todo lo actuado. La alerta no puede cerrarse sin este registro.</div></div>
+        <input type="checkbox" style="margin-left:auto;width:18px;height:18px;accent-color:var(--red);flex-shrink:0;">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Registro de lo actuado (obligatorio)</label>
+      <textarea class="form-textarea" placeholder="ej. Llamé a la madre a las 10:22 am. Está en camino al colegio. Sofía está en sala de orientación acompañada..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('modalCrisis').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-danger" onclick="document.getElementById('modalCrisis').classList.remove('open')">🚨 Activar protocolo y registrar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     MODAL: VINCULAR ESTUDIANTE
+══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalVincular" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-title">🔗 Vincular nuevo estudiante</div>
+    <div class="modal-sub">Ingresa el código que generó el padre o tutor del estudiante desde la app /family.</div>
+
+    <div class="form-group">
+      <label class="form-label">Código de vinculación <span style="color:var(--gray3);font-weight:400">(8 dígitos · vigencia 72 h)</span></label>
+      <input class="form-input" type="text" placeholder="ej. A3F8-9K21" style="letter-spacing:3px;font-weight:700;font-size:18px;text-align:center;">
+    </div>
+
+    <div style="background:var(--orange-l);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--dark);margin-bottom:16px;">
+      📲 <strong>¿Cómo obtiene el código el padre?</strong> En la PWA /family → <em>Actores vinculados → Agregar colegio</em>. El código expira en 72 horas y es de un solo uso.
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('modalVincular').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-primary" onclick="document.getElementById('modalVincular').classList.remove('open')">Verificar y vincular →</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    // actualizar botones del nav
+    document.querySelectorAll('.sn-btn').forEach((btn, i) => {
+      const ids = ['s-landing','s-login','s-dashboard','s-alertas','s-perfil','s-bitacora','s-informes','s-corpus','s-config'];
+      btn.classList.toggle('active', ids[i] === id);
+    });
+    window.scrollTo(0,0);
+  }
+
+  function switchTab(el, tabId) {
+    // Desactivar tabs
+    el.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    // Ocultar contenidos
+    const contents = document.querySelectorAll('[id^="tab-"]');
+    contents.forEach(c => c.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+  }
+
+  function selectVis(el) {
+    el.closest('.vis-options').querySelectorAll('.vis-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  // ── ESTUDIANTE ACTIVO ──────────────────────────────
+  let activeStudent = { name: 'Sofía Ramírez', grade: '9°A', level: '🔴 Alerta activa' };
+
+  function setActiveStudent(name, grade, level) {
+    activeStudent = { name, grade, level };
+    const initials = name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    // Actualizar barra en perfil
+    const bp = document.getElementById('studentBarPerfil');
+    if (bp) {
+      document.getElementById('sabAvatarPerfil').textContent = initials;
+      document.getElementById('sabNamePerfil').textContent = name;
+      document.getElementById('sabMetaPerfil').textContent = grade + ' · Estudiante activo';
+      document.getElementById('sabBadgePerfil').textContent = level;
+    }
+    // Actualizar barra en bitácora
+    const bb = document.getElementById('studentBarBitacora');
+    if (bb) {
+      document.getElementById('sabAvatarBitacora').textContent = initials;
+      document.getElementById('sabNameBitacora').textContent = name;
+      document.getElementById('sabBadgeBitacora').textContent = level;
+    }
+  }
+
+  function clearActiveStudent() {
+    activeStudent = null;
+    const bb = document.getElementById('studentBarBitacora');
+    if (bb) bb.style.display = 'none';
+  }
+
+  // Inicializar con estudiante por defecto al cargar
+  setActiveStudent('Sofía Ramírez', '9°A', '🔴 Alerta activa');
+</script>
+</body>
+</html>
