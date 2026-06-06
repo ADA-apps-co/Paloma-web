@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Paloma · Acuerdo de Tratamiento de Datos — Instituciones</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,300&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#FDF8F2;color:#2D4A3E;line-height:1.7;-webkit-font-smoothing:antialiased;color-scheme:light}
+.wrap{max-width:760px;margin:0 auto;padding:60px 40px 100px}
+@media(max-width:600px){.wrap{padding:32px 20px 80px}}
+.doc-header{background:#1A3A5C;color:white;padding:48px 40px;border-radius:20px;margin-bottom:40px}
+.doc-logo{font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:#7AB5DC;margin-bottom:16px}
+.doc-title{font-family:'Fraunces',serif;font-size:30px;font-weight:600;line-height:1.2;margin-bottom:8px}
+.doc-subtitle{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:8px}
+.doc-meta{font-size:13px;color:rgba(255,255,255,.5)}
+.disclaimer{background:#FFF5F5;border:2px solid #C03030;border-radius:16px;padding:20px 24px;margin-bottom:36px}
+.disclaimer-title{font-weight:700;color:#C03030;font-size:14px;margin-bottom:8px}
+.disclaimer-text{font-size:14px;color:#5A2020;line-height:1.6}
+.toc{background:white;border-radius:16px;padding:24px 28px;margin-bottom:36px;border:1px solid #E0D8D0}
+.toc-title{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:#2D4A3E;margin-bottom:14px}
+.toc ol{padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.toc li{font-size:13px;color:#4A7EC8}
+.toc a{color:#4A7EC8;text-decoration:none;font-weight:600}
+.toc a:hover{text-decoration:underline}
+.sec{margin-bottom:40px}
+.sec-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:#1A3A5C;margin-bottom:14px;padding-top:8px;border-top:2px solid #E0D8D0}
+.sec-sub{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#4A7EC8;margin:20px 0 10px}
+.sec p{font-size:14px;color:#3A4A40;line-height:1.75;margin-bottom:12px}
+.sec ul,.sec ol{padding-left:20px;margin-bottom:12px;display:flex;flex-direction:column;gap:6px}
+.sec li{font-size:14px;color:#3A4A40;line-height:1.6}
+.sec strong{color:#1A3A5C;font-weight:700}
+.box{border-radius:12px;padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.65}
+.box-green{background:#E8F4F0;border-left:4px solid #4A8C78;color:#1A3A2E}
+.box-amber{background:#FFFAED;border-left:4px solid #B07000;color:#3A2A00}
+.box-blue{background:#EEF4FF;border-left:4px solid #4A7EC8;color:#1A2A4E}
+.box-red{background:#FFF5F5;border-left:4px solid #C03030;color:#5A2020}
+.tbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+.tbl th{background:#1A3A5C;color:white;padding:10px 14px;text-align:left;font-weight:700}
+.tbl td{padding:10px 14px;border-bottom:1px solid #E0D8D0;vertical-align:top;line-height:1.5}
+.tbl tr:nth-child(even) td{background:#F5F8F5}
+.parties-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}
+@media(max-width:560px){.parties-grid{grid-template-columns:1fr}}
+.party-card{background:white;border:2px solid #E0D8D0;border-radius:14px;padding:20px}
+.party-label{font-size:11px;font-weight:700;color:#4A7EC8;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.party-name{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#1A3A5C;margin-bottom:12px}
+.field-group{margin-bottom:14px}
+.field-label{font-size:11px;font-weight:700;color:#5A6B7B;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.field-line{border:none;border-bottom:1px solid #E0D8D0;width:100%;padding:6px 0;font-family:'Nunito',sans-serif;font-size:13px;color:#2D4A3E;background:transparent}
+.sig-block{margin-top:40px}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+@media(max-width:500px){.sig-grid{grid-template-columns:1fr}}
+.sig-card{background:white;border:1px solid #E0D8D0;border-radius:12px;padding:20px}
+.sig-line{border-bottom:2px solid #1A3A5C;height:56px;margin:12px 0 8px}
+.sig-label{font-size:11px;color:#5A6B7B;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.badge{display:inline-block;background:#EEF4FF;color:#4A7EC8;font-size:11px;font-weight:700;padding:4px 10px;border-radius:50px;margin-right:8px;letter-spacing:.5px}
+.doc-footer{background:#1A3A5C;color:white;padding:32px 40px;border-radius:16px;margin-top:60px;font-size:13px}
+.doc-footer-title{font-family:'Fraunces',serif;font-size:18px;color:#7AB5DC;margin-bottom:8px}
+@media print{body{background:white}.doc-header,.doc-footer{-webkit-print-color-adjust:exact}.wrap{padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="doc-header">
+  <div class="doc-logo">🕊️ paloma · by ADA</div>
+  <div class="doc-title">Acuerdo de Tratamiento de Datos Personales</div>
+  <div class="doc-subtitle">Data Processing Agreement (DPA) — Uso Institucional</div>
+  <div class="doc-meta" style="margin-top:12px">
+    <span class="badge" style="background:rgba(122,181,220,.3);color:#7AB5DC">BORRADOR v1.0</span>
+    <span class="badge" style="background:rgba(232,133,106,.3);color:#E8856A">Para revisión por abogado</span>
+    Para: Colegios · EPS · Clínicas · Centros terapéuticos · Ibagué, Colombia · 2026
+  </div>
+</div>
+
+<div class="disclaimer">
+  <div class="disclaimer-title">⚠️ Documento borrador — Requiere revisión jurídica</div>
+  <div class="disclaimer-text">Este es un borrador para planificación. Debe ser revisado por un abogado antes de firmarse con cualquier institución. ADA S.A.S. no asume responsabilidad por el uso de este borrador sin la debida revisión legal.</div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido</div>
+  <ol>
+    <li><a href="#d1">Partes del acuerdo</a></li>
+    <li><a href="#d2">Objeto y propósito</a></li>
+    <li><a href="#d3">Roles en el tratamiento de datos</a></li>
+    <li><a href="#d4">Datos que se comparten y accesos por rol</a></li>
+    <li><a href="#d5">Obligaciones de la institución</a></li>
+    <li><a href="#d6">Obligaciones de ADA (Paloma)</a></li>
+    <li><a href="#d7">Medidas de seguridad</a></li>
+    <li><a href="#d8">Subprocesadores de datos</a></li>
+    <li><a href="#d9">Incidentes de seguridad</a></li>
+    <li><a href="#d10">Vigencia y terminación</a></li>
+    <li><a href="#d11">Ley aplicable</a></li>
+    <li><a href="#d12">Firmas</a></li>
+  </ol>
+</div>
+
+<!-- D1 -->
+<div class="sec" id="d1">
+  <div class="sec-title">1. Partes del acuerdo</div>
+  <div class="parties-grid">
+    <div class="party-card">
+      <div class="party-label">Responsable del Tratamiento / Proveedor</div>
+      <div class="party-name">Aplicaciones Digitales Avanzadas S.A.S. (ADA)</div>
+      <div class="field-group">
+        <div class="field-label">NIT</div>
+        <input type="text" class="field-line" placeholder="[Pendiente registro DIAN]">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Domicilio</div>
+        <input type="text" class="field-line" value="Ibagué, Tolima, Colombia">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Representante legal</div>
+        <input type="text" class="field-line" placeholder="[Nombre — pendiente]">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Correo DPA</div>
+        <input type="text" class="field-line" value="legal@paloma.app">
+      </div>
+    </div>
+    <div class="party-card">
+      <div class="party-label">Encargado del Tratamiento / Institución</div>
+      <div class="party-name">Institución aliada</div>
+      <div class="field-group">
+        <div class="field-label">Razón social</div>
+        <input type="text" class="field-line" placeholder="Nombre completo de la institución">
+      </div>
+      <div class="field-group">
+        <div class="field-label">NIT / RUT</div>
+        <input type="text" class="field-line" placeholder="NIT de la institución">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Representante legal</div>
+        <input type="text" class="field-line" placeholder="Nombre del representante">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Tipo</div>
+        <input type="text" class="field-line" placeholder="Colegio / EPS / Clínica / Centro terapéutico">
+      </div>
+    </div>
+  </div>
+  <p>En adelante ADA se denominará <strong>"el Proveedor"</strong> y la institución se denominará <strong>"la Institución"</strong>. Conjuntamente se les llamará <strong>"las Partes"</strong>.</p>
+</div>
+
+<!-- D2 -->
+<div class="sec" id="d2">
+  <div class="sec-title">2. Objeto y propósito</div>
+  <p>Este Acuerdo de Tratamiento de Datos (ATD) regula las condiciones bajo las cuales el Proveedor otorga a la Institución acceso parcial a la plataforma Paloma y a ciertos datos de bienestar de niños y adolescentes vinculados a dicha institución, para los siguientes propósitos exclusivos:</p>
+  <table class="tbl">
+    <tr><th>Tipo de institución</th><th>Propósito autorizado</th></tr>
+    <tr><td><strong>🏫 Colegio / institución educativa</strong></td><td>Monitoreo colectivo anonimizado del clima emocional estudiantil; recepción de alertas de crisis individuales únicamente con autorización parental previa; herramientas para orientadores escolares.</td></tr>
+    <tr><td><strong>🏥 EPS / aseguradora de salud</strong></td><td>Oferta de Paloma como beneficio complementario de bienestar para afiliados; acceso a reportes de uso anonimizados y agregados; sin acceso a datos individuales identificados.</td></tr>
+    <tr><td><strong>🩺 Clínica / centro terapéutico</strong></td><td>Dashboard clínico multi-paciente para los profesionales de la institución que hayan sido autorizados individualmente por cada acudiente; hilo clínico; exportación de reportes.</td></tr>
+  </table>
+  <div class="box box-red">
+    <strong>Propósitos prohibidos:</strong> Está absolutamente prohibido usar los datos accedidos a través de Paloma para: perfilamiento comercial de menores, publicidad dirigida, venta o cesión de datos a terceros, investigación académica sin consentimiento adicional, o cualquier fin distinto al descrito en la tabla anterior.
+  </div>
+</div>
+
+<!-- D3 -->
+<div class="sec" id="d3">
+  <div class="sec-title">3. Roles en el tratamiento de datos</div>
+  <table class="tbl">
+    <tr><th>Actor</th><th>Rol bajo la Ley 1581</th><th>Responsabilidades principales</th></tr>
+    <tr><td><strong>ADA (Proveedor)</strong></td><td>Responsable del Tratamiento</td><td>Define las finalidades; garantiza los derechos de los titulares; mantiene la seguridad de la infraestructura; es el punto de contacto ante la SIC.</td></tr>
+    <tr><td><strong>La Institución</strong></td><td>Encargado del Tratamiento</td><td>Accede a los datos solo para los fines autorizados; garantiza la confidencialidad de sus usuarios; notifica incidentes a ADA; no cede datos a terceros.</td></tr>
+    <tr><td><strong>Acudiente / padre de familia</strong></td><td>Titular (representante del menor)</td><td>Otorga o revoca el consentimiento de vinculación con la institución; puede limitar el acceso en cualquier momento.</td></tr>
+    <tr><td><strong>Niño / adolescente</strong></td><td>Titular de los datos</td><td>Sus datos solo se comparten con la institución cuando el acudiente lo autoriza expresamente.</td></tr>
+  </table>
+</div>
+
+<!-- D4 -->
+<div class="sec" id="d4">
+  <div class="sec-title">4. Datos que se comparten y nivel de acceso por tipo de institución</div>
+  <table class="tbl">
+    <tr><th>Dato</th><th>🏫 Colegio</th><th>🏥 EPS</th><th>🩺 Clínica/terapeuta</th></tr>
+    <tr><td>Nombre del estudiante</td><td>Solo en alerta Nivel 0</td><td>❌ Nunca</td><td>✅ Sí (autorizado por acudiente)</td></tr>
+    <tr><td>Indicador semanal de bienestar</td><td>✅ Anonimizado (grupo)</td><td>✅ Solo agregados</td><td>✅ Individual autorizado</td></tr>
+    <tr><td>Registros emocionales detallados</td><td>❌ Nunca</td><td>❌ Nunca</td><td>✅ Solo si acudiente lo autoriza</td></tr>
+    <tr><td>Pensamientos libres (texto)</td><td>❌ Nunca</td><td>❌ Nunca</td><td>❌ Nunca (cifrado de extremo a extremo)</td></tr>
+    <tr><td>Alertas de crisis (Nivel 0 y 1)</td><td>Solo Nivel 0 con autorización</td><td>❌ Nunca</td><td>✅ Niveles 0 y 1 (autorizado)</td></tr>
+    <tr><td>Estadísticas de uso agregadas</td><td>✅ Del grupo completo</td><td>✅ De la población afiliada</td><td>✅ Del paciente autorizado</td></tr>
+    <tr><td>Datos de facturación / pago</td><td>❌ Nunca</td><td>❌ Nunca</td><td>❌ Nunca</td></tr>
+  </table>
+  <div class="box box-blue">
+    <strong>Principio de mínima exposición:</strong> La institución solo tiene acceso a la cantidad mínima de datos necesaria para cumplir su propósito. El acudiente puede modificar o revocar estos permisos en cualquier momento desde la app, sin que esto afecte la prestación del servicio básico al menor.
+  </div>
+</div>
+
+<!-- D5 -->
+<div class="sec" id="d5">
+  <div class="sec-title">5. Obligaciones de la institución</div>
+  <p>Al suscribir este acuerdo, la Institución se compromete a:</p>
+  <ul>
+    <li>Tratar los datos accedidos única y exclusivamente para los propósitos autorizados en la Cláusula 2.</li>
+    <li>Designar un <strong>responsable interno de protección de datos</strong> que será el punto de contacto con ADA.</li>
+    <li>Garantizar que solo el personal expresamente autorizado (orientadores, terapeutas con rol asignado) acceda a los datos de la plataforma.</li>
+    <li>No descargar, copiar ni almacenar en sistemas propios los datos individuales de los estudiantes o pacientes obtenidos a través de Paloma, salvo exportaciones expresamente autorizadas por ADA y por el acudiente.</li>
+    <li>No ceder, vender, compartir ni divulgar los datos accedidos a ningún tercero bajo ninguna circunstancia.</li>
+    <li>Implementar medidas de seguridad razonables para proteger las credenciales de acceso a la plataforma (contraseñas robustas, no compartir credenciales, reportar accesos sospechosos).</li>
+    <li>Notificar a ADA dentro de las <strong>24 horas</strong> siguientes a la detección de cualquier incidente de seguridad, acceso no autorizado o uso indebido de los datos.</li>
+    <li>Cumplir con la Ley 1581 de 2012 y demás normativa aplicable en el tratamiento de datos personales de menores.</li>
+    <li>Obtener y documentar el consentimiento de los acudientes de cada estudiante o paciente antes de vincularlos a la plataforma a través de la licencia institucional.</li>
+    <li>Destruir o devolver todos los datos obtenidos a través de Paloma al término de este acuerdo.</li>
+  </ul>
+</div>
+
+<!-- D6 -->
+<div class="sec" id="d6">
+  <div class="sec-title">6. Obligaciones de ADA (Paloma)</div>
+  <ul>
+    <li>Implementar y mantener las medidas de seguridad técnicas y organizativas descritas en la Política de Privacidad.</li>
+    <li>Garantizar que los datos de los menores vinculados a la Institución solo sean accesibles por los usuarios autorizados de la misma.</li>
+    <li>Notificar a la Institución dentro de las <strong>48 horas</strong> de detectar un incidente de seguridad que afecte datos de sus estudiantes o pacientes.</li>
+    <li>Prestar soporte técnico y de onboarding para la correcta configuración del dashboard institucional.</li>
+    <li>Proporcionar capacitación básica al personal de la Institución sobre el uso responsable de la plataforma.</li>
+    <li>Mantener la disponibilidad del servicio conforme a los acuerdos de nivel de servicio (SLA) del plan Institucional.</li>
+    <li>Informar a la Institución con al menos <strong>30 días de anticipación</strong> sobre cambios materiales en el tratamiento de datos o en estos Términos.</li>
+    <li>Permitir a la Institución, previa solicitud razonada, verificar el cumplimiento de las medidas de seguridad implementadas.</li>
+  </ul>
+</div>
+
+<!-- D7 -->
+<div class="sec" id="d7">
+  <div class="sec-title">7. Medidas de seguridad</div>
+  <table class="tbl">
+    <tr><th>Medida</th><th>Descripción</th></tr>
+    <tr><td><strong>Cifrado en tránsito</strong></td><td>TLS 1.3 en todas las comunicaciones entre app, plataforma web y servidores</td></tr>
+    <tr><td><strong>Cifrado en reposo</strong></td><td>AES-256 para datos sensibles. Los pensamientos libres del menor usan cifrado de extremo a extremo — ADA no tiene acceso</td></tr>
+    <tr><td><strong>Control de acceso por roles (RBAC)</strong></td><td>Row Level Security en base de datos: cada usuario institucional solo ve los datos de sus estudiantes/pacientes autorizados</td></tr>
+    <tr><td><strong>Autenticación segura</strong></td><td>Contraseñas con hash bcrypt · JWT de corta duración · Soporte 2FA para cuentas institucionales</td></tr>
+    <tr><td><strong>Logs de auditoría</strong></td><td>Registro de todos los accesos a datos sensibles con timestamp, IP y usuario — retención 12 meses</td></tr>
+    <tr><td><strong>Gestión de incidentes</strong></td><td>Protocolo documentado de respuesta a incidentes con notificación a SIC en 72 horas</td></tr>
+  </table>
+</div>
+
+<!-- D8 -->
+<div class="sec" id="d8">
+  <div class="sec-title">8. Subprocesadores de datos</div>
+  <p>ADA utiliza los siguientes subprocesadores para prestar el servicio. La Institución acepta estos subprocesadores al firmar este acuerdo:</p>
+  <table class="tbl">
+    <tr><th>Subprocesador</th><th>Propósito</th><th>Ubicación</th><th>Garantías</th></tr>
+    <tr><td><strong>Supabase</strong></td><td>Base de datos e infraestructura cloud</td><td>EU / EE.UU.</td><td>GDPR · SOC 2 · DPA firmado</td></tr>
+    <tr><td><strong>Expo / React Native</strong></td><td>Plataforma de apps móviles</td><td>EE.UU.</td><td>Solo procesamiento técnico · sin acceso a datos</td></tr>
+    <tr><td><strong>OneSignal</strong></td><td>Notificaciones push</td><td>EE.UU.</td><td>GDPR compliant · solo tokens anónimos de dispositivo</td></tr>
+    <tr><td><strong>PostHog</strong></td><td>Analíticas de producto (auto-alojado)</td><td>Servidor propio</td><td>Sin transferencia a terceros · solo datos anonimizados</td></tr>
+    <tr><td><strong>Stripe / Wompi</strong></td><td>Procesamiento de pagos</td><td>EE.UU. / Colombia</td><td>PCI DSS · datos de pago nunca pasan por servidores de ADA</td></tr>
+  </table>
+  <p>ADA notificará a la Institución con al menos 15 días de anticipación ante la adición de nuevos subprocesadores que puedan afectar los datos de la institución.</p>
+</div>
+
+<!-- D9 -->
+<div class="sec" id="d9">
+  <div class="sec-title">9. Incidentes de seguridad — Protocolo de notificación</div>
+  <table class="tbl">
+    <tr><th>Evento</th><th>ADA notifica a la Institución</th><th>ADA notifica a la SIC</th></tr>
+    <tr><td>Acceso no autorizado a datos de la institución</td><td>Dentro de 24 horas</td><td>Dentro de 72 horas</td></tr>
+    <tr><td>Brecha de datos confirmada que afecta menores</td><td>Dentro de 24 horas</td><td>Dentro de 72 horas</td></tr>
+    <tr><td>Vulnerabilidad crítica sin explotación confirmada</td><td>Dentro de 72 horas</td><td>Según evaluación de riesgo</td></tr>
+    <tr><td>Indisponibilidad del servicio > 4 horas</td><td>Inmediatamente por el canal de soporte</td><td>No aplica</td></tr>
+  </table>
+  <div class="box box-amber">
+    La notificación incluirá: (1) naturaleza del incidente, (2) datos posiblemente afectados, (3) número estimado de titulares, (4) medidas adoptadas y en curso, (5) punto de contacto para seguimiento. La notificación no implica reconocimiento de responsabilidad.
+  </div>
+</div>
+
+<!-- D10 -->
+<div class="sec" id="d10">
+  <div class="sec-title">10. Vigencia y terminación</div>
+  <p>Este acuerdo entra en vigor en la fecha de firma y tiene una vigencia de <strong>un (1) año</strong>, renovable automáticamente por períodos iguales salvo que cualquiera de las partes notifique su intención de no renovar con 30 días de anticipación.</p>
+  <div class="sec-sub">Terminación anticipada</div>
+  <ul>
+    <li><strong>Por cualquier parte:</strong> Con 30 días de aviso escrito, sin expresión de causa, con derecho a reembolso proporcional si aplica.</li>
+    <li><strong>Por causa:</strong> Inmediatamente si la otra parte incumple materialmente este acuerdo y no subsana el incumplimiento dentro de los 10 días hábiles siguientes a la notificación.</li>
+    <li><strong>Por ADA:</strong> Inmediatamente si detecta uso indebido de los datos de menores, sin derecho a reembolso.</li>
+  </ul>
+  <div class="sec-sub">Efectos de la terminación</div>
+  <p>Al término del acuerdo, la Institución deberá: (1) cesar inmediatamente el acceso a la plataforma, (2) destruir o devolver a ADA toda información obtenida, (3) confirmar por escrito el cumplimiento de estas obligaciones dentro de los 5 días hábiles siguientes a la terminación.</p>
+</div>
+
+<!-- D11 -->
+<div class="sec" id="d11">
+  <div class="sec-title">11. Ley aplicable y resolución de conflictos</div>
+  <p>Este acuerdo se rige por las leyes de la República de Colombia, en particular la Ley 1581 de 2012, el Decreto 1377 de 2013 y el Código de Comercio. Las controversias se resolverán conforme al mecanismo establecido en los Términos y Condiciones de Uso de Paloma (negociación → conciliación → jueces de Ibagué).</p>
+  <div class="box box-blue">
+    <strong>Para instituciones del sector salud:</strong> Este acuerdo complementa (no reemplaza) los acuerdos de confidencialidad y protección de datos que la institución pueda tener bajo la normativa del sector salud (Resolución 2654 de 2019 y normas concordantes).
+  </div>
+</div>
+
+<!-- D12 - FIRMAS -->
+<div class="sec" id="d12">
+  <div class="sec-title">12. Firmas</div>
+  <p>Las partes, debidamente representadas, suscriben el presente Acuerdo de Tratamiento de Datos en la ciudad de _________________, el día _____ del mes de _________________ de _______.</p>
+  <p style="margin-bottom:8px">En señal de aceptación de todas y cada una de las cláusulas aquí establecidas:</p>
+
+  <div style="margin-top:32px">
+    <div class="sig-grid">
+      <div class="sig-card">
+        <div style="font-size:12px;color:#4A7EC8;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Por el Proveedor</div>
+        <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:#1A3A5C;margin-bottom:4px">ADA S.A.S.</div>
+        <div style="font-size:12px;color:#5A6B7B;margin-bottom:16px">Aplicaciones Digitales Avanzadas S.A.S.</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Representante Legal</div>
+        <div style="font-size:12px;color:#5A6B7B;margin-top:6px">Nombre: ___________________________</div>
+        <div style="font-size:12px;color:#5A6B7B;margin-top:4px">C.C. No.: _________________________</div>
+        <div style="font-size:12px;color:#5A6B7B;margin-top:4px">Cargo: ____________________________</div>
+      </div>
+      <div class="sig-card">
+        <div style="font-size:12px;color:#4A7EC8;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Por la Institución</div>
+        <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:#1A3A5C;margin-bottom:4px">_______________________________</div>
+        <div style="font-size:12px;color:#5A6B7B;margin-bottom:16px">Nombre de la institución</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Representante Legal</div>
+        <div style="font-size:12px;color:#5A6B7B;margin-top:6px">Nombre: ___________________________</div>
+        <div style="font-size:12px;color:#5A6B7B;margin-top:4px">C.C. No.: _________________________</div>
+        <div style="font-size:12px;color:#5A6B7B;margin-top:4px">Cargo: ____________________________</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;background:#F5F8F5;border-radius:12px;padding:16px 20px">
+      <div style="font-size:12px;color:#5A6B7B;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Datos de suscripción del acuerdo</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+        <div>
+          <div style="font-size:11px;color:#5A6B7B">No. de acuerdo</div>
+          <div style="font-size:13px;color:#2D4A3E;border-bottom:1px solid #E0D8D0;padding-bottom:4px">DPA-2026-___</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:#5A6B7B">Fecha de inicio</div>
+          <div style="font-size:13px;color:#2D4A3E;border-bottom:1px solid #E0D8D0;padding-bottom:4px">____/____/________</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:#5A6B7B">Fecha de vencimiento</div>
+          <div style="font-size:13px;color:#2D4A3E;border-bottom:1px solid #E0D8D0;padding-bottom:4px">____/____/________</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <div class="doc-footer-title">🕊️ paloma · Acuerdo de Tratamiento de Datos — Instituciones</div>
+  <p style="margin-top:8px;opacity:.7;font-size:13px">Versión: Borrador v1.0 · Abril 2026 · Sujeto a revisión jurídica<br>Base legal: Ley 1581 de 2012 · Decreto 1377 de 2013 · GDPR (para instituciones con pacientes en Europa)<br>Aplica para: Colegios · EPS · Clínicas · Centros terapéuticos</p>
+  <p style="margin-top:12px;opacity:.5;font-size:12px">Aplicaciones Digitales Avanzadas S.A.S. (ADA) · Apps Driving Awareness · legal@paloma.app · Ibagué, Colombia</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Paloma · Consentimiento Informado Parental</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,300&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#FDF8F2;color:#2D4A3E;line-height:1.7;-webkit-font-smoothing:antialiased;color-scheme:light}
+.wrap{max-width:760px;margin:0 auto;padding:60px 40px 100px}
+@media(max-width:600px){.wrap{padding:32px 20px 80px}}
+.doc-header{background:#2D4A3E;color:white;padding:48px 40px;border-radius:20px;margin-bottom:40px}
+.doc-logo{font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:#7AB5A0;margin-bottom:16px}
+.doc-title{font-family:'Fraunces',serif;font-size:32px;font-weight:600;line-height:1.2;margin-bottom:8px}
+.doc-meta{font-size:13px;color:rgba(255,255,255,.5)}
+.disclaimer{background:#FFF5F5;border:2px solid #C03030;border-radius:16px;padding:20px 24px;margin-bottom:36px}
+.disclaimer-title{font-weight:700;color:#C03030;font-size:14px;margin-bottom:8px}
+.disclaimer-text{font-size:14px;color:#5A2020;line-height:1.6}
+.sec{margin-bottom:36px}
+.sec-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:#2D4A3E;margin-bottom:14px;padding-top:8px;border-top:2px solid #E0D8D0}
+.sec-sub{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#4A8C78;margin:20px 0 10px}
+.sec p{font-size:14px;color:#3A4A40;line-height:1.75;margin-bottom:12px}
+.sec ul{padding-left:20px;margin-bottom:12px;display:flex;flex-direction:column;gap:6px}
+.sec li{font-size:14px;color:#3A4A40;line-height:1.6}
+.sec strong{color:#2D4A3E;font-weight:700}
+.box{border-radius:12px;padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.65}
+.box-green{background:#E8F4F0;border-left:4px solid #4A8C78;color:#1A3A2E}
+.box-amber{background:#FFFAED;border-left:4px solid #B07000;color:#3A2A00}
+.box-blue{background:#EEF4FF;border-left:4px solid #4A7EC8;color:#1A2A4E}
+.box-red{background:#FFF5F5;border-left:4px solid #C03030;color:#5A2020}
+.tbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+.tbl th{background:#2D4A3E;color:white;padding:10px 14px;text-align:left;font-weight:700}
+.tbl td{padding:10px 14px;border-bottom:1px solid #E0D8D0;vertical-align:top;line-height:1.5}
+.tbl tr:nth-child(even) td{background:#F5F8F5}
+/* Consent form styles */
+.consent-block{background:white;border:2px solid #2D4A3E;border-radius:16px;padding:32px;margin:24px 0}
+.consent-block-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:#2D4A3E;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.field-group{margin-bottom:20px}
+.field-label{font-size:12px;font-weight:700;color:#4A8C78;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.field-line{border:none;border-bottom:2px solid #E0D8D0;width:100%;padding:8px 0;font-family:'Nunito',sans-serif;font-size:14px;color:#2D4A3E;background:transparent;outline:none}
+.field-line:focus{border-bottom-color:#4A8C78}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:500px){.field-row{grid-template-columns:1fr}}
+.checkbox-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #F0EBE3}
+.checkbox-item:last-child{border-bottom:none}
+.checkbox-item input{width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:#4A8C78}
+.checkbox-item label{font-size:14px;color:#3A4A40;line-height:1.6;cursor:pointer}
+.checkbox-item label strong{color:#2D4A3E}
+.sig-area{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px}
+@media(max-width:500px){.sig-area{grid-template-columns:1fr}}
+.sig-box{text-align:center}
+.sig-line{border-bottom:2px solid #2D4A3E;height:60px;margin-bottom:8px}
+.sig-label{font-size:12px;color:#5A6B7B;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.badge{display:inline-block;background:#E8F4F0;color:#4A8C78;font-size:11px;font-weight:700;padding:4px 10px;border-radius:50px;margin-right:8px;letter-spacing:.5px}
+.doc-footer{background:#2D4A3E;color:white;padding:32px 40px;border-radius:16px;margin-top:60px;font-size:13px}
+.doc-footer-title{font-family:'Fraunces',serif;font-size:18px;color:#7AB5A0;margin-bottom:8px}
+@media print{
+  body{background:white}
+  .doc-header,.doc-footer{background:#2D4A3E!important;-webkit-print-color-adjust:exact}
+  .wrap{padding:20px}
+  .consent-block{break-inside:avoid}
+  .no-print{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="doc-header">
+  <div class="doc-logo">🕊️ paloma · by ADA</div>
+  <div class="doc-title">Consentimiento Informado y Autorización Parental</div>
+  <div class="doc-meta" style="margin-top:12px">
+    <span class="badge" style="background:rgba(122,181,160,.3);color:#7AB5A0">BORRADOR v1.0</span>
+    <span class="badge" style="background:rgba(232,133,106,.3);color:#E8856A">Para revisión por abogado</span>
+    Abril 2026 · Aplicaciones Digitales Avanzadas S.A.S. (ADA) · Ibagué, Colombia
+  </div>
+</div>
+
+<div class="disclaimer">
+  <div class="disclaimer-title">⚠️ Documento borrador — Requiere revisión jurídica</div>
+  <div class="disclaimer-text">Este formulario es un borrador. Debe ser revisado por un abogado especializado antes de usarse. La versión definitiva se integrará en el flujo de onboarding digital de la app y deberá cumplir con los requisitos del artículo 7 de la Ley 1581 de 2012 para el tratamiento de datos de menores de edad.</div>
+</div>
+
+<!-- INTRODUCCIÓN -->
+<div class="sec" id="intro">
+  <div class="sec-title">¿Qué es este documento?</div>
+  <p>Este formulario es el <strong>Consentimiento Informado y Autorización Parental</strong> que debe firmar el padre, madre o tutor legal de un niño o adolescente antes de que pueda usar Paloma.</p>
+  <div class="box box-green">
+    <strong>Base legal:</strong> El artículo 7 de la Ley 1581 de 2012 (Protección de Datos Personales de Colombia) exige que el tratamiento de datos personales de menores de edad cuente siempre con el consentimiento previo, expreso e informado de su representante legal. Este documento satisface ese requisito.
+  </div>
+  <p>Este consentimiento se otorga de forma digital durante el proceso de registro en la app (onboarding), con registro de IP, fecha, hora y número de versión del documento aceptado. La versión física imprimible se ofrece para uso en contextos institucionales (colegios, clínicas).</p>
+</div>
+
+<!-- SECCIÓN: QUÉ ES PALOMA -->
+<div class="sec">
+  <div class="sec-title">Antes de firmar: entienda qué es Paloma</div>
+  <table class="tbl">
+    <tr><th>✅ Paloma SÍ es...</th><th>❌ Paloma NO es...</th></tr>
+    <tr><td>Una herramienta de registro emocional para niños y adolescentes</td><td>Un servicio médico o de salud mental</td></tr>
+    <tr><td>Un canal de comunicación de bienestar entre el niño y su familia</td><td>Un sistema de diagnóstico psicológico o psiquiátrico</td></tr>
+    <tr><td>Una plataforma de educación emocional y hábitos de bienestar</td><td>Un reemplazo de la terapia o la consulta con profesionales</td></tr>
+    <tr><td>Un sistema de alertas tempranas para el equipo de cuidado</td><td>Un servicio de atención en crisis o urgencias</td></tr>
+    <tr><td>Regulada por la Ley 1581 de 2012 y supervisada por la SIC</td><td>Un dispositivo médico que requiera registro INVIMA</td></tr>
+  </table>
+  <div class="box box-red">
+    <strong>Ante una emergencia:</strong> Llame al 123 (emergencias) o a la Línea de Salud Mental 106 (gratuita, 24/7 en Colombia). Paloma no reemplaza estos servicios.
+  </div>
+</div>
+
+<!-- FORMULARIO DE CONSENTIMIENTO -->
+<div class="consent-block">
+  <div class="consent-block-title">📋 Sección A — Datos del representante legal</div>
+  <div class="field-row">
+    <div class="field-group">
+      <div class="field-label">Nombre completo</div>
+      <input type="text" class="field-line" placeholder="Nombres y apellidos completos">
+    </div>
+    <div class="field-group">
+      <div class="field-label">Tipo y número de identificación</div>
+      <input type="text" class="field-line" placeholder="Ej: C.C. 1.234.567.890">
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field-group">
+      <div class="field-label">Correo electrónico</div>
+      <input type="email" class="field-line" placeholder="correo@ejemplo.com">
+    </div>
+    <div class="field-group">
+      <div class="field-label">Teléfono de contacto</div>
+      <input type="tel" class="field-line" placeholder="+57 300 000 0000">
+    </div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">Relación con el menor</div>
+    <input type="text" class="field-line" placeholder="Padre / Madre / Tutor legal / Otro (especificar)">
+  </div>
+</div>
+
+<div class="consent-block">
+  <div class="consent-block-title">👧🏽 Sección B — Datos del niño o adolescente</div>
+  <div class="field-row">
+    <div class="field-group">
+      <div class="field-label">Nombre completo del menor</div>
+      <input type="text" class="field-line" placeholder="Nombres y apellidos completos">
+    </div>
+    <div class="field-group">
+      <div class="field-label">Fecha de nacimiento</div>
+      <input type="text" class="field-line" placeholder="DD / MM / AAAA">
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field-group">
+      <div class="field-label">Edad actual</div>
+      <input type="text" class="field-line" placeholder="Entre 8 y 17 años">
+    </div>
+    <div class="field-group">
+      <div class="field-label">Ciudad de residencia</div>
+      <input type="text" class="field-line" placeholder="Ciudad, Departamento">
+    </div>
+  </div>
+  <div class="field-group">
+    <div class="field-label">Institución educativa (si aplica)</div>
+    <input type="text" class="field-line" placeholder="Nombre del colegio o institución">
+  </div>
+  <div class="field-group">
+    <div class="field-label">Profesional de apoyo asignado (si aplica)</div>
+    <input type="text" class="field-line" placeholder="Nombre del psicólogo / psiquiatra tratante">
+  </div>
+</div>
+
+<div class="consent-block">
+  <div class="consent-block-title">✅ Sección C — Autorizaciones específicas</div>
+  <p style="font-size:14px;color:#3A4A40;margin-bottom:16px">Marque cada autorización que otorga. Todas las marcadas en rojo son <strong>obligatorias</strong> para usar Paloma. Las marcadas en azul son opcionales.</p>
+
+  <div class="checkbox-item">
+    <input type="checkbox" id="c1">
+    <label for="c1">🔴 <strong>Uso básico de la plataforma:</strong> Autorizo a Paloma (ADA S.A.S.) a recopilar y procesar los datos de registro emocional, preferencias y uso de la app del menor identificado en la Sección B, con el fin de prestarle el servicio de acompañamiento emocional descrito en los Términos y Condiciones.</label>
+  </div>
+
+  <div class="checkbox-item">
+    <input type="checkbox" id="c2">
+    <label for="c2">🔴 <strong>Datos sensibles — emociones y bienestar:</strong> Entiendo que los registros emocionales del menor constituyen datos sensibles de salud bajo la Ley 1581 de 2012, y autorizo expresamente su tratamiento por parte de Paloma para los fines del servicio. Este consentimiento puede revocarse en cualquier momento eliminando la cuenta.</label>
+  </div>
+
+  <div class="checkbox-item">
+    <input type="checkbox" id="c3">
+    <label for="c3">🔴 <strong>Notificaciones al equipo de cuidado:</strong> Autorizo a Paloma a enviarme notificaciones push y por correo electrónico con indicadores de bienestar del menor, reportes semanales y alertas cuando el sistema detecte indicadores de riesgo Nivel 0 o Nivel 1 (planificación o ideación de autolesión).</label>
+  </div>
+
+  <div class="checkbox-item">
+    <input type="checkbox" id="c4">
+    <label for="c4">🔴 <strong>Transferencia internacional de datos:</strong> Entiendo y acepto que los datos del menor pueden almacenarse en servidores ubicados fuera de Colombia (principalmente en la Unión Europea a través de Supabase), conforme al artículo 26 de la Ley 1581 y con las garantías GDPR aplicables.</label>
+  </div>
+
+  <div class="checkbox-item">
+    <input type="checkbox" id="c5">
+    <label for="c5">🔴 <strong>Términos y Política de Privacidad:</strong> He leído y acepto los Términos y Condiciones de Uso y la Política de Privacidad de Paloma, disponibles en paloma.app/terminos y paloma.app/privacidad.</label>
+  </div>
+
+  <div class="checkbox-item">
+    <input type="checkbox" id="c6">
+    <label for="c6">🔵 <strong>(Opcional) Vinculación con profesional de apoyo:</strong> Autorizo a que el profesional de apoyo indicado en la Sección B pueda ver los indicadores de bienestar, alertas y el hilo de comunicación clínica del menor en la plataforma, según los permisos configurados.</label>
+  </div>
+
+  <div class="checkbox-item">
+    <input type="checkbox" id="c7">
+    <label for="c7">🔵 <strong>(Opcional) Vinculación con institución educativa:</strong> Autorizo la vinculación del menor a la institución educativa indicada en la Sección B, permitiendo que el orientador escolar acceda al dashboard colectivo anonimizado y reciba alertas de Nivel 0 únicamente.</label>
+  </div>
+
+  <div class="checkbox-item">
+    <input type="checkbox" id="c8">
+    <label for="c8">🔵 <strong>(Opcional) Mejora del producto:</strong> Autorizo el uso de datos anonimizados y agregados del uso del menor (sin identificación) para mejorar los algoritmos y contenidos de la plataforma. Este uso nunca permitirá identificar al menor individualmente.</label>
+  </div>
+
+  <div class="checkbox-item">
+    <input type="checkbox" id="c9">
+    <label for="c9">🔵 <strong>(Opcional) Comunicaciones informativas:</strong> Acepto recibir comunicaciones de Paloma con recursos, noticias y consejos sobre bienestar emocional infantil. Puedo cancelar la suscripción en cualquier momento.</label>
+  </div>
+</div>
+
+<div class="consent-block">
+  <div class="consent-block-title">📖 Sección D — Declaración y firma</div>
+  <p style="font-size:14px;color:#3A4A40;margin-bottom:20px">Yo, el/la firmante, en calidad de representante legal del menor identificado en la Sección B, declaro bajo la gravedad de juramento que:</p>
+  <ul style="margin-bottom:20px;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+    <li style="font-size:14px;color:#3A4A40">Tengo plena capacidad legal para otorgar este consentimiento en nombre del menor.</li>
+    <li style="font-size:14px;color:#3A4A40">He leído y comprendido la totalidad de este documento y los documentos referenciados.</li>
+    <li style="font-size:14px;color:#3A4A40">La información proporcionada es veraz y verificable.</li>
+    <li style="font-size:14px;color:#3A4A40">Entiendo que puedo revocar este consentimiento en cualquier momento eliminando la cuenta, lo que implicará la supresión de los datos del menor.</li>
+    <li style="font-size:14px;color:#3A4A40">Entiendo que Paloma <strong>no es un servicio médico</strong> y no reemplaza la atención de profesionales de salud mental.</li>
+    <li style="font-size:14px;color:#3A4A40">Me comprometo a supervisar el uso que el menor hace de la plataforma y a actualizar los datos si hay cambios relevantes.</li>
+  </ul>
+
+  <div class="field-row">
+    <div class="field-group">
+      <div class="field-label">Ciudad</div>
+      <input type="text" class="field-line" placeholder="Ciudad donde firma">
+    </div>
+    <div class="field-group">
+      <div class="field-label">Fecha de firma</div>
+      <input type="text" class="field-line" placeholder="DD / MM / AAAA">
+    </div>
+  </div>
+
+  <div class="sig-area" style="margin-top:32px">
+    <div class="sig-box">
+      <div class="sig-line"></div>
+      <div class="sig-label">Firma del representante legal</div>
+      <div style="font-size:12px;color:#5A6B7B;margin-top:4px">Nombre: ___________________________</div>
+      <div style="font-size:12px;color:#5A6B7B;margin-top:4px">C.C. No.: _________________________</div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-line"></div>
+      <div class="sig-label">Huella dactilar (opcional)</div>
+      <div style="font-size:12px;color:#5A6B7B;margin-top:4px">Para uso en contextos institucionales</div>
+    </div>
+  </div>
+</div>
+
+<!-- Sección información sobre derechos -->
+<div class="sec">
+  <div class="sec-title">Sus derechos como titular y representante</div>
+  <p>Como representante legal del menor, usted puede en cualquier momento:</p>
+  <table class="tbl">
+    <tr><th>Derecho</th><th>Cómo ejercerlo</th></tr>
+    <tr><td><strong>Acceso:</strong> Ver todos los datos del menor en nuestra plataforma</td><td>Desde Ajustes → Privacidad → Exportar mis datos, o email a privacidad@paloma.app</td></tr>
+    <tr><td><strong>Rectificación:</strong> Corregir datos incorrectos</td><td>Desde el Perfil en la app o por email</td></tr>
+    <tr><td><strong>Supresión:</strong> Eliminar todos los datos del menor</td><td>Ajustes → Cuenta → Eliminar cuenta (irreversible en 30 días)</td></tr>
+    <tr><td><strong>Revocación:</strong> Retirar cualquier autorización opcional</td><td>Ajustes → Privacidad → Gestionar autorizaciones</td></tr>
+    <tr><td><strong>Queja:</strong> Si cree que violamos sus derechos</td><td>Primero a privacidad@paloma.app, luego ante la SIC: www.sic.gov.co</td></tr>
+  </table>
+  <div class="box box-blue">
+    <strong>Cuando el menor cumpla 18 años:</strong> Paloma le notificará al joven que puede reclamar la titularidad de sus propios datos y gestionar su propia cuenta de forma independiente. El acudiente dejará de tener acceso automáticamente al cumplimiento de la mayoría de edad, salvo que el joven lo autorice explícitamente.
+  </div>
+</div>
+
+<!-- Nota para implementación digital -->
+<div class="sec">
+  <div class="sec-title">Nota para implementación digital (desarrollo)</div>
+  <div class="box box-amber">
+    <strong>Para el equipo de desarrollo:</strong> En la versión digital de este consentimiento (onboarding de la app), se debe registrar y almacenar: (1) versión del documento aceptado, (2) fecha y hora UTC de aceptación, (3) dirección IP del dispositivo, (4) identificador del dispositivo, (5) checkboxes específicos marcados. Este registro constituye el "mecanismo verificable de consentimiento parental" requerido por COPPA (EE.UU.) y la Ley 1581 (Colombia). El consentimiento debe ser un paso obligatorio e independiente — no puede estar agrupado con los Términos y Condiciones generales en un solo checkbox.
+  </div>
+</div>
+
+<div class="doc-footer">
+  <div class="doc-footer-title">🕊️ paloma · Consentimiento Informado Parental</div>
+  <p style="margin-top:8px;opacity:.7;font-size:13px">Versión: Borrador v1.0 · Abril 2026 · Sujeto a revisión jurídica<br>Base legal: Art. 7, Ley 1581 de 2012 · Decreto 1377 de 2013 · COPPA (para usuarios en EE.UU.)<br>Responsable del tratamiento: Aplicaciones Digitales Avanzadas S.A.S. (ADA) · privacidad@paloma.app</p>
+</div>
+
+</div>
+</body>
+</html>

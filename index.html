@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paloma · Acompañamiento emocional para niños y adolescentes</title>
+
+<!-- SEO básico -->
+<meta name="description" content="Paloma es una app segura para que niños y adolescentes entre 8 y 17 años expresen sus emociones. NLP que detecta riesgo real. Sin diagnósticos, sin espionaje. Piloto julio 2026 · Colombia.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://paloma-app.com.co/">
+
+<!-- Open Graph — preview en WhatsApp, Facebook, LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://paloma-app.com.co/">
+<meta property="og:title" content="Paloma · Tu hijo tiene algo que decir">
+<meta property="og:description" content="App de acompañamiento emocional para niños 8–17 años. Espacio seguro, NLP que detecta riesgo real, sin leer el diario. Piloto gratuito julio 2026 en Ibagué, Colombia.">
+<meta property="og:image" content="https://paloma-app.com.co/og-image.png">
+<meta property="og:locale" content="es_CO">
+<meta property="og:site_name" content="Paloma">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Paloma · Tu hijo tiene algo que decir">
+<meta name="twitter:description" content="App de acompañamiento emocional para niños 8–17 años. Espacio seguro, NLP que detecta riesgo real. Piloto julio 2026 · Colombia.">
+<meta name="twitter:image" content="https://paloma-app.com.co/og-image.png">
+
+<!-- Color de barra del navegador móvil -->
+<meta name="theme-color" content="#1A636B">
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,600;0,9..144,900;1,9..144,200;1,9..144,600;1,9..144,900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & TOKENS ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --teal-900: #0D3D42;
+  --teal-800: #1A636B;
+  --teal-700: #1E7880;
+  --teal-600: #259099;
+  --teal-500: #3DA89A;
+  --teal-400: #62BEB7;
+  --teal-300: #93D4CF;
+  --teal-200: #BDE8E5;
+  --teal-100: #DAF3F2;
+  --teal-50:  #EEF9F9;
+  --coral:    #E8725A;
+  --coral-dk: #C5573F;
+  --coral-lt: #FDECEA;
+  --cream:    #FAF7F2;
+  --sand:     #F2EFE9;
+  --dark:     #1A1A1A;
+  --dark-2:   #2E2E2E;
+  --mid:      #6B7280;
+  --light:    #D1D5DB;
+  --white:    #FFFFFF;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 40px;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(250,247,242,0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--teal-800);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nav-wordmark {
+  font-family: 'Fraunces', serif;
+  font-size: 22px; font-weight: 600; font-style: italic;
+  color: var(--teal-800); line-height: 1;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 14px; font-weight: 700; color: var(--dark);
+  text-decoration: none; opacity: 0.65;
+  transition: opacity 0.2s;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-cta {
+  background: var(--coral); color: white !important;
+  opacity: 1 !important;
+  padding: 10px 22px; border-radius: 50px;
+  font-size: 14px !important; font-weight: 800 !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--coral-dk) !important; }
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--teal-800);
+  display: flex; align-items: center;
+  padding: 120px 80px 80px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.05);
+  top: -250px; right: -200px;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.05);
+  bottom: -200px; left: -100px;
+}
+/* Floating blobs */
+.hero-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); pointer-events: none;
+}
+.hero-blob-1 {
+  width: 400px; height: 400px;
+  background: rgba(61,168,154,0.25);
+  top: 100px; right: 10%;
+}
+.hero-blob-2 {
+  width: 300px; height: 300px;
+  background: rgba(232,114,90,0.15);
+  bottom: 100px; right: 25%;
+}
+.hero-inner {
+  max-width: 1100px; margin: 0 auto; width: 100%;
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: center;
+}
+@media (max-width: 960px) {
+  .hero { padding: 100px 32px 60px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+}
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--teal-400); font-weight: 700; margin-bottom: 24px;
+}
+.hero-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(42px, 6vw, 80px);
+  font-weight: 200; font-style: italic;
+  color: white; line-height: 1.05; margin-bottom: 28px;
+}
+.hero-title strong {
+  font-weight: 900; font-style: normal; color: var(--teal-300);
+}
+.hero-sub {
+  font-size: clamp(16px, 2vw, 19px);
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7; margin-bottom: 44px;
+  max-width: 520px;
+}
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: none; border-radius: 50px;
+  padding: 15px 30px; font-size: 15px; font-weight: 800;
+  font-family: 'Nunito', sans-serif; cursor: pointer;
+  text-decoration: none; transition: all 0.2s;
+  line-height: 1;
+}
+.btn:active { transform: scale(0.97); }
+.btn-coral { background: var(--coral); color: white; }
+.btn-coral:hover { background: var(--coral-dk); }
+.btn-ghost { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.35); }
+.btn-ghost:hover { background: rgba(255,255,255,0.1); }
+.hero-trust {
+  margin-top: 56px;
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+}
+.hero-trust-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 600;
+}
+.hero-trust-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal-400); flex-shrink: 0;
+}
+
+/* ── APP MOCKUP ── */
+.hero-mockup {
+  position: relative; display: flex; justify-content: center;
+}
+.phone-frame {
+  width: 260px;
+  background: #111;
+  border-radius: 40px;
+  padding: 12px;
+  box-shadow:
+    0 40px 80px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(255,255,255,0.08);
+  position: relative; z-index: 2;
+}
+.phone-screen {
+  background: #0D3D42;
+  border-radius: 30px;
+  overflow: hidden;
+  aspect-ratio: 9/19;
+  display: flex; flex-direction: column;
+  padding: 20px 16px;
+  position: relative;
+}
+.phone-statusbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px; font-size: 10px; color: rgba(255,255,255,0.5);
+  font-weight: 700;
+}
+.phone-greeting {
+  font-family: 'Fraunces', serif;
+  font-size: 18px; color: white; font-weight: 600;
+  margin-bottom: 4px;
+}
+.phone-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+.phone-question {
+  font-family: 'Fraunces', serif;
+  font-size: 14px; font-style: italic; font-weight: 200;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.5; margin-bottom: 20px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 14px; padding: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.phone-faces {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  margin-bottom: 16px;
+}
+.phone-face {
+  aspect-ratio: 1;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 20px; gap: 3px;
+  border: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer; transition: all 0.2s;
+}
+.phone-face.active {
+  background: rgba(61,168,154,0.25);
+  border-color: var(--teal-400);
+}
+.phone-face-label { font-size: 7px; color: rgba(255,255,255,0.5); font-weight: 700; }
+.phone-fab {
+  position: absolute; bottom: 20px; right: 16px;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: #C5573F;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 0 0 8px rgba(197,87,63,0.15);
+  animation: pulse-fab 3s infinite;
+}
+@keyframes pulse-fab {
+  0%, 100% { box-shadow: 0 0 0 8px rgba(197,87,63,0.15); }
+  50% { box-shadow: 0 0 0 14px rgba(197,87,63,0.08); }
+}
+.phone-plumas {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: rgba(255,255,255,0.6); font-weight: 700;
+  margin-bottom: 12px;
+}
+.pluma-badge {
+  background: rgba(242,201,76,0.15);
+  border: 1px solid rgba(242,201,76,0.3);
+  border-radius: 20px; padding: 3px 10px;
+  color: #F2C94C; font-size: 11px; font-weight: 800;
+}
+
+/* Floating badge */
+.hero-badge {
+  position: absolute; top: -20px; right: -30px; z-index: 3;
+  background: white; border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+  font-size: 12px; font-weight: 700; color: var(--dark);
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+}
+.hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #22C55E; flex-shrink: 0; animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.hero-badge-2 {
+  position: absolute; bottom: 30px; left: -40px; z-index: 3;
+  background: var(--teal-900); border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  font-size: 12px; font-weight: 700; color: white;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+}
+@media (max-width: 960px) {
+  .hero-badge, .hero-badge-2 { display: none; }
+}
+
+/* ── SECTION HELPERS ── */
+section { padding: 100px 80px; }
+@media (max-width: 768px) { section { padding: 72px 24px; } }
+.container { max-width: 1100px; margin: 0 auto; width: 100%; }
+.eyebrow {
+  font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  font-weight: 700; color: var(--teal-600); margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 600; line-height: 1.1;
+  margin-bottom: 20px;
+}
+.section-lead {
+  font-size: clamp(16px, 1.8vw, 18px);
+  line-height: 1.75; color: var(--mid);
+  max-width: 600px; margin-bottom: 56px;
+}
+
+/* ── PROBLEMA ── */
+.problema { background: var(--teal-900); }
+.problema .eyebrow { color: var(--teal-400); }
+.problema .section-title { color: white; }
+.problema .section-lead { color: rgba(255,255,255,0.6); }
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px; margin-bottom: 56px;
+}
+.stat-card {
+  padding: 32px 28px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(8px);
+}
+.stat-number {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 900; color: var(--coral);
+  line-height: 1; display: block; margin-bottom: 8px;
+}
+.stat-label { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+.stat-source { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 6px; }
+.ley-banner {
+  background: rgba(61,168,154,0.12);
+  border: 1px solid rgba(61,168,154,0.3);
+  border-radius: 20px; padding: 28px 32px;
+  display: flex; align-items: flex-start; gap: 20px;
+}
+.ley-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+.ley-text { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.65; }
+.ley-text strong { color: var(--teal-300); }
+
+/* ── CÓMO FUNCIONA ── */
+.como { background: var(--cream); }
+.flujo-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  margin-bottom: 64px;
+}
+@media (max-width: 768px) { .flujo-grid { grid-template-columns: 1fr; gap: 24px; } }
+.flujo-card {
+  background: white; border-radius: 24px;
+  padding: 32px 28px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  position: relative; overflow: hidden;
+}
+.flujo-card::before {
+  content: attr(data-step);
+  position: absolute; top: -10px; right: 16px;
+  font-family: 'Fraunces', serif;
+  font-size: 80px; font-weight: 900; font-style: italic;
+  color: rgba(0,0,0,0.04); line-height: 1;
+}
+.flujo-icon {
+  width: 52px; height: 52px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin-bottom: 20px;
+}
+.flujo-title { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+.flujo-desc { font-size: 14px; line-height: 1.65; color: var(--mid); }
+
+.flujo-card.child .flujo-icon { background: rgba(61,168,154,0.12); }
+.flujo-card.family .flujo-icon { background: rgba(45,156,219,0.12); }
+.flujo-card.medical .flujo-icon { background: rgba(39,174,96,0.12); }
+
+/* Pipeline visual */
+.pipeline {
+  display: flex; align-items: center; gap: 0;
+  background: white; border-radius: 24px;
+  border: 1px solid rgba(0,0,0,0.06);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+@media (max-width: 768px) { .pipeline { flex-direction: column; } }
+.pipe-step {
+  flex: 1; padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 8px;
+  position: relative;
+}
+.pipe-step:not(:last-child)::after {
+  content: '→';
+  position: absolute; right: -10px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px; color: var(--light); z-index: 1;
+  font-weight: 900;
+}
+@media (max-width: 768px) {
+  .pipe-step:not(:last-child)::after { content: '↓'; right: auto; top: auto; bottom: -12px; left: 50%; transform: translateX(-50%); }
+}
+.pipe-icon { font-size: 22px; }
+.pipe-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--mid); }
+.pipe-title { font-size: 15px; font-weight: 800; }
+.pipe-desc { font-size: 12px; color: var(--mid); line-height: 1.5; }
+.pipe-badge {
+  display: inline-block; font-size: 10px; font-weight: 800;
+  padding: 2px 8px; border-radius: 20px; margin-top: 2px;
+}
+
+/* ── PRIVACIDAD ── */
+.privacidad { background: var(--sand); }
+.priv-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: center;
+}
+@media (max-width: 900px) { .priv-grid { grid-template-columns: 1fr; gap: 40px; } }
+.priv-rules { display: flex; flex-direction: column; gap: 20px; }
+.priv-rule {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px; border-radius: 16px;
+  background: white; border: 1px solid rgba(0,0,0,0.05);
+}
+.priv-rule-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  background: rgba(61,168,154,0.1);
+}
+.priv-rule-title { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+.priv-rule-desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+.privacy-visual {
+  background: var(--teal-900); border-radius: 28px;
+  padding: 36px; color: white;
+}
+.privacy-visual-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px; font-weight: 600; font-style: italic;
+  margin-bottom: 24px; color: var(--teal-300);
+}
+.access-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px;
+}
+.access-row:last-child { border-bottom: none; }
+.access-actor { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.access-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.access-items { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.access-chip {
+  font-size: 10px; font-weight: 700; padding: 3px 8px;
+  border-radius: 20px;
+}
+.chip-yes { background: rgba(39,174,96,0.2); color: #4ADE80; }
+.chip-no  { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+.chip-alert { background: rgba(232,114,90,0.2); color: #FCA5A5; }
+
+/* ── PARA QUIÉN ── */
+.para-quien { background: white; }
+.portales-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+@media (max-width: 900px) { .portales-grid { grid-template-columns: 1fr; } }
+.portal-card {
+  border-radius: 24px; padding: 36px 32px;
+  position: relative; overflow: hidden;
+  color: white;
+}
+.portal-card.family  { background: linear-gradient(135deg, #1A5276, #2D9CDB); }
+.portal-card.school  { background: linear-gradient(135deg, #935116, #E08C47); }
+.portal-card.medical { background: linear-gradient(135deg, #1E8449, #27AE60); }
+.portal-icon {
+  width: 56px; height: 56px; border-radius: 18px;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 24px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.portal-role {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; opacity: 0.7; margin-bottom: 8px;
+}
+.portal-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600; margin-bottom: 12px; }
+.portal-desc { font-size: 14px; line-height: 1.7; opacity: 0.8; margin-bottom: 24px; }
+.portal-features { display: flex; flex-direction: column; gap: 8px; }
+.portal-feat {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13px; font-weight: 600; opacity: 0.85;
+}
+.portal-feat::before { content: '✓'; opacity: 0.6; flex-shrink: 0; }
+.portal-url {
+  position: absolute; top: 20px; right: 20px;
+  font-size: 11px; opacity: 0.4; font-weight: 700;
+  background: rgba(255,255,255,0.1); border-radius: 20px;
+  padding: 4px 10px;
+}
+
+/* ── ALERTAS NLP ── */
+.nlp { background: var(--teal-900); }
+.nlp .eyebrow { color: var(--teal-400); }
+.nlp .section-title { color: white; }
+.nlp .section-lead { color: rgba(255,255,255,0.6); max-width: 100%; }
+.alertas-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  margin-top: 48px;
+}
+@media (max-width: 900px) { .alertas-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .alertas-grid { grid-template-columns: 1fr; } }
+.alerta-card {
+  border-radius: 20px; padding: 28px 24px;
+  border: 1px solid rgba(255,255,255,0.1);
+  position: relative; overflow: hidden;
+}
+.alerta-card.n0 { background: rgba(197,87,63,0.15); border-color: rgba(197,87,63,0.3); }
+.alerta-card.n1 { background: rgba(242,153,74,0.12); border-color: rgba(242,153,74,0.25); }
+.alerta-card.n2 { background: rgba(242,201,76,0.1);  border-color: rgba(242,201,76,0.2); }
+.alerta-card.n3 { background: rgba(61,168,154,0.1);  border-color: rgba(61,168,154,0.2); }
+.alerta-nivel {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.n0 .alerta-nivel { color: #FCA5A5; }
+.n1 .alerta-nivel { color: #FCD34D; }
+.n2 .alerta-nivel { color: #FDE68A; }
+.n3 .alerta-nivel { color: var(--teal-300); }
+.alerta-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: white; margin-bottom: 8px; }
+.alerta-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 16px; }
+.alerta-action {
+  font-size: 12px; font-weight: 800; padding: 6px 14px;
+  border-radius: 20px; display: inline-block;
+}
+.n0 .alerta-action { background: rgba(197,87,63,0.3); color: #FCA5A5; }
+.n1 .alerta-action { background: rgba(242,153,74,0.25); color: #FCD34D; }
+.n2 .alerta-action { background: rgba(242,201,76,0.2); color: #FDE68A; }
+.n3 .alerta-action { background: rgba(61,168,154,0.2); color: var(--teal-300); }
+
+/* ── PLUMAS ── */
+.plumas-section { background: var(--sand); }
+.plumas-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: center;
+}
+@media (max-width: 900px) { .plumas-grid { grid-template-columns: 1fr; gap: 40px; } }
+.plumas-visual {
+  background: var(--teal-800); border-radius: 28px; padding: 36px;
+  color: white;
+}
+.plumas-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+}
+.plumas-title-visual {
+  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; font-style: italic;
+}
+.plumas-counter {
+  font-family: 'Fraunces', serif;
+  font-size: 64px; font-weight: 900;
+  color: #F2C94C; line-height: 1;
+  text-align: center; margin-bottom: 4px;
+}
+.plumas-sub { text-align: center; font-size: 13px; opacity: 0.5; margin-bottom: 28px; }
+.plumas-ways { display: flex; flex-direction: column; gap: 12px; }
+.plumas-way {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px;
+}
+.plumas-way-label { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.plumas-way-pts {
+  font-family: 'Fraunces', serif; font-size: 16px; font-weight: 800;
+  color: #F2C94C;
+}
+.plumas-points { display: flex; flex-direction: column; gap: 16px; }
+.plumas-point { display: flex; gap: 16px; align-items: flex-start; }
+.plumas-point-icon {
+  width: 44px; height: 44px; border-radius: 14px;
+  background: rgba(242,201,76,0.12);
+  border: 1px solid rgba(242,201,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.plumas-point-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+.plumas-point-desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+
+/* ── PILOTO ── */
+.piloto { background: var(--cream); }
+.piloto-inner {
+  background: var(--teal-800); border-radius: 32px;
+  padding: 64px; color: white; position: relative; overflow: hidden;
+  text-align: center;
+}
+.piloto-inner::before {
+  content: '';
+  position: absolute; width: 500px; height: 500px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.05);
+  top: -200px; right: -100px;
+}
+.piloto-eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--teal-400); margin-bottom: 20px; font-weight: 700; }
+.piloto-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 200; font-style: italic;
+  line-height: 1.1; margin-bottom: 20px;
+}
+.piloto-title strong { font-weight: 900; font-style: normal; color: var(--teal-300); }
+.piloto-sub {
+  font-size: 17px; opacity: 0.7; line-height: 1.7;
+  max-width: 580px; margin: 0 auto 44px;
+}
+.piloto-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-bottom: 48px;
+}
+@media (max-width: 600px) { .piloto-cards { grid-template-columns: 1fr; } }
+.piloto-card {
+  padding: 24px 20px; border-radius: 18px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.piloto-card-number {
+  font-family: 'Fraunces', serif;
+  font-size: 40px; font-weight: 900; color: var(--teal-300);
+  line-height: 1; margin-bottom: 6px;
+}
+.piloto-card-label { font-size: 13px; opacity: 0.65; }
+.piloto-cta {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+}
+.btn-white { background: white; color: var(--teal-800); }
+.btn-white:hover { background: var(--teal-50); }
+.piloto-legal { margin-top: 20px; font-size: 12px; opacity: 0.4; }
+
+/* ── CONFIANZA ── */
+.confianza { background: var(--sand); }
+.trust-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px; margin-top: 48px;
+}
+.trust-item {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 24px; border-radius: 18px;
+  background: white; border: 1px solid rgba(0,0,0,0.05);
+}
+.trust-icon { font-size: 28px; }
+.trust-title { font-size: 15px; font-weight: 800; }
+.trust-desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+
+/* ── TESTIMONIOS RESPONSIVE ── */
+@media (max-width: 900px) { .testimonios-grid { grid-template-columns: 1fr 1fr !important; } }
+@media (max-width: 600px) { .testimonios-grid { grid-template-columns: 1fr !important; } }
+
+/* ── FORMULARIO LISTA DE ESPERA ── */
+.waitlist-form {
+  max-width: 480px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.waitlist-row { display: flex; gap: 12px; }
+@media (max-width: 600px) { .waitlist-row { flex-direction: column; } }
+.waitlist-input {
+  flex: 1; padding: 14px 18px;
+  border-radius: 50px; border: none;
+  background: rgba(255,255,255,0.12);
+  color: white; font-family: 'Nunito', sans-serif;
+  font-size: 14px; font-weight: 600;
+  outline: none; transition: background 0.2s;
+}
+.waitlist-input::placeholder { color: rgba(255,255,255,0.4); }
+.waitlist-input:focus { background: rgba(255,255,255,0.18); }
+.waitlist-select {
+  flex: 1; padding: 14px 18px;
+  border-radius: 50px; border: none;
+  background: rgba(255,255,255,0.12);
+  color: white; font-family: 'Nunito', sans-serif;
+  font-size: 14px; font-weight: 600;
+  outline: none; cursor: pointer;
+  appearance: none;
+}
+.waitlist-select option { background: var(--teal-900); color: white; }
+.waitlist-submit {
+  width: 100%; padding: 15px;
+  border-radius: 50px; border: none;
+  background: var(--coral); color: white;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px; font-weight: 800;
+  cursor: pointer; transition: background 0.2s;
+}
+.waitlist-submit:hover { background: var(--coral-dk); }
+.waitlist-success {
+  display: none; text-align: center;
+  padding: 20px; border-radius: 16px;
+  background: rgba(39,174,96,0.2);
+  border: 1px solid rgba(39,174,96,0.3);
+  color: #4ADE80; font-weight: 700; font-size: 15px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--teal-900);
+  padding: 64px 80px 48px;
+  color: white;
+}
+@media (max-width: 768px) { footer { padding: 48px 24px 40px; } }
+.footer-top {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 56px;
+}
+@media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; } }
+@media (max-width: 500px) { .footer-top { grid-template-columns: 1fr; } }
+.footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.footer-brand-mark {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+}
+.footer-wordmark {
+  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+  font-style: italic; color: white;
+}
+.footer-desc { font-size: 13px; opacity: 0.5; line-height: 1.7; margin-bottom: 20px; }
+.footer-col-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; opacity: 0.5; margin-bottom: 20px;
+}
+.footer-links { display: flex; flex-direction: column; gap: 12px; }
+.footer-links a {
+  font-size: 14px; color: rgba(255,255,255,0.65);
+  text-decoration: none; transition: color 0.2s; font-weight: 600;
+}
+.footer-links a:hover { color: white; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 32px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-copy { font-size: 12px; opacity: 0.4; }
+.footer-legal { display: flex; gap: 24px; }
+.footer-legal a { font-size: 12px; opacity: 0.4; color: white; text-decoration: none; transition: opacity 0.2s; }
+.footer-legal a:hover { opacity: 0.8; }
+
+/* ── ANIMATIONS ── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in { opacity: 0; animation: fade-up 0.6s ease forwards; }
+.fade-in-1 { animation-delay: 0.1s; }
+.fade-in-2 { animation-delay: 0.25s; }
+.fade-in-3 { animation-delay: 0.4s; }
+.fade-in-4 { animation-delay: 0.55s; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
+        <path d="M10 2C10 2 3 5.5 3 12C3 16.4 6.1 20 10 20C13.9 20 17 16.4 17 12C17 5.5 10 2 10 2Z" fill="white" opacity="0.9"/>
+        <circle cx="13.5" cy="8.5" r="2" fill="#E8725A"/>
+      </svg>
+    </div>
+    <span class="nav-wordmark">Paloma</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#como-funciona">Cómo funciona</a></li>
+    <li><a href="#para-quien">Para quién</a></li>
+    <li><a href="#privacidad">Privacidad</a></li>
+    <li><a href="#piloto" class="nav-cta">Unirse al piloto →</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="inicio">
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow fade-in fade-in-1">Acompañamiento emocional · Colombia</p>
+      <h1 class="hero-title fade-in fade-in-2">
+        Tu hijo tiene<br>
+        <strong>algo que decir.</strong><br>
+        Paloma lo escucha.
+      </h1>
+      <p class="hero-sub fade-in fade-in-3">
+        Una app segura para que niños y adolescentes entre 8 y 17 años expresen sus emociones libremente.
+        Tecnología NLP que detecta señales de riesgo real — sin diagnósticos, sin juicios, sin espionaje.
+      </p>
+      <div class="hero-actions fade-in fade-in-4">
+        <a href="#piloto" class="btn btn-coral">Quiero el piloto gratuito →</a>
+        <a href="#como-funciona" class="btn btn-ghost">Cómo funciona</a>
+      </div>
+      <div class="hero-trust fade-in fade-in-4">
+        <div class="hero-trust-item"><div class="hero-trust-dot"></div>Sin IA externa — todo procesa en tu servidor</div>
+        <div class="hero-trust-item"><div class="hero-trust-dot"></div>Ley 2460/2025 Colombia</div>
+        <div class="hero-trust-item"><div class="hero-trust-dot"></div>El niño quiere volver mañana 🪶</div>
+        <div class="hero-trust-item"><div class="hero-trust-dot"></div>Piloto julio 2026 · Ibagué</div>
+      </div>
+    </div>
+
+    <!-- Phone Mockup -->
+    <div class="hero-mockup">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        NLP activo · Análisis en RAM
+      </div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-statusbar">
+            <span>9:41</span>
+            <span>● ● ●</span>
+          </div>
+          <div class="phone-greeting">Hola, Sofía 🕊️</div>
+          <div class="phone-sub">Lunes · 14 años</div>
+          <div class="plumas-header" style="margin-bottom:16px">
+            <span class="pluma-badge">🪶 17 plumas hoy</span>
+          </div>
+          <div class="phone-question">
+            ¿Cómo te sientes en este momento?
+          </div>
+          <div class="phone-faces">
+            <div class="phone-face">😄<span class="phone-face-label">¡Genial!</span></div>
+            <div class="phone-face">🙂<span class="phone-face-label">Bien</span></div>
+            <div class="phone-face active">😐<span class="phone-face-label">Más o menos</span></div>
+            <div class="phone-face">😢<span class="phone-face-label">Triste</span></div>
+            <div class="phone-face">😠<span class="phone-face-label">Enojado/a</span></div>
+            <div class="phone-face">😰<span class="phone-face-label">Ansioso/a</span></div>
+            <div class="phone-face">😴<span class="phone-face-label">Cansado/a</span></div>
+            <div class="phone-face">🤷<span class="phone-face-label">No sé</span></div>
+          </div>
+          <div class="phone-fab">🕊️</div>
+        </div>
+      </div>
+      <div class="hero-badge-2">
+        🔒 El texto del diario<br>nunca lo lee un adulto
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROBLEMA ── -->
+<section class="problema" id="problema">
+  <div class="container">
+    <p class="eyebrow">El contexto</p>
+    <h2 class="section-title">La salud mental infantil<br>es una crisis silenciosa</h2>
+    <p class="section-lead">
+      Colombia enfrenta una brecha enorme entre los niños que necesitan apoyo emocional y los recursos disponibles para dárselo.
+    </p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number">1 de 5</span>
+        <p class="stat-label">niños en Colombia presenta algún trastorno mental antes de los 18 años</p>
+        <p class="stat-source">Minsalud 2023</p>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">70%</span>
+        <p class="stat-label">no recibe atención alguna por barreras de acceso, estigma o falta de detección temprana</p>
+        <p class="stat-source">OPS / PAHO</p>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">11 años</span>
+        <p class="stat-label">es la edad media de inicio de los síntomas de la mayoría de trastornos mentales</p>
+        <p class="stat-source">OMS 2022</p>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">8.3M</span>
+        <p class="stat-label">niños y adolescentes en Colombia entre 8 y 17 años — el mercado potencial</p>
+        <p class="stat-source">DANE 2023</p>
+      </div>
+    </div>
+    <div class="ley-banner">
+      <div class="ley-icon">⚖️</div>
+      <div class="ley-text">
+        <strong>Ley 2460/2025</strong> — Colombia ahora obliga a colegios y EPS a implementar programas de salud mental para niños y adolescentes.
+        Paloma es la herramienta tecnológica diseñada específicamente para cumplir esa ley.
+        <br><br>
+        Complementa la <strong>Ley 2503/2025</strong> (formación docente en inteligencia emocional) y la <strong>Ley 1616/2013</strong> (salud mental general).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIOS ── -->
+<section style="background: var(--cream); padding: 100px 80px;">
+  <div class="container">
+    <p class="eyebrow">Voces del piloto</p>
+    <h2 class="section-title">Lo que dicen quienes<br>cuidan a los niños</h2>
+    <p class="section-lead">Familias, colegios y especialistas que ya hacen parte de Paloma.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;" class="testimonios-grid">
+
+      <!-- 1 — Mamá -->
+      <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 20px;">
+        <div style="font-size: 32px; color: var(--teal-400); font-family: 'Fraunces', serif; line-height: 1;">"</div>
+        <p style="font-size: 15px; line-height: 1.75; color: var(--dark-2); flex: 1;">Mi hijo de 13 años nunca me decía cómo se sentía. Con Paloma empezó a expresarse — y me enteré que necesitaba ayuda antes de que fuera demasiado tarde.</p>
+        <div style="display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06);">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--teal-100); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">👩</div>
+          <div>
+            <div style="font-size: 14px; font-weight: 800;">María C.</div>
+            <div style="font-size: 12px; color: var(--mid);">Mamá · Ibagué</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 — Papá -->
+      <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 20px;">
+        <div style="font-size: 32px; color: var(--teal-400); font-family: 'Fraunces', serif; line-height: 1;">"</div>
+        <p style="font-size: 15px; line-height: 1.75; color: var(--dark-2); flex: 1;">Al principio me preocupaba que fuera espionaje disfrazado. Cuando vi que yo no puedo leer el diario de mi hijo — solo recibo alertas cuando hay riesgo real — entendí que esto es diferente.</p>
+        <div style="display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06);">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--teal-100); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">👨</div>
+          <div>
+            <div style="font-size: 14px; font-weight: 800;">Carlos M.</div>
+            <div style="font-size: 12px; color: var(--mid);">Papá · Ibagué</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 — Orientadora -->
+      <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 20px;">
+        <div style="font-size: 32px; color: var(--coral); font-family: 'Fraunces', serif; line-height: 1;">"</div>
+        <p style="font-size: 15px; line-height: 1.75; color: var(--dark-2); flex: 1;">Antes tenía que esperar a que un estudiante llegara en crisis para actuar. Paloma me avisa antes — puedo intervenir cuando todavía hay tiempo de hacer algo.</p>
+        <div style="display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06);">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(242,153,74,0.1); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">👩‍🏫</div>
+          <div>
+            <div style="font-size: 14px; font-weight: 800;">Luz Marina R.</div>
+            <div style="font-size: 12px; color: var(--mid);">Orientadora · Colegio Champagnat, Ibagué</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 — Segunda mamá -->
+      <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 20px;">
+        <div style="font-size: 32px; color: var(--coral); font-family: 'Fraunces', serif; line-height: 1;">"</div>
+        <p style="font-size: 15px; line-height: 1.75; color: var(--dark-2); flex: 1;">Le pregunté a mi hija si le molestaba usarla. Me dijo que no, porque "Paloma no le cuenta nada a nadie". Eso me tranquilizó más que cualquier explicación técnica.</p>
+        <div style="display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06);">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--teal-100); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">👩</div>
+          <div>
+            <div style="font-size: 14px; font-weight: 800;">Patricia V.</div>
+            <div style="font-size: 12px; color: var(--mid);">Mamá · Ibagué</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 — Psicóloga -->
+      <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 20px;">
+        <div style="font-size: 32px; color: var(--teal-500); font-family: 'Fraunces', serif; line-height: 1;">"</div>
+        <p style="font-size: 15px; line-height: 1.75; color: var(--dark-2); flex: 1;">El NLP me da contexto real entre sesiones. Cuando el niño llega el jueves, yo ya sé cómo estuvo el lunes — y puedo enfocar la sesión donde más importa.</p>
+        <div style="display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06);">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(39,174,96,0.1); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">👩‍⚕️</div>
+          <div>
+            <div style="font-size: 14px; font-weight: 800;">Dra. Andrea P.</div>
+            <div style="font-size: 12px; color: var(--mid);">Psicóloga clínica · Ibagué</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 — Psiquiatra -->
+      <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 20px;">
+        <div style="font-size: 32px; color: var(--teal-500); font-family: 'Fraunces', serif; line-height: 1;">"</div>
+        <p style="font-size: 15px; line-height: 1.75; color: var(--dark-2); flex: 1;">Por fin una herramienta que no pretende reemplazar al médico. Paloma acompaña, alerta y me entrega datos — el diagnóstico y el tratamiento siguen siendo míos.</p>
+        <div style="display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06);">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(39,174,96,0.1); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">🩺</div>
+          <div>
+            <div style="font-size: 14px; font-weight: 800;">Dr. Felipe S.</div>
+            <div style="font-size: 12px; color: var(--mid);">Psiquiatra infantil · Ibagué</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- Nota de transparencia -->
+    <p style="text-align: center; margin-top: 32px; font-size: 12px; color: var(--mid);">
+      * Testimonios del piloto inicial. Los nombres han sido abreviados por privacidad.
+    </p>
+  </div>
+</section>
+
+<!-- ── CÓMO FUNCIONA ── -->
+<section class="como" id="como-funciona">
+  <div class="container">
+    <p class="eyebrow">El producto</p>
+    <h2 class="section-title">Un ecosistema de 4 portales<br>que trabajan juntos</h2>
+    <p class="section-lead">
+      El niño tiene su espacio íntimo. Los adultos tienen visibilidad — solo la que necesitan para cuidarlo, nunca más.
+    </p>
+    <div class="flujo-grid">
+      <div class="flujo-card child" data-step="1">
+        <div class="flujo-icon">🕊️</div>
+        <h3 class="flujo-title">App del niño</h3>
+        <p class="flujo-desc">
+          Registro emocional diario con caras blobby, diario libre privado, 7 herramientas de bienestar (respiración, grounding, surfea la ola…), diccionario de emociones Plutchik y sistema de Plumas. Funciona en iOS y Android.
+        </p>
+      </div>
+      <div class="flujo-card family" data-step="2">
+        <div class="flujo-icon">👨‍👩‍👧</div>
+        <h3 class="flujo-title">Portal Familiar</h3>
+        <p class="flujo-desc">
+          Los padres ven patrones emocionales (no palabras), reciben alertas cuando el NLP detecta riesgo, pueden anotar observaciones y coordinar citas con el equipo profesional.
+        </p>
+      </div>
+      <div class="flujo-card medical" data-step="3">
+        <div class="flujo-icon">🩺</div>
+        <h3 class="flujo-title">Portal Especialista</h3>
+        <p class="flujo-desc">
+          Psicólogos y psiquiatras reciben alertas priorizadas, acceden al resumen NLP clínico y pueden coordinar con la familia y el colegio — todo desde una sola plataforma.
+        </p>
+      </div>
+    </div>
+
+    <!-- Pipeline NLP -->
+    <div style="margin-bottom: 24px;">
+      <p style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--mid); margin-bottom: 20px;">Cómo fluye la información</p>
+    </div>
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-icon">✏️</div>
+        <div class="pipe-label">El niño</div>
+        <div class="pipe-title">Escribe libremente</div>
+        <div class="pipe-desc">Diario privado — solo tú puedes leer esto</div>
+        <div class="pipe-badge" style="background: rgba(61,168,154,0.1); color: var(--teal-600);">Privado</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">🧠</div>
+        <div class="pipe-label">NLP server-side</div>
+        <div class="pipe-title">Análisis en RAM</div>
+        <div class="pipe-desc">1.000 frases DSM-5 · Determinístico · Sin IA externa</div>
+        <div class="pipe-badge" style="background: rgba(155,81,224,0.1); color: #9B51E0;">Motor propio</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">📊</div>
+        <div class="pipe-label">Equipo profesional</div>
+        <div class="pipe-title">Recibe alerta + nivel</div>
+        <div class="pipe-desc">Patrón emocional · Nunca el texto literal</div>
+        <div class="pipe-badge" style="background: rgba(39,174,96,0.1); color: #27AE60;">Nivel N0→N3</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-icon">🏫</div>
+        <div class="pipe-label">Portal Escolar</div>
+        <div class="pipe-title">Orientador al tanto</div>
+        <div class="pipe-desc">Solo sus alumnos · Notas firmadas</div>
+        <div class="pipe-badge" style="background: rgba(242,153,74,0.1); color: #E08C47;">Privacidad RLS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRIVACIDAD ── -->
+<section class="privacidad" id="privacidad">
+  <div class="container">
+    <div class="priv-grid">
+      <div>
+        <p class="eyebrow">El espacio seguro</p>
+        <h2 class="section-title">Privacidad que el niño<br>puede <em style="font-style:italic; color: var(--teal-700);">sentir</em></h2>
+        <p class="section-lead" style="margin-bottom: 32px;">
+          Paloma no es vigilancia. Es un espacio íntimo donde el niño se expresa sin saber que lo están cuidando.
+          Cuando hay riesgo real, el sistema actúa — discretamente.
+        </p>
+        <div class="priv-rules">
+          <div class="priv-rule">
+            <div class="priv-rule-icon">🔒</div>
+            <div>
+              <div class="priv-rule-title">El diario es invisible para adultos</div>
+              <div class="priv-rule-desc">El texto literal del diario nunca es visible para padres, colegio ni especialistas. El NLP corre en RAM y solo genera un nivel de alerta — jamás transmite las palabras exactas.</div>
+            </div>
+          </div>
+          <div class="priv-rule">
+            <div class="priv-rule-icon">🕊️</div>
+            <div>
+              <div class="priv-rule-title">El equipo profesional es invisible para el niño</div>
+              <div class="priv-rule-desc">Las notas de la psicóloga llegan firmadas como "Paloma 🕊️" — anónimas. Si el niño siente que lo espían, la app deja de funcionar.</div>
+            </div>
+          </div>
+          <div class="priv-rule">
+            <div class="priv-rule-icon">🛡️</div>
+            <div>
+              <div class="priv-rule-title">Cifrado pgcrypto end-to-end</div>
+              <div class="priv-rule-desc">Datos cifrados en reposo con pgcrypto en Supabase. Row Level Security (RLS) garantiza que cada actor solo ve exactamente lo que le corresponde — ni un byte más.</div>
+            </div>
+          </div>
+          <div class="priv-rule">
+            <div class="priv-rule-icon">🆘</div>
+            <div>
+              <div class="priv-rule-title">El botón de crisis lo controla el niño</div>
+              <div class="priv-rule-desc">El FAB de emergencia solo muestra los contactos que el niño añadió. El psicólogo no aparece automáticamente — debe ser elegido por el niño para estar ahí.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="privacy-visual">
+        <div class="privacy-visual-title">¿Quién ve qué?</div>
+        <div class="access-row">
+          <div class="access-actor"><div class="access-dot" style="background: var(--teal-400)"></div>El niño</div>
+          <div class="access-items">
+            <span class="access-chip chip-yes">Su diario</span>
+            <span class="access-chip chip-yes">Sus emociones</span>
+            <span class="access-chip chip-no">Alertas del equipo</span>
+          </div>
+        </div>
+        <div class="access-row">
+          <div class="access-actor"><div class="access-dot" style="background: #2D9CDB"></div>Padres</div>
+          <div class="access-items">
+            <span class="access-chip chip-yes">Patrones</span>
+            <span class="access-chip chip-alert">Alertas N0–N2</span>
+            <span class="access-chip chip-no">Texto diario</span>
+          </div>
+        </div>
+        <div class="access-row">
+          <div class="access-actor"><div class="access-dot" style="background: #E08C47"></div>Orientador</div>
+          <div class="access-items">
+            <span class="access-chip chip-yes">Sus alumnos</span>
+            <span class="access-chip chip-alert">Alertas N1–N2</span>
+            <span class="access-chip chip-no">Diario · N0</span>
+          </div>
+        </div>
+        <div class="access-row">
+          <div class="access-actor"><div class="access-dot" style="background: #27AE60"></div>Especialista</div>
+          <div class="access-items">
+            <span class="access-chip chip-yes">Resumen NLP</span>
+            <span class="access-chip chip-alert">N0 siempre</span>
+            <span class="access-chip chip-no">Texto literal N3</span>
+          </div>
+        </div>
+        <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);">
+          <div style="font-size: 12px; opacity: 0.5; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">Protecciones técnicas</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 13px; color: rgba(255,255,255,0.7); display: flex; gap: 8px; align-items: center;">
+              <span style="color: var(--teal-400);">✓</span> Supabase RLS · acceso por fila, por actor
+            </div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.7); display: flex; gap: 8px; align-items: center;">
+              <span style="color: var(--teal-400);">✓</span> pgcrypto · cifrado en reposo
+            </div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.7); display: flex; gap: 8px; align-items: center;">
+              <span style="color: var(--teal-400);">✓</span> NLP en RAM · texto nunca persiste en claro
+            </div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.7); display: flex; gap: 8px; align-items: center;">
+              <span style="color: var(--teal-400);">✓</span> Ley 1581/2012 + Decreto 1377/2013
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- CTA inline -->
+    <div style="text-align:center; margin-top: 56px;">
+      <a href="#piloto" class="btn btn-coral">Quiero un espacio seguro para mi hijo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PARA QUIÉN ── -->
+<section class="para-quien" id="para-quien">
+  <div class="container">
+    <p class="eyebrow">Los portales adultos</p>
+    <h2 class="section-title">Cada adulto tiene<br>su propio portal</h2>
+    <p class="section-lead">
+      Tres portales web (PWA) diseñados para los roles que rodean al niño — con accesos y vistas diferenciadas.
+    </p>
+    <div class="portales-grid">
+      <div class="portal-card family">
+        <div class="portal-url">paloma-app.com.co/family</div>
+        <div class="portal-icon">👨‍👩‍👧</div>
+        <div class="portal-role">Para padres y madres</div>
+        <div class="portal-title">Portal Familiar</div>
+        <div class="portal-desc">
+          Seguimiento emocional de tu hijo, sin leer su diario. Recibe alertas cuando algo requiere tu atención y coordina con el equipo de profesionales.
+        </div>
+        <div class="portal-features">
+          <div class="portal-feat">Alertas de riesgo en tiempo real (N0–N2)</div>
+          <div class="portal-feat">Patrones emocionales — sin texto literal</div>
+          <div class="portal-feat">Notas para el equipo profesional</div>
+          <div class="portal-feat">Citas con psicólogos y especialistas</div>
+          <div class="portal-feat">Soporte para hasta 2 padres vinculados</div>
+        </div>
+      </div>
+      <div class="portal-card school">
+        <div class="portal-url">paloma-app.com.co/school</div>
+        <div class="portal-icon">🏫</div>
+        <div class="portal-role">Para orientadores escolares</div>
+        <div class="portal-title">Portal Escolar</div>
+        <div class="portal-desc">
+          Triage de bienestar emocional de todos tus alumnos en una sola pantalla. Solo ves los estudiantes de tu colegio — nadie más.
+        </div>
+        <div class="portal-features">
+          <div class="portal-feat">Dashboard de triage por nivel de alerta</div>
+          <div class="portal-feat">Bitácora firmada por orientador</div>
+          <div class="portal-feat">Alertas N1 y N2 solamente</div>
+          <div class="portal-feat">Coordinación con familia y especialista</div>
+          <div class="portal-feat">RLS estricto por colegio</div>
+        </div>
+      </div>
+      <div class="portal-card medical">
+        <div class="portal-url">paloma-app.com.co/medical</div>
+        <div class="portal-icon">🩺</div>
+        <div class="portal-role">Para psicólogos y psiquiatras</div>
+        <div class="portal-title">Portal Especialista</div>
+        <div class="portal-desc">
+          Seguimiento clínico continuo entre sesiones. Accede al resumen NLP, los tests clínicos (PHQ-A, GAD-7, C-SSRS) y la historia emocional de tus pacientes.
+        </div>
+        <div class="portal-features">
+          <div class="portal-feat">Alertas N0 con notificación inmediata</div>
+          <div class="portal-feat">Tests clínicos: PHQ-A, GAD-7, SCARED, C-SSRS</div>
+          <div class="portal-feat">Resumen NLP listo para historia clínica</div>
+          <div class="portal-feat">Notas compartibles con el equipo</div>
+          <div class="portal-feat">Hasta 4 especialistas por niño</div>
+        </div>
+      </div>
+    </div>
+    <!-- CTA inline -->
+    <div style="text-align:center; margin-top: 56px;">
+      <a href="#piloto" class="btn" style="background: var(--teal-800); color: white;">Unirse al piloto gratuito →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLUMAS ── -->
+<section class="plumas-section" id="plumas">
+  <div class="container">
+    <div class="plumas-grid">
+      <div>
+        <p class="eyebrow">Motivación intrínseca</p>
+        <h2 class="section-title">Las Plumas: el niño<br>quiere volver mañana</h2>
+        <p class="section-lead" style="margin-bottom: 40px;">
+          Sin dinero real, sin rankings, sin comparaciones sociales. Solo una moneda personal que refleja el esfuerzo de cuidarse.
+        </p>
+        <div class="plumas-points">
+          <div class="plumas-point">
+            <div class="plumas-point-icon">🪶</div>
+            <div>
+              <div class="plumas-point-title">Motivación sin presión</div>
+              <div class="plumas-point-desc">Las Plumas no penalizan los días difíciles. Son un reflejo del uso, no de los resultados — no hay formas "equivocadas" de ganarlas.</div>
+            </div>
+          </div>
+          <div class="plumas-point">
+            <div class="plumas-point-icon">🎨</div>
+            <div>
+              <div class="plumas-point-title">Se invierten en el avatar</div>
+              <div class="plumas-point-desc">Fondos, temas y personalizaciones visuales. El niño construye un espacio que siente suyo — eso genera apego positivo a la app.</div>
+            </div>
+          </div>
+          <div class="plumas-point">
+            <div class="plumas-point-icon">📈</div>
+            <div>
+              <div class="plumas-point-title">Retención comprobada</div>
+              <div class="plumas-point-desc">El techo diario de 25 Plumas y el bonus de racha semanal (+20 tras 7 días seguidos) crean hábitos sin crear adicción.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="plumas-visual">
+        <div class="plumas-header">
+          <span style="font-size: 28px;">🪶</span>
+          <div class="plumas-title-visual">Tu semana en Plumas</div>
+        </div>
+        <div class="plumas-counter">847</div>
+        <div class="plumas-sub">Total acumulado · Sofía, 14 años</div>
+        <div class="plumas-ways">
+          <div class="plumas-way">
+            <div class="plumas-way-label">✏️ Registrar emoción</div>
+            <div class="plumas-way-pts">+5 🪶</div>
+          </div>
+          <div class="plumas-way">
+            <div class="plumas-way-label">📝 Diario libre</div>
+            <div class="plumas-way-pts">+3 🪶</div>
+          </div>
+          <div class="plumas-way">
+            <div class="plumas-way-label">🌬️ Herramienta completada</div>
+            <div class="plumas-way-pts">+5 🪶</div>
+          </div>
+          <div class="plumas-way">
+            <div class="plumas-way-label">📖 Diccionario explorado</div>
+            <div class="plumas-way-pts">+2 🪶</div>
+          </div>
+          <div class="plumas-way" style="background: rgba(242,201,76,0.1); border-color: rgba(242,201,76,0.2);">
+            <div class="plumas-way-label">🔥 Racha 7 días</div>
+            <div class="plumas-way-pts" style="color: #F2C94C;">+20 🪶</div>
+          </div>
+          <div class="plumas-way" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06);">
+            <div class="plumas-way-label" style="opacity: 0.4;">Techo diario</div>
+            <div class="plumas-way-pts" style="color: rgba(255,255,255,0.35);">máx. 25/día</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ALERTAS NLP ── -->
+<section class="nlp" id="nlp">
+  <div class="container">
+    <p class="eyebrow">Motor NLP</p>
+    <h2 class="section-title" style="color: white;">Detección de riesgo real.<br>Sin IA externa, sin nubes de terceros.</h2>
+    <p class="section-lead">
+      El motor NLP de Paloma analiza el texto del diario con 1.000 frases clasificadas según el DSM-5.
+      Corre server-side, en RAM — el texto nunca sale del servidor y nunca se persiste en claro.
+      Cuatro niveles de alerta con acciones diferentes para cada uno.
+    </p>
+    <div class="alertas-grid">
+      <div class="alerta-card n0">
+        <div class="alerta-nivel">Nivel 0</div>
+        <div class="alerta-name">Emergencia</div>
+        <div class="alerta-desc">Riesgo de autolesión o suicidio. Notificación inmediata obligatoria al especialista principal. No es dismisseable.</div>
+        <div class="alerta-action">Push &lt; 24h · Obligatorio</div>
+      </div>
+      <div class="alerta-card n1">
+        <div class="alerta-nivel">Nivel 1</div>
+        <div class="alerta-name">Urgente</div>
+        <div class="alerta-desc">Señal de angustia severa. Push al especialista principal y secundarios con permiso N1 activado.</div>
+        <div class="alerta-action">Push al especialista</div>
+      </div>
+      <div class="alerta-card n2">
+        <div class="alerta-nivel">Nivel 2</div>
+        <div class="alerta-name">Seguimiento</div>
+        <div class="alerta-desc">Patrón de malestar moderado. Recomendado revisar en la próxima sesión o reunión de equipo.</div>
+        <div class="alerta-action">Próxima sesión</div>
+      </div>
+      <div class="alerta-card n3">
+        <div class="alerta-nivel">Nivel 3</div>
+        <div class="alerta-name">Normal</div>
+        <div class="alerta-desc">Desahogo emocional cotidiano. Sin alerta. El niño simplemente usó el espacio como diario.</div>
+        <div class="alerta-action">Sin alerta · Privado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PILOTO ── -->
+<section class="piloto" id="piloto">
+  <div class="container">
+    <div class="piloto-inner">
+      <p class="piloto-eyebrow">Piloto · Julio 2026</p>
+      <h2 class="piloto-title">
+        Ibagué primero.<br>
+        <strong>Después, el mundo.</strong>
+      </h2>
+      <p class="piloto-sub">
+        El piloto de julio 2026 arranca en Ibagué con colegios y psicólogos aliados.
+        Si quieres participar — como familia, colegio o especialista — el cupo es gratuito y limitado.
+      </p>
+      <div class="piloto-cards">
+        <div class="piloto-card">
+          <div class="piloto-card-number">3</div>
+          <div class="piloto-card-label">colegios aliados en Ibagué</div>
+        </div>
+        <div class="piloto-card">
+          <div class="piloto-card-number">150</div>
+          <div class="piloto-card-label">niños en el piloto inicial</div>
+        </div>
+        <div class="piloto-card">
+          <div class="piloto-card-number">100%</div>
+          <div class="piloto-card-label">gratuito durante el piloto</div>
+        </div>
+      </div>
+      <!-- Formulario lista de espera -->
+      <form class="waitlist-form" onsubmit="submitWaitlist(event)">
+        <div class="waitlist-row">
+          <input class="waitlist-input" type="text" placeholder="Tu nombre" required />
+          <input class="waitlist-input" type="email" placeholder="Tu correo" required />
+        </div>
+        <select class="waitlist-select" required>
+          <option value="" disabled selected>¿Cómo llegaste a Paloma?</option>
+          <option value="familia">Soy papá o mamá</option>
+          <option value="colegio">Soy orientador/a escolar</option>
+          <option value="psicologo">Soy psicólogo/a o psiquiatra</option>
+          <option value="otro">Otro</option>
+        </select>
+        <button type="submit" class="waitlist-submit">Quiero el piloto gratuito 🪶</button>
+      </form>
+      <div class="waitlist-success" id="waitlist-success">
+        ✅ ¡Listo! Te contactaremos antes del piloto de julio. Bienvenido/a a Paloma 🕊️
+      </div>
+
+      <!-- O contactar directo -->
+      <div class="piloto-cta" style="margin-top: 24px;">
+        <a href="https://wa.me/573246106500?text=Hola%2C+quiero+saber+más+del+piloto+de+Paloma" class="btn btn-ghost" target="_blank">
+          💬 WhatsApp
+        </a>
+        <a href="mailto:cuentas@ada-apps.com.co?subject=Piloto%20Paloma%20Julio%202026" class="btn btn-ghost">
+          ✉️ Correo
+        </a>
+      </div>
+      <p class="piloto-legal">Paloma · ADA — Aplicaciones Digitales Avanzadas S.A.S. · Ibagué, Colombia</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONFIANZA ── -->
+<section class="confianza" id="confianza">
+  <div class="container">
+    <p class="eyebrow">Por qué Paloma</p>
+    <h2 class="section-title">Construido con rigor<br>desde el primer día</h2>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">🧠</div>
+        <div class="trust-title">NLP determinístico</div>
+        <div class="trust-desc">No usamos ChatGPT ni ninguna IA externa. El motor NLP es propio, basado en DSM-5, y corre en nuestros servidores.</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🔐</div>
+        <div class="trust-title">Cifrado total</div>
+        <div class="trust-desc">pgcrypto en Supabase + Row Level Security. Cada actor ve solo lo que le corresponde — sin excepciones.</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">⚖️</div>
+        <div class="trust-title">Marco legal colombiano</div>
+        <div class="trust-desc">Diseñado para cumplir Ley 2460/2025, Ley 1581/2012, Resolución 2654/2019 y Código de Infancia y Adolescencia.</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">👩‍⚕️</div>
+        <div class="trust-title">Validado clínicamente</div>
+        <div class="trust-desc">Tests clínicos (PHQ-A, GAD-7, SCARED, CRAFFT, C-SSRS) integrados y validados con psiquiatras y psicólogos.</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🚫</div>
+        <div class="trust-title">No diagnostica</div>
+        <div class="trust-desc">Paloma no reemplaza al profesional de salud mental. Acompaña y alerta — el diagnóstico siempre lo hace un humano.</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🇨🇴</div>
+        <div class="trust-title">Hecho en Colombia</div>
+        <div class="trust-desc">Desarrollado por ADA — Aplicaciones Digitales Avanzadas S.A.S. en Ibagué, para la realidad de los niños colombianos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-logo">
+          <div class="footer-brand-mark">
+            <svg width="18" height="20" viewBox="0 0 20 22" fill="none">
+              <path d="M10 2C10 2 3 5.5 3 12C3 16.4 6.1 20 10 20C13.9 20 17 16.4 17 12C17 5.5 10 2 10 2Z" fill="white" opacity="0.8"/>
+              <circle cx="13.5" cy="8.5" r="2" fill="#E8725A"/>
+            </svg>
+          </div>
+          <span class="footer-wordmark">Paloma</span>
+        </div>
+        <p class="footer-desc">
+          Plataforma de acompañamiento emocional para niños y adolescentes entre 8 y 17 años. Colombia y LATAM.
+        </p>
+        <div style="font-size: 12px; opacity: 0.35;">
+          ADA · Aplicaciones Digitales Avanzadas S.A.S.<br>
+          Ibagué, Colombia
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Producto</div>
+        <div class="footer-links">
+          <a href="#como-funciona">Cómo funciona</a>
+          <a href="#para-quien">Portales adultos</a>
+          <a href="#nlp">Motor NLP</a>
+          <a href="#plumas">Sistema de Plumas</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Para quién</div>
+        <div class="footer-links">
+          <a href="#para-quien">Familias</a>
+          <a href="#para-quien">Colegios</a>
+          <a href="#para-quien">Psicólogos y psiquiatras</a>
+          <a href="#piloto">Piloto julio 2026</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links">
+          <a href="legal/politica-privacidad.html" target="_blank">Política de privacidad</a>
+          <a href="legal/terminos-condiciones.html" target="_blank">Términos y condiciones</a>
+          <a href="legal/consentimiento-parental.html" target="_blank">Consentimiento parental</a>
+          <a href="legal/acuerdo-instituciones-dpa.html" target="_blank">DPA para instituciones</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 ADA — Aplicaciones Digitales Avanzadas S.A.S. Todos los derechos reservados.</div>
+      <div class="footer-legal">
+        <a href="legal/politica-privacidad.html" target="_blank">Privacidad</a>
+        <a href="legal/terminos-condiciones.html" target="_blank">Términos</a>
+        <a href="mailto:cuentas@ada-apps.com.co?subject=Contacto%20Paloma">Contacto</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Smooth nav active state
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.style.boxShadow = window.scrollY > 80 ? '0 2px 24px rgba(0,0,0,0.08)' : 'none';
+});
+
+// Waitlist form
+function submitWaitlist(e) {
+  e.preventDefault();
+  const form = e.target;
+  const nombre = form.querySelector('input[type="text"]').value;
+  const correo = form.querySelector('input[type="email"]').value;
+  const perfil = form.querySelector('select').value;
+  // Enviar por mailto como fallback hasta tener backend
+  const asunto = encodeURIComponent('Lista de espera Paloma · ' + perfil);
+  const cuerpo = encodeURIComponent('Nombre: ' + nombre + '\nCorreo: ' + correo + '\nPerfil: ' + perfil);
+  window.open('mailto:cuentas@ada-apps.com.co?subject=' + asunto + '&body=' + cuerpo);
+  form.style.display = 'none';
+  document.getElementById('waitlist-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
